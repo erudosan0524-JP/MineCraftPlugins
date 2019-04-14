@@ -1,0 +1,19 @@
+name: eWhitelist
+main: com.github.erudosan0524.jp.ewhitelist.EWhitelist
+version: 0.5.6
+author: 'Ld0'
+website: https://github.com/erudosan0524-JP
+commands:
+   eWhitelist:
+    description: test
+permissions:
+  ewhitelist.addall:
+    default: op
+  ewhitelist.removeall:
+    default: op
+  ewhitelist.list:
+    default: op
+  ewhitelist.add:
+    default: op
+  ewhitelist.remove:
+    default: op
