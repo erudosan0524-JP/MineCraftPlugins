@@ -1,0 +1,8 @@
+name: eNoPotions
+version: 1.1.0
+main: com.erudo0524.jp.github.enopotions.ENoPotions
+website: https://github.com/erudosan0524-JP
+author: 'Ld0'
+permissions:
+  enopotions.admin:
+    default: op
