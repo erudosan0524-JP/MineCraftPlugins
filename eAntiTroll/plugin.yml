@@ -1,0 +1,17 @@
+name: eAntiTroll
+version: 1.4.1
+main: jp.github.erudo.eantitroll.EAntiTroll
+website: https://github.com/erudosan0524-JP
+author: 'Ld0'
+commands:
+   eAntiTroll:
+    description: kaijo/on/off
+permissions:
+  eantitroll.kaijo:
+    default: op
+  eantitroll.kidou:
+    default: op
+  eantitroll.lava:
+    default: op
+  eantitroll.admin:
+    default: op
