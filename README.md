@@ -1,6 +1,6 @@
 # MineCraft Plugins Storage
-This repository is where I put the plugin for Minecraft I developed.
-Some plugins do not support English. I will support it if I hace time.   
+This repository is where I put the plugin for Minecraft I developed.  
+Some plugins do not support English. I will support it if I hace time.  
 Read this in other languages: [English](README.md), [日本語](README.ja.md)
 ## How to Install
 1. [Install a Spigot Server](https://www.spigotmc.org/wiki/spigot-installation/)
