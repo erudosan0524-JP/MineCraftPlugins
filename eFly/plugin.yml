@@ -1,0 +1,13 @@
+name: eFly
+version: 1.0.0
+main: com.github.efly.erudo.Main
+author: 'Ld0'
+website: https://github.com/erudosan0524-JP
+commands:
+   eFly:
+    description: Toggle on/off
+permissions:
+   efly.on:
+    default: op
+   efly.off:
+    default: op
