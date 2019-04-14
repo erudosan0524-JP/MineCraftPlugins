@@ -1,0 +1,6 @@
+world:
+  color: '&b'
+world_nether:
+  color: '&4'
+world_the_end:
+  color: '&2'
