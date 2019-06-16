@@ -15,7 +15,8 @@ Read this in other languages: [English](README.md), [日本語](README.ja.md)
 + eNoPotions
 + eTabList
 + eWhitelist
-+ eWorldNames  
++ eWorldNames
++ eOni2  
 [** DOWNLOAD **](https://www.dropbox.com/sh/ze13z10sew7llpx/AACSJUWHvuhSt6lVVP2Lc_2Ya?dl=0)
 ## Author
 エルド(erudo)
