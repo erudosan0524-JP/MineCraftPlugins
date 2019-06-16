@@ -23,7 +23,7 @@ public class Game extends BukkitRunnable {
 
 	public void run() {
 		if(plg.getCurrentGameState() == GameState.END) {
-			MessageManager.messageAll("鬼ごっこ終了!");
+			MessageManager.broadcastMessage("鬼ごっこ終了!");
 			plg.getServer().getScheduler().cancelTask(task.getTaskId());
 			count = 0;
 		}
@@ -45,9 +45,15 @@ public class Game extends BukkitRunnable {
 				}
 
 				if(plg.getTeam(Teams.ONI).getEntries().size() <= 0) {
-					MessageManager.messageAll("鬼が０人だったため試合が終了しました");
 					plg.setCurrentGameState(GameState.END);
+					MessageManager.messageAll("鬼が０人だったため試合が終了しました");
 				}
+
+				if(plg.getTpPos() == null || plg.getOniPos() == null) {
+					plg.setCurrentGameState(GameState.END);
+					MessageManager.messageAll("TP場所が正しく設定されていなかったため試合が終了しました");
+				}
+
 
 			} else {
 				plg.setCurrentGameState(GameState.END);
