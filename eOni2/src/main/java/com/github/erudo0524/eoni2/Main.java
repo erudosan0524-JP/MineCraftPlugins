@@ -34,6 +34,21 @@ public class Main extends JavaPlugin {
 	@Override
 	public void onDisable() {
 		getLogger().info("プラグインが停止しました");
+
+		manager = Bukkit.getScoreboardManager();
+		board = manager.getMainScoreboard();
+		obj = board.getObjective(objName);
+
+		if(obj != null) {
+//			this.getServer().dispatchCommand(this.getServer().getConsoleSender(), "scoreboard objectives remove " + objName);
+			obj.unregister();
+		}
+
+		if(board.getTeam(Teams.ONI.getName()) != null) {
+			board.getTeam(Teams.ONI.getName()).unregister();
+		}else if (board.getTeam(Teams.PLAYER.getName()) != null) {
+			board.getTeam(Teams.PLAYER.getName()).unregister();
+		}
 	}
 
 	@SuppressWarnings("deprecation")

@@ -1,13 +1,12 @@
 package com.github.erudo0524.eoni2;
 
+import org.bukkit.ChatColor;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.scoreboard.Score;
 
 import com.github.erudo0524.eoni2.enums.GameState;
 import com.github.erudo0524.eoni2.enums.Teams;
-
-import net.md_5.bungee.api.ChatColor;
 
 public class Game extends BukkitRunnable {
 
@@ -23,9 +22,9 @@ public class Game extends BukkitRunnable {
 
 	public void run() {
 		if(plg.getCurrentGameState() == GameState.END) {
+			count = 0;
 			MessageManager.broadcastMessage("鬼ごっこ終了!");
 			plg.getServer().getScheduler().cancelTask(task.getTaskId());
-			count = 0;
 		}
 
 		if(plg.getCurrentGameState() == GameState.GAMING) {
