@@ -1,12 +1,15 @@
 package com.github.erudo0524.eoni2;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.scoreboard.Score;
 
 import com.github.erudo0524.eoni2.enums.GameState;
 import com.github.erudo0524.eoni2.enums.Teams;
+import com.github.erudo0524.eoni2.utils.MessageManager;
 
 public class Game extends BukkitRunnable {
 
@@ -22,8 +25,11 @@ public class Game extends BukkitRunnable {
 
 	public void run() {
 		if(plg.getCurrentGameState() == GameState.END) {
-			count = 0;
 			MessageManager.broadcastMessage("鬼ごっこ終了!");
+			count = 0;
+			for(Player player : Bukkit.getServer().getOnlinePlayers()) {
+				player.setSneaking(false);
+			}
 			plg.getServer().getScheduler().cancelTask(task.getTaskId());
 		}
 
@@ -52,7 +58,6 @@ public class Game extends BukkitRunnable {
 					plg.setCurrentGameState(GameState.END);
 					MessageManager.messageAll("TP場所が正しく設定されていなかったため試合が終了しました");
 				}
-
 
 			} else {
 				plg.setCurrentGameState(GameState.END);

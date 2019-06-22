@@ -3,7 +3,9 @@ package com.github.erudo0524.eoni2;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
@@ -14,6 +16,8 @@ import org.bukkit.scoreboard.Team;
 import com.github.erudo0524.eoni2.enums.GameState;
 import com.github.erudo0524.eoni2.enums.Teams;
 import com.github.erudo0524.eoni2.events.DamagePlayerListener;
+import com.github.erudo0524.eoni2.events.PlayerMoveListener;
+import com.github.erudo0524.eoni2.utils.Config;
 
 public class Main extends JavaPlugin {
 
@@ -26,8 +30,12 @@ public class Main extends JavaPlugin {
 	//ゲームの状態
 	private GameState currentGameState;
 
+	//コンフィグ
+	private Config config;
+
 	private Location tpPos;
 	private Location oniPos;
+	private Location removeBlockPos;
 
 	public final String objName = "情報";
 
@@ -60,6 +68,12 @@ public class Main extends JavaPlugin {
 		///		Command		///
 		///////////////////////
 		getCommand("eoni").setExecutor(new CommandManager(this));
+
+		///////////////////////
+		///		Config		///
+		///////////////////////
+		config = new Config(this);
+
 
 		///////////////////////////
 		///		ScoreBoard		///
@@ -104,6 +118,8 @@ public class Main extends JavaPlugin {
 		///		Listener 	///
 		///////////////////////
 		new DamagePlayerListener(this);
+		new PlayerMoveListener(this);
+
 
 		setCurrentGameState(GameState.PREPARE);
 	}
@@ -171,5 +187,39 @@ public class Main extends JavaPlugin {
 	public void setOniPos(Location oniPos) {
 		this.oniPos = oniPos;
 	}
+
+	public Location getRemoveBlockPos() {
+		return removeBlockPos;
+	}
+
+	public void setRemoveBlockPos(Location removeBlockPos) {
+		this.removeBlockPos = removeBlockPos;
+	}
+
+	public void setOni(Player player, Location tpLoc) {
+		for (Team team : player.getScoreboard().getTeams()) {
+			if(team.getName() == Teams.PLAYER.getName()) {
+				this.removePlayerFromTeam(Teams.PLAYER, player);
+			}
+		}
+
+		this.addPlayerToTeam(Teams.ONI, player);
+		player.getInventory().setHelmet(new ItemStack(Material.DIAMOND_HELMET));
+		player.getInventory().setChestplate(new ItemStack(Material.DIAMOND_CHESTPLATE));
+		player.getInventory().setLeggings(new ItemStack(Material.DIAMOND_LEGGINGS));
+		player.getInventory().setBoots(new ItemStack(Material.DIAMOND_BOOTS));
+
+		player.teleport(tpLoc);
+	}
+
+	//ここからConfig関連
+	public int getDefaultTime() {
+		return config.getDefaultTime();
+	}
+
+	public boolean isModeHue() {
+		return config.isModeHue();
+	}
+
 
 }

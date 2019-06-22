@@ -8,9 +8,9 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.scoreboard.Team;
 
 import com.github.erudo0524.eoni2.Main;
-import com.github.erudo0524.eoni2.MessageManager;
 import com.github.erudo0524.eoni2.enums.GameState;
 import com.github.erudo0524.eoni2.enums.Teams;
+import com.github.erudo0524.eoni2.utils.MessageManager;
 
 public class DamagePlayerListener implements Listener {
 
@@ -41,15 +41,16 @@ public class DamagePlayerListener implements Listener {
 			return;
 		}
 
-		//プレイヤーがチームに所属していなかったらreturn;
 		for(Team team : entity.getScoreboard().getTeams()) {
-			if(!(team.getName() == Teams.ONI.getName()) || !(team.getName() == Teams.PLAYER.getName())) {
-				return;
-			}
-
-			//entityとdamagerのチームが同じだったらreturn;
 			for(Team team2 : damager.getScoreboard().getTeams()) {
 				if(team == team2) {
+					return;
+				}
+
+				//プレイヤーが鬼に攻撃したら
+				//TODO: ここうまくいかないから直す
+				if(team2.getName() == Teams.PLAYER.getName() && team.getName() == Teams.ONI.getName()) {
+					e.setCancelled(true);
 					return;
 				}
 			}
@@ -59,12 +60,13 @@ public class DamagePlayerListener implements Listener {
 		///////////////////////////////
 		///		ここからが処理		///
 		///////////////////////////////
-
-		entity.teleport(plg.getTpPos());
 		MessageManager.ArrestMessage(entity, damager);
-		plg.removePlayerFromTeam(Teams.PLAYER, entity);
-		plg.addPlayerToTeam(Teams.ONI, entity);
-
+		if(plg.isModeHue()) {
+			plg.setOni(entity, plg.getTpPos());
+		} else {
+			plg.removePlayerFromTeam(Teams.PLAYER, entity);
+			entity.teleport(plg.getTpPos());
+		}
 
 
 	}

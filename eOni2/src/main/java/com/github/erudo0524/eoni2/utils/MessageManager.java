@@ -1,4 +1,4 @@
-package com.github.erudo0524.eoni2;
+package com.github.erudo0524.eoni2.utils;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
