@@ -12,7 +12,7 @@ public class JoinLeaveListener implements Listener{
 	Main plg;
 
 	public JoinLeaveListener(Main main) {
-		this.plg = plg;
+		this.plg = main;
 		plg.getServer().getPluginManager().registerEvents(this, plg);
 	}
 

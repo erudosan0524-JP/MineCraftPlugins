@@ -28,23 +28,15 @@
 		<dependency>
 			<groupId>org.spigotmc</groupId>
 			<artifactId>spigot-api</artifactId>
-			<version>1.14.2-R0.1-SNAPSHOT</version>
+			<version>1.12.2-R0.1-SNAPSHOT</version>
 			<scope>provided</scope>
 		</dependency>
 		<!--Bukkit API -->
 		<!--You only need one of the two, don't put both. Spigot is recommended. -->
 		<dependency>
 			<groupId>org.bukkit</groupId>
-			<artifactId>bukkit</artifactId>
-			<version>1.14.2-R0.1-SNAPSHOT</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.arrowhitblock</groupId>
-			<artifactId>ArrowHitBlockEvent</artifactId>
-			<version>1.0</version>
-			<scope>system</scope>
-			<systemPath>${basedir}/lib/ArrowHitBlockEvent-1.2.0.jar</systemPath>
+			<artifactId>craftbukkit</artifactId>
+			<version>1.12.2-R0.1-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 </project>
