@@ -7,6 +7,7 @@ import org.bukkit.scoreboard.Score;
 
 import com.github.erudo.ebowspleef.Main;
 import com.github.erudo.ebowspleef.enums.GameState;
+import com.github.erudo.ebowspleef.enums.Teams;
 import com.github.erudo.ebowspleef.utils.MessageManager;
 
 public class Game extends BukkitRunnable {
@@ -32,6 +33,11 @@ public class Game extends BukkitRunnable {
 			if (count > 0) {
 				Score TimeScore = plg.getObj().getScore(ChatColor.GOLD + "残り時間: ");
 				TimeScore.setScore(count);
+
+				if(plg.getTeam(Teams.BLUE).getEntries().size() == 0 || plg.getTeam(Teams.RED).getEntries().size() == 0) {
+					MessageManager.messageAll("プレイヤーが十分に揃っていなかったためゲームが終了しました。");
+					plg.setGameState(GameState.END);
+				}
 
 			} else {
 				plg.setGameState(GameState.END);

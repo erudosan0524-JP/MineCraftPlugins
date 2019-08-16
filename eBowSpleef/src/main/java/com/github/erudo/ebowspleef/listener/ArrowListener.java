@@ -46,6 +46,7 @@ public class ArrowListener implements Listener {
 			return;
 		}
 
+		//矢の軌道
 		arrows.add((Projectile) e.getProjectile());
 		addParticleEffect((Projectile) e.getProjectile());
 	}
@@ -59,6 +60,7 @@ public class ArrowListener implements Listener {
 		if (e.getEntity() instanceof Arrow) {
 			arrows.remove(e.getEntity());
 
+			//プレイヤーに当たったら
 			if (e.getHitEntity() != null) {
 				if (e.getHitEntity() instanceof Player) {
 					Player player = (Player) e.getHitEntity();
@@ -70,6 +72,7 @@ public class ArrowListener implements Listener {
 
 			}
 
+			//あたったブロックが羊毛だったら消去
 			Block block = e.getHitBlock();
 			Location blockLoc1 = new Location(block.getWorld(), block.getLocation().getX() + 1, block.getLocation().getY(),
 					block.getLocation().getZ());

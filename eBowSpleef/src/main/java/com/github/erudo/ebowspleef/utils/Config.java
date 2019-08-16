@@ -11,6 +11,7 @@ public class Config {
 	//ここからConfigの内容用の変数
 	private int arrowRange;
 	private int defaultTime;
+	private int defaultCount;
 
 	public Config(Main plg) {
 		this.plg = plg;
@@ -26,6 +27,7 @@ public class Config {
 
 		arrowRange = config.getInt("ArrowRange");
 		defaultTime = config.getInt("DefaultTime");
+		defaultCount = config.getInt("DefaultCount");
 	}
 
 	public int getArrowRange() {
@@ -34,6 +36,10 @@ public class Config {
 
 	public int getDefaultTime() {
 		return defaultTime;
+	}
+
+	public int getDefaultCount() {
+		return defaultCount;
 	}
 
 }

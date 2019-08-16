@@ -1,7 +1,8 @@
 package com.github.erudo.ebowspleef.enums;
 
 public enum Teams {
-	PLAYER("Player"),
+	RED("Red"),
+	BLUE("Blue"),
 	SPECTATOR("Spectator");
 
 	private final String name;

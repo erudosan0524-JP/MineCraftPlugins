@@ -2,6 +2,7 @@ package com.github.erudo.ebowspleef;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
@@ -15,6 +16,7 @@ import com.github.erudo.ebowspleef.enums.GameState;
 import com.github.erudo.ebowspleef.enums.Teams;
 import com.github.erudo.ebowspleef.listener.ArrowListener;
 import com.github.erudo.ebowspleef.listener.JoinLeaveListener;
+import com.github.erudo.ebowspleef.runnable.CountDown;
 import com.github.erudo.ebowspleef.runnable.Game;
 import com.github.erudo.ebowspleef.utils.Config;
 import com.github.erudo.ebowspleef.utils.MessageManager;
@@ -25,9 +27,9 @@ public class Main extends JavaPlugin {
 	private Scoreboard board;
 	private Objective obj;
 	private Team spectator;
-	private Team player;
+	private Team redTeam;
+	private Team blueTeam;
 	public final String objName = "情報";
-
 
 	private Config config;
 
@@ -70,16 +72,25 @@ public class Main extends JavaPlugin {
 
 		//Team
 
-
-		if (board.getTeam(Teams.PLAYER.getName()) == null) {
-			player = board.registerNewTeam(Teams.PLAYER.getName());
+		if (board.getTeam(Teams.RED.getName()) == null) {
+			redTeam = board.registerNewTeam(Teams.RED.getName());
 		} else {
-			player = board.getTeam(Teams.PLAYER.getName());
+			redTeam = board.getTeam(Teams.RED.getName());
 		}
-		player.setPrefix("§9");
-		player.setSuffix(ChatColor.WHITE.toString());
-		player.setDisplayName("プレイヤー");
-		player.setAllowFriendlyFire(true);
+		redTeam.setPrefix("§c");
+		redTeam.setSuffix(ChatColor.WHITE.toString());
+		redTeam.setDisplayName("赤チーム");
+		redTeam.setAllowFriendlyFire(false);
+
+		if (board.getTeam(Teams.BLUE.getName()) == null) {
+			blueTeam = board.registerNewTeam(Teams.BLUE.getName());
+		} else {
+			blueTeam = board.getTeam(Teams.BLUE.getName());
+		}
+		blueTeam.setPrefix("§9");
+		blueTeam.setSuffix(ChatColor.WHITE.toString());
+		blueTeam.setDisplayName("青チーム");
+		blueTeam.setAllowFriendlyFire(false);
 
 		if (board.getTeam(Teams.SPECTATOR.getName()) == null) {
 			spectator = board.registerNewTeam(Teams.SPECTATOR.getName());
@@ -108,6 +119,27 @@ public class Main extends JavaPlugin {
 		game.setTask(task);
 	}
 
+	@SuppressWarnings("deprecation")
+	public void CountStart(int count, int time) {
+		CountDown countDown;
+		BukkitTask task;
+
+		for(Player p : Bukkit.getServer().getOnlinePlayers()) {
+			if (!(this.getTeam(Teams.BLUE).hasEntry(p.getName()) || this.getTeam(Teams.RED).hasEntry(p.getName()))) {
+				this.addPlayerToTeam(Teams.SPECTATOR, p);
+				p.setGameMode(GameMode.SPECTATOR);
+			}
+
+			p.setGameMode(GameMode.SURVIVAL);
+			p.setSneaking(true);
+		}
+
+		countDown = new CountDown(this, count, time);
+		task = this.getServer().getScheduler().runTaskTimer(this, countDown, 0L, 20L);
+		countDown.setTask(task);
+
+	}
+
 	public Objective getObj() {
 		return obj;
 	}
@@ -115,24 +147,30 @@ public class Main extends JavaPlugin {
 	public Team getTeam(Teams teams) {
 		if (teams == Teams.SPECTATOR) {
 			return spectator;
+		} else if (teams == Teams.RED) {
+			return redTeam;
 		} else {
-			return player;
+			return blueTeam;
 		}
 	}
 
 	public void removePlayerFromTeam(Teams teams, Player p) {
 		if (teams == Teams.SPECTATOR) {
-			spectator.removeEntry(player.getName());
+			spectator.removeEntry(p.getName());
+		} else if (teams == Teams.RED) {
+			redTeam.removeEntry(p.getName());
 		} else {
-			player.removeEntry(p.getName());
+			blueTeam.removeEntry(p.getName());
 		}
 	}
 
 	public void addPlayerToTeam(Teams teams, Player p) {
 		if (teams == Teams.SPECTATOR) {
 			spectator.addEntry(p.getName());
-		} else if (teams == Teams.PLAYER) {
-			player.addEntry(p.getName());
+		} else if (teams == Teams.RED) {
+			redTeam.addEntry(p.getName());
+		} else {
+			blueTeam.addEntry(p.getName());
 		}
 	}
 
@@ -152,4 +190,7 @@ public class Main extends JavaPlugin {
 		return config.getDefaultTime();
 	}
 
+	public int getDefaultCount() {
+		return config.getDefaultCount();
+	}
 }
