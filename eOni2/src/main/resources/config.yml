@@ -1,2 +1,10 @@
 defaultTime: 120
+supplyChestInterval: 30
 isModeHue: true
+OniPosition: "343 17 651"
+TpPosition: "343 17 651"
+DeleteBlockPosition: "340 19 651"
+supplyChestPositions:
+  - "338 17 649"
+  - "338 17 653" 
+defaultWorld: "world"

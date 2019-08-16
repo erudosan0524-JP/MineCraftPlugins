@@ -1,9 +1,7 @@
 package com.github.erudo0524.eoni2.events;
 
 import org.bukkit.GameMode;
-import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -23,7 +21,7 @@ public class PlayerMoveListener implements Listener {
 
 	@EventHandler
 	public void onMove(PlayerMoveEvent e) {
-		Player player = e.getPlayer();
+		final Player player = e.getPlayer();
 
 		//ゲーム中でなかったらreturn;
 		if (!(plg.getCurrentGameState() == GameState.GAMING)) {
@@ -40,13 +38,10 @@ public class PlayerMoveListener implements Listener {
 		///////////////////////////////
 
 		//TODO: ここがうまくいかない
-		if(player.getLocation().getBlock().getRelative(BlockFace.SELF).isLiquid()) {
-			Block block = player.getLocation().getBlock().getRelative(BlockFace.SELF);
-			if(block.getType() == Material.WATER) {
-				player.damage(0.1);
-			}else if(block.getType() == Material.LAVA) {
-				player.damage(100000000);
-			}
+		Block getToBlock = e.getTo().getBlock();
+		if (getToBlock.isLiquid()) {
+			player.damage(0.1);
+
 		}
 	}
 }

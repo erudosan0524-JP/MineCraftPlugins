@@ -24,7 +24,7 @@ public class DamagePlayerListener implements Listener {
 	@EventHandler
 	public void onDamagePlayer(EntityDamageByEntityEvent e) {
 		//プレイヤーからプレイヤーの攻撃でない場合はreturn;
-		if(!(e.getEntity() instanceof Player) && !(e.getDamager() instanceof Player)) {
+		if (!(e.getEntity() instanceof Player) && !(e.getDamager() instanceof Player)) {
 			return;
 		}
 
@@ -32,42 +32,35 @@ public class DamagePlayerListener implements Listener {
 		Player damager = (Player) e.getDamager();
 
 		//ゲームモードがクリエだったらreturn;
-		if(entity.getGameMode().equals(GameMode.CREATIVE) || damager.getGameMode().equals(GameMode.CREATIVE)) {
+		if (entity.getGameMode().equals(GameMode.CREATIVE) || damager.getGameMode().equals(GameMode.CREATIVE)) {
 			return;
 		}
 
 		//ゲーム中でなかったらreturn;
-		if(!(plg.getCurrentGameState() == GameState.GAMING)) {
+		if (!(plg.getCurrentGameState() == GameState.GAMING)) {
 			return;
 		}
 
-		for(Team team : entity.getScoreboard().getTeams()) {
-			for(Team team2 : damager.getScoreboard().getTeams()) {
-				if(team == team2) {
-					return;
-				}
 
-				//プレイヤーが鬼に攻撃したら
-				//TODO: ここうまくいかないから直す
-				if(team2.getName() == Teams.PLAYER.getName() && team.getName() == Teams.ONI.getName()) {
-					e.setCancelled(true);
-					return;
-				}
-			}
+		//プレイヤーが殴ったものは全てreturn
+		@SuppressWarnings("deprecation")
+		Team team = damager.getScoreboard().getPlayerTeam(damager);
+		if(team.getName().equals(Teams.PLAYER.getName())) {
+			e.setCancelled(true);
+			return;
 		}
-
 
 		///////////////////////////////
 		///		ここからが処理		///
 		///////////////////////////////
-		MessageManager.ArrestMessage(entity, damager);
-		if(plg.isModeHue()) {
+		if (plg.isModeHue()) {
+			MessageManager.ArrestMessage(entity, damager);
 			plg.setOni(entity, plg.getTpPos());
 		} else {
+			MessageManager.ArrestMessage(entity, damager);
 			plg.removePlayerFromTeam(Teams.PLAYER, entity);
 			entity.teleport(plg.getTpPos());
 		}
-
 
 	}
 

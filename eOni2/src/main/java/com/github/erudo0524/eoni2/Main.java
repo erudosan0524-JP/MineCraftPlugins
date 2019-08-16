@@ -1,9 +1,13 @@
 package com.github.erudo0524.eoni2;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -21,6 +25,8 @@ import com.github.erudo0524.eoni2.utils.Config;
 
 public class Main extends JavaPlugin {
 
+	//TODO:Config.ymlからポジション取得したいができていない
+
 	private ScoreboardManager manager;
 	private Scoreboard board;
 	private Objective obj;
@@ -33,9 +39,11 @@ public class Main extends JavaPlugin {
 	//コンフィグ
 	private Config config;
 
-	private Location tpPos;
 	private Location oniPos;
-	private Location removeBlockPos;
+	private Location tpPos;
+	private Location deleteBlockPos;
+	private List<Location> supplyChestPos;
+	private String defaultWorld;
 
 	public final String objName = "情報";
 
@@ -47,14 +55,14 @@ public class Main extends JavaPlugin {
 		board = manager.getMainScoreboard();
 		obj = board.getObjective(objName);
 
-		if(obj != null) {
-//			this.getServer().dispatchCommand(this.getServer().getConsoleSender(), "scoreboard objectives remove " + objName);
+		if (obj != null) {
+			//			this.getServer().dispatchCommand(this.getServer().getConsoleSender(), "scoreboard objectives remove " + objName);
 			obj.unregister();
 		}
 
-		if(board.getTeam(Teams.ONI.getName()) != null) {
+		if (board.getTeam(Teams.ONI.getName()) != null) {
 			board.getTeam(Teams.ONI.getName()).unregister();
-		}else if (board.getTeam(Teams.PLAYER.getName()) != null) {
+		} else if (board.getTeam(Teams.PLAYER.getName()) != null) {
 			board.getTeam(Teams.PLAYER.getName()).unregister();
 		}
 	}
@@ -74,21 +82,19 @@ public class Main extends JavaPlugin {
 		///////////////////////
 		config = new Config(this);
 
-
 		///////////////////////////
-		///		ScoreBoard		///
 		///////////////////////////
 		manager = Bukkit.getScoreboardManager();
 		board = manager.getMainScoreboard();
 		obj = board.getObjective(objName);
 		//無かったら作る
-		if(board.getObjective(objName) == null) {
+		if (board.getObjective(objName) == null) {
 			obj = board.registerNewObjective(objName, "dummy");
 		}
 		obj.setDisplaySlot(DisplaySlot.SIDEBAR);
 
 		//Team
-		if(board.getTeam(Teams.ONI.getName()) == null) {
+		if (board.getTeam(Teams.ONI.getName()) == null) {
 			oni = board.registerNewTeam(Teams.ONI.getName());
 		} else {
 			oni = board.getTeam(Teams.ONI.getName());
@@ -98,7 +104,7 @@ public class Main extends JavaPlugin {
 		oni.setDisplayName("鬼");
 		oni.setAllowFriendlyFire(false);
 
-		if(board.getTeam(Teams.PLAYER.getName()) == null) {
+		if (board.getTeam(Teams.PLAYER.getName()) == null) {
 			player = board.registerNewTeam(Teams.PLAYER.getName());
 		} else {
 			player = board.getTeam(Teams.PLAYER.getName());
@@ -109,10 +115,10 @@ public class Main extends JavaPlugin {
 		player.setAllowFriendlyFire(false);
 
 		//とりあえず全員Playerに
-		for(String s : oni.getEntries()) {
+		for (String s : oni.getEntries()) {
+			oni.removeEntry(s);
 			player.addEntry(s);
 		}
-
 
 		///////////////////////
 		///		Listener 	///
@@ -120,8 +126,9 @@ public class Main extends JavaPlugin {
 		new DamagePlayerListener(this);
 		new PlayerMoveListener(this);
 
-
 		setCurrentGameState(GameState.PREPARE);
+		supplyChestPos = new ArrayList<Location>();
+
 	}
 
 	public Team getTeam(Teams teams) {
@@ -188,17 +195,29 @@ public class Main extends JavaPlugin {
 		this.oniPos = oniPos;
 	}
 
-	public Location getRemoveBlockPos() {
-		return removeBlockPos;
+	public Location getDeleteBlockPos() {
+		return deleteBlockPos;
 	}
 
-	public void setRemoveBlockPos(Location removeBlockPos) {
-		this.removeBlockPos = removeBlockPos;
+	public void setDeleteBlockPos(Location deleteBlockPos) {
+		this.deleteBlockPos = deleteBlockPos;
+	}
+
+	public List<Location> getSupplyChestPos() {
+		return supplyChestPos;
+	}
+
+	public void addSupplyChestPos(Location supplyChestPos) {
+		this.supplyChestPos.add(supplyChestPos);
+	}
+
+	public void setSupplyChestPos(List<Location> locs) {
+		this.supplyChestPos = locs;
 	}
 
 	public void setOni(Player player, Location tpLoc) {
 		for (Team team : player.getScoreboard().getTeams()) {
-			if(team.getName() == Teams.PLAYER.getName()) {
+			if (team.getName() == Teams.PLAYER.getName()) {
 				this.removePlayerFromTeam(Teams.PLAYER, player);
 			}
 		}
@@ -221,5 +240,32 @@ public class Main extends JavaPlugin {
 		return config.isModeHue();
 	}
 
+	public int getSupplyChestInterval() {
+		return config.getSupplyChestInterval();
+	}
 
+	public World getDefaultWorld() {
+		return this.getServer().getWorld(config.getDefaultWorld());
+	}
+
+	public Location getOniPos(World world) {
+		return new Location(world, config.getConfOniPos()[0], config.getConfOniPos()[1], config.getConfOniPos()[2]);
+	}
+
+	public Location getTpPos(World world) {
+		return new Location(world, config.getConfOniPos()[0], config.getConfOniPos()[1], config.getConfOniPos()[2]);
+	}
+
+	public Location getDeleteBlockPos(World world) {
+		return deleteBlockPos = new Location(world, config.getConfDeleteBlockPos()[0],
+				config.getConfDeleteBlockPos()[1], config.getConfDeleteBlockPos()[2]);
+	}
+
+	public List<Location> getSupplyChestPos(World world) {
+		List<Location> array = new ArrayList<Location>();
+		for (int[] d : config.getConfSupplyChestPos()) {
+			array.add(new Location(world, d[0], d[1], d[2]));
+		}
+		return array;
+	}
 }
