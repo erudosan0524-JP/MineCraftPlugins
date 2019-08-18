@@ -1,3 +1,11 @@
 ArrowRange: 2
 DefaultTime: 180
 DefaultCount: 3
+RedPosition:
+  x:
+  y:
+  z:
+BluePosition:
+  x:
+  y:
+  z:

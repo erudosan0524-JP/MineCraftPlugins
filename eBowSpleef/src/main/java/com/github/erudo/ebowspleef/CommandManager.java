@@ -75,9 +75,15 @@ public class CommandManager implements CommandExecutor {
 					Random r = new Random();
 					Teams key = keysAsArray.get(r.nextInt(keysAsArray.size()));
 					plg.addPlayerToTeam(key, player);
-					MessageManager.sendMessage(player, "あなたは" + teams.get(key) + key.getName() + "に参加した");
+					MessageManager.sendMessage(player, "あなたは" + teams.get(key) + key.getName() + ChatColor.WHITE + "に参加した");
 					return true;
 				}
+			} else if(args[0].equalsIgnoreCase("setredpos")) {
+				plg.setRedPosition(player.getLocation());
+				MessageManager.sendMessage(player, "赤チームの拠点を設定しました。");
+			} else if(args[0].equalsIgnoreCase("setbluepos")) {
+				plg.setBluePosition(player.getLocation());
+				MessageManager.sendMessage(player, "青チームの拠点を設定しました。");
 			}
 		}
 		return false;

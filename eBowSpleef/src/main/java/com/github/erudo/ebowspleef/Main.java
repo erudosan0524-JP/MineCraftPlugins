@@ -3,6 +3,7 @@ package com.github.erudo.ebowspleef;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
@@ -16,9 +17,11 @@ import com.github.erudo.ebowspleef.enums.GameState;
 import com.github.erudo.ebowspleef.enums.Teams;
 import com.github.erudo.ebowspleef.listener.ArrowListener;
 import com.github.erudo.ebowspleef.listener.JoinLeaveListener;
+import com.github.erudo.ebowspleef.listener.MoveListener;
 import com.github.erudo.ebowspleef.runnable.CountDown;
 import com.github.erudo.ebowspleef.runnable.Game;
 import com.github.erudo.ebowspleef.utils.Config;
+import com.github.erudo.ebowspleef.utils.Items;
 import com.github.erudo.ebowspleef.utils.MessageManager;
 
 public class Main extends JavaPlugin {
@@ -34,6 +37,8 @@ public class Main extends JavaPlugin {
 	private Config config;
 
 	private GameState gameState;
+
+	private Items items;
 
 	@Override
 	public void onDisable() {
@@ -57,6 +62,7 @@ public class Main extends JavaPlugin {
 		///////////////////////////
 		new JoinLeaveListener(this);
 		new ArrowListener(this);
+		new MoveListener(this);
 
 		///////////////////////////
 		///		ScoreBoard		///
@@ -102,8 +108,8 @@ public class Main extends JavaPlugin {
 		spectator.setDisplayName("観客");
 		spectator.setAllowFriendlyFire(false);
 
-		//GameState設定
-		setGameState(GameState.PREPARE);
+		//アイテム設定
+		items = new Items();
 	}
 
 	@SuppressWarnings("deprecation")
@@ -117,6 +123,13 @@ public class Main extends JavaPlugin {
 
 		MessageManager.broadcastMessage("ゲームスタート!");
 		game.setTask(task);
+
+		//アイテム配布
+		for (Player p : Bukkit.getServer().getOnlinePlayers()) {
+			if (this.getTeam(Teams.BLUE).hasEntry(p.getName()) || this.getTeam(Teams.RED).hasEntry(p.getName())) {
+				p.getInventory().addItem(items.getOriginalBow());
+			}
+		}
 	}
 
 	@SuppressWarnings("deprecation")
@@ -124,7 +137,10 @@ public class Main extends JavaPlugin {
 		CountDown countDown;
 		BukkitTask task;
 
-		for(Player p : Bukkit.getServer().getOnlinePlayers()) {
+		//GameState設定
+		setGameState(GameState.PREPARE);
+
+		for (Player p : Bukkit.getServer().getOnlinePlayers()) {
 			if (!(this.getTeam(Teams.BLUE).hasEntry(p.getName()) || this.getTeam(Teams.RED).hasEntry(p.getName()))) {
 				this.addPlayerToTeam(Teams.SPECTATOR, p);
 				p.setGameMode(GameMode.SPECTATOR);
@@ -182,6 +198,9 @@ public class Main extends JavaPlugin {
 		this.gameState = gameState;
 	}
 
+	///////////////////////////
+	///		Config系		///
+	///////////////////////////
 	public int getArrowRange() {
 		return config.getArrowRange();
 	}
@@ -192,5 +211,13 @@ public class Main extends JavaPlugin {
 
 	public int getDefaultCount() {
 		return config.getDefaultCount();
+	}
+
+	public void setRedPosition(Location loc) {
+		config.setRedPosition(loc.getX(), loc.getY(), loc.getZ());
+	}
+
+	public void setBluePosition(Location loc) {
+		config.setBluePosition(loc.getX(), loc.getY(), loc.getZ());
 	}
 }
