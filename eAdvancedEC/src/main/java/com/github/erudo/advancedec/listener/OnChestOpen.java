@@ -2,7 +2,6 @@ package com.github.erudo.advancedec.listener;
 
 import java.io.IOException;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -32,22 +31,15 @@ public class OnChestOpen implements Listener {
 			if(e.getClickedBlock() != null) {
 				if(e.getClickedBlock().getType().equals(Material.ENDER_CHEST)) {
 					e.setCancelled(true);
-					Inventory inventory;
-					//インベントリが存在している
+					Inventory inventory = null;
 					try {
 						inventory = plg.getSavedInventory(player);
-						plg.saveInventory(player,inventory);
-						player.openInventory(inventory);
-
-					//インベントリが存在していない
-					}catch(NullPointerException ex) {
-						inventory = Bukkit.getServer().createInventory(null, 9 * plg.getChestRow(),"AdvancedEnderChest");
-						plg.saveInventory(player, inventory);
-						player.openInventory(inventory);
-
-					} catch (IOException e1) {
-						e1.printStackTrace();
+					} catch (IOException e2) {
+						// TODO 自動生成された catch ブロック
+						e2.printStackTrace();
 					}
+
+					player.openInventory(inventory);
 				}
 			}
 		}

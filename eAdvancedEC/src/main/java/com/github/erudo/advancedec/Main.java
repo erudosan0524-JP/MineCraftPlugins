@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.UUID;
 
+import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.v1_14_R1.inventory.CraftInventoryCustom;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -19,6 +20,8 @@ import com.github.erudo.advancedec.listener.OnChestClose;
 import com.github.erudo.advancedec.listener.OnChestOpen;
 
 public class Main extends JavaPlugin {
+
+	public static final String CHESTNAME = "AdvancedEnderChest";
 
 	private Config config;
 
@@ -69,7 +72,7 @@ public class Main extends JavaPlugin {
 			ByteArrayInputStream inputStream = new ByteArrayInputStream(Base64Coder.decodeLines(data));
 			BukkitObjectInputStream datainput = new BukkitObjectInputStream(inputStream);
 
-			CraftInventoryCustom inventory = new CraftInventoryCustom(null, datainput.readInt(),"AdvancedEnderChest");
+			CraftInventoryCustom inventory = new CraftInventoryCustom(null, datainput.readInt(),CHESTNAME);
 
 			for (int i = 0; i < inventory.getSize(); i++) {
 				inventory.setItem(i, (ItemStack) datainput.readObject());
@@ -101,7 +104,7 @@ public class Main extends JavaPlugin {
 		if (this.inventories.containsKey(p.getUniqueId())) {
 			return this.InventoryfromBase64(inventories.get(p.getUniqueId()));
 		} else {
-			return null;
+			return Bukkit.getServer().createInventory(null, 9 * this.getChestRow(),CHESTNAME);
 		}
 	}
 
