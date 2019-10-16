@@ -4,7 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
+import java.util.UUID;
 
 import org.bukkit.craftbukkit.v1_14_R1.inventory.CraftInventoryCustom;
 import org.bukkit.entity.Player;
@@ -22,9 +22,7 @@ public class Main extends JavaPlugin {
 
 	private Config config;
 
-	private HashMap<Player, String> inventories = new HashMap<Player, String>();
-
-	private LinkedHashMap<Player,String> outputInventories = new LinkedHashMap<Player,String>();
+	private HashMap<UUID, String> inventories = new HashMap<UUID, String>();
 
 	@Override
 	public void onDisable() {
@@ -71,7 +69,7 @@ public class Main extends JavaPlugin {
 			ByteArrayInputStream inputStream = new ByteArrayInputStream(Base64Coder.decodeLines(data));
 			BukkitObjectInputStream datainput = new BukkitObjectInputStream(inputStream);
 
-			CraftInventoryCustom inventory = new CraftInventoryCustom(null, datainput.readInt());
+			CraftInventoryCustom inventory = new CraftInventoryCustom(null, datainput.readInt(),"AdvancedEnderChest");
 
 			for (int i = 0; i < inventory.getSize(); i++) {
 				inventory.setItem(i, (ItemStack) datainput.readObject());
@@ -89,19 +87,19 @@ public class Main extends JavaPlugin {
 	public void saveInventory(Player p, Inventory inventory) {
 		String data = this.InventorytoBase64(inventory);
 
-		if (this.inventories.containsKey (p)) {
-			this.inventories.replace(p,data);
+		if (this.inventories.containsKey (p.getUniqueId())) {
+			this.inventories.replace(p.getUniqueId(),data);
 			System.out.println("replace");
 		} else {
-			this.inventories.put(p, data);
+			this.inventories.put(p.getUniqueId(), data);
 			System.out.println("put");
 		}
 	}
 
 	public Inventory getSavedInventory(Player p) throws IOException {
 		System.out.println(inventories);
-		if (this.inventories.containsKey(p)) {
-			return this.InventoryfromBase64(inventories.get(p));
+		if (this.inventories.containsKey(p.getUniqueId())) {
+			return this.InventoryfromBase64(inventories.get(p.getUniqueId()));
 		} else {
 			return null;
 		}

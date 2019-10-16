@@ -36,6 +36,7 @@ public class OnChestOpen implements Listener {
 					//インベントリが存在している
 					try {
 						inventory = plg.getSavedInventory(player);
+						plg.saveInventory(player,inventory);
 						player.openInventory(inventory);
 
 					//インベントリが存在していない
