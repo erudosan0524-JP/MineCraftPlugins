@@ -1,6 +1,8 @@
-package com.github.erudo.advancedec;
+package com.github.erudo.advancedec.utils;
 
 import org.bukkit.configuration.file.FileConfiguration;
+
+import com.github.erudo.advancedec.Main;
 
 public class Config {
 
@@ -28,4 +30,5 @@ public class Config {
 	public int getChestRow() {
 		return chestrow;
 	}
+
 }

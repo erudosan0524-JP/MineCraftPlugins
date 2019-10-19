@@ -3,7 +3,9 @@ package com.github.erudo.advancedec;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
@@ -18,18 +20,41 @@ import org.yaml.snakeyaml.external.biz.base64Coder.Base64Coder;
 
 import com.github.erudo.advancedec.listener.OnChestClose;
 import com.github.erudo.advancedec.listener.OnChestOpen;
+import com.github.erudo.advancedec.utils.Config;
+import com.github.erudo.advancedec.utils.OutputYaml;
 
 public class Main extends JavaPlugin {
 
 	public static final String CHESTNAME = "AdvancedEnderChest";
 
+	//Config関連
 	private Config config;
+	private OutputYaml outputConfig;
 
+	//インベントリ登録済みプレイヤー
+	private List<UUID> players = new ArrayList<UUID>();
+	//データを紐づけするMAP
 	private HashMap<UUID, String> inventories = new HashMap<UUID, String>();
+
+
 
 	@Override
 	public void onDisable() {
 		getLogger().info("プラグインが停止しました");
+
+
+		for (UUID uuid : players) {
+			if (inventories.containsKey(uuid)) {
+				//アウトプット用データ
+				outputConfig.setContent(uuid, inventories.get(uuid));
+			}
+		}
+
+		////////////////////////
+		///		Config 		///
+		///////////////////////
+		outputConfig.save();
+
 	}
 
 	@Override
@@ -46,6 +71,8 @@ public class Main extends JavaPlugin {
 		///		Config 		///
 		///////////////////////
 		config = new Config(this);
+
+		outputConfig = new OutputYaml(this);
 	}
 
 	//セーブ関連
@@ -72,7 +99,7 @@ public class Main extends JavaPlugin {
 			ByteArrayInputStream inputStream = new ByteArrayInputStream(Base64Coder.decodeLines(data));
 			BukkitObjectInputStream datainput = new BukkitObjectInputStream(inputStream);
 
-			CraftInventoryCustom inventory = new CraftInventoryCustom(null, datainput.readInt(),CHESTNAME);
+			CraftInventoryCustom inventory = new CraftInventoryCustom(null, datainput.readInt(), CHESTNAME);
 
 			for (int i = 0; i < inventory.getSize(); i++) {
 				inventory.setItem(i, (ItemStack) datainput.readObject());
@@ -90,11 +117,14 @@ public class Main extends JavaPlugin {
 	public void saveInventory(Player p, Inventory inventory) {
 		String data = this.InventorytoBase64(inventory);
 
-		if (this.inventories.containsKey (p.getUniqueId())) {
-			this.inventories.replace(p.getUniqueId(),data);
+		if (this.inventories.containsKey(p.getUniqueId())) {
+			this.inventories.replace(p.getUniqueId(), data);
 			System.out.println("replace");
 		} else {
 			this.inventories.put(p.getUniqueId(), data);
+			if (!players.contains(p.getUniqueId())) {
+				players.add(p.getUniqueId());
+			}
 			System.out.println("put");
 		}
 	}
@@ -104,12 +134,8 @@ public class Main extends JavaPlugin {
 		if (this.inventories.containsKey(p.getUniqueId())) {
 			return this.InventoryfromBase64(inventories.get(p.getUniqueId()));
 		} else {
-			return Bukkit.getServer().createInventory(null, 9 * this.getChestRow(),CHESTNAME);
+			return Bukkit.getServer().createInventory(null, 9 * this.getChestRow(), CHESTNAME);
 		}
-	}
-
-	public void saveInventory() {
-
 	}
 
 	public int getChestRow() {

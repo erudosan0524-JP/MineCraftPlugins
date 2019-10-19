@@ -35,7 +35,6 @@ public class OnChestOpen implements Listener {
 					try {
 						inventory = plg.getSavedInventory(player);
 					} catch (IOException e2) {
-						// TODO 自動生成された catch ブロック
 						e2.printStackTrace();
 					}
 

@@ -32,7 +32,7 @@ public class OnChestClose implements Listener {
 
 		Inventory inventory = e.getInventory();
 
-		if(e.getView().getTitle() == "Chest" && e.getView().getTitle() == "AdvancedEnderChest") {
+		if(e.getView().getTitle() == "AdvancedEnderChest") {
 			plg.saveInventory(player, inventory);
 		}
 
