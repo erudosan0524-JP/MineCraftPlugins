@@ -18,6 +18,10 @@ public class OutputYaml extends YAMLManager {
 		config.set(id.toString(), s);
 	}
 
+	public String getContent(String path) {
+		return config.getString(path);
+	}
+
 	public void write(String s) throws IOException {
 		FileWriter fw = new FileWriter("");
 		PrintWriter pw = new PrintWriter(new BufferedWriter(fw));

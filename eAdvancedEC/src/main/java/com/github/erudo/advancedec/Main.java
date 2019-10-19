@@ -20,6 +20,7 @@ import org.yaml.snakeyaml.external.biz.base64Coder.Base64Coder;
 
 import com.github.erudo.advancedec.listener.OnChestClose;
 import com.github.erudo.advancedec.listener.OnChestOpen;
+import com.github.erudo.advancedec.listener.OnJoinLeave;
 import com.github.erudo.advancedec.utils.Config;
 import com.github.erudo.advancedec.utils.OutputYaml;
 
@@ -32,9 +33,9 @@ public class Main extends JavaPlugin {
 	private OutputYaml outputConfig;
 
 	//インベントリ登録済みプレイヤー
-	private List<UUID> players = new ArrayList<UUID>();
+	public static List<UUID> players = new ArrayList<UUID>();
 	//データを紐づけするMAP
-	private HashMap<UUID, String> inventories = new HashMap<UUID, String>();
+	public static HashMap<UUID, String> inventories = new HashMap<UUID, String>();
 
 
 
@@ -66,6 +67,7 @@ public class Main extends JavaPlugin {
 		///////////////////////
 		new OnChestOpen(this);
 		new OnChestClose(this);
+		new OnJoinLeave(this);
 
 		////////////////////////
 		///		Config 		///
@@ -117,11 +119,11 @@ public class Main extends JavaPlugin {
 	public void saveInventory(Player p, Inventory inventory) {
 		String data = this.InventorytoBase64(inventory);
 
-		if (this.inventories.containsKey(p.getUniqueId())) {
-			this.inventories.replace(p.getUniqueId(), data);
+		if (Main.inventories.containsKey(p.getUniqueId())) {
+			Main.inventories.replace(p.getUniqueId(), data);
 			System.out.println("replace");
 		} else {
-			this.inventories.put(p.getUniqueId(), data);
+			Main.inventories.put(p.getUniqueId(), data);
 			if (!players.contains(p.getUniqueId())) {
 				players.add(p.getUniqueId());
 			}
@@ -131,7 +133,7 @@ public class Main extends JavaPlugin {
 
 	public Inventory getSavedInventory(Player p) throws IOException {
 		System.out.println(inventories);
-		if (this.inventories.containsKey(p.getUniqueId())) {
+		if (Main.inventories.containsKey(p.getUniqueId())) {
 			return this.InventoryfromBase64(inventories.get(p.getUniqueId()));
 		} else {
 			return Bukkit.getServer().createInventory(null, 9 * this.getChestRow(), CHESTNAME);
@@ -140,6 +142,10 @@ public class Main extends JavaPlugin {
 
 	public int getChestRow() {
 		return config.getChestRow();
+	}
+
+	public String getContent(UUID uuid) {
+		return outputConfig.getContent(uuid.toString());
 	}
 
 }
