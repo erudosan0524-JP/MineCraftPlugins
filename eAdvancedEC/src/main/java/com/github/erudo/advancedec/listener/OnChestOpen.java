@@ -27,7 +27,8 @@ public class OnChestOpen implements Listener {
 
 		Player player = e.getPlayer();
 
-		if(e.getAction() == Action.RIGHT_CLICK_BLOCK) {
+		//左クリックしたらGUIを開く
+		if(e.getAction() == Action.LEFT_CLICK_BLOCK) {
 			if(e.getClickedBlock() != null) {
 				if(e.getClickedBlock().getType().equals(Material.ENDER_CHEST)) {
 					e.setCancelled(true);

@@ -121,18 +121,18 @@ public class Main extends JavaPlugin {
 
 		if (Main.inventories.containsKey(p.getUniqueId())) {
 			Main.inventories.replace(p.getUniqueId(), data);
-			System.out.println("replace");
+//			System.out.println("replace");
 		} else {
 			Main.inventories.put(p.getUniqueId(), data);
 			if (!players.contains(p.getUniqueId())) {
 				players.add(p.getUniqueId());
 			}
-			System.out.println("put");
+//			System.out.println("put");
 		}
 	}
 
 	public Inventory getSavedInventory(Player p) throws IOException {
-		System.out.println(inventories);
+//		System.out.println(inventories);
 		if (Main.inventories.containsKey(p.getUniqueId())) {
 			return this.InventoryfromBase64(inventories.get(p.getUniqueId()));
 		} else {
