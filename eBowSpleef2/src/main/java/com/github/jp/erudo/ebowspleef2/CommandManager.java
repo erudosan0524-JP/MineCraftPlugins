@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Objects;
 
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
 import org.bukkit.command.Command;
@@ -186,20 +187,32 @@ public class CommandManager implements CommandExecutor {
 			PlayersSetting.setLobbyPos(plg.getMyConfig().getLobbyPosition(player.getWorld()));
 		}
 
+
+
 		game = new Game(plg, time);
 		task = plg.getServer().getScheduler().runTaskTimer(plg, game, 0L, 20L);
 
 		MessageManager.broadcastMessage("試合開始！！");
 		game.setTask(task);
 
-		//青でも赤でもないプレイヤーを観戦者に
 		for (Player p : Bukkit.getServer().getOnlinePlayers()) {
-			if (!plg.getTeam(Teams.RED).hasEntry(p.getName()) || !plg.getTeam(Teams.BLUE).hasEntry(p.getName())) {
-				PlayersSetting.addPlayerToTeam(Teams.SPECTATOR, p);
-			}
+			if(plg.getTeam(Teams.BLUE).hasEntry(p.getName())) {
+				//テレポート＆スポーン地点設定
+				p.teleport(PlayersSetting.getBluePos());
+				p.setBedSpawnLocation(PlayersSetting.getBluePos());
 
-			//全員シフト状態に
-			p.setSneaking(true);
+				p.setGameMode(GameMode.SURVIVAL);
+				p.setSneaking(true);
+			}else if(plg.getTeam(Teams.RED).hasEntry(p.getName())) {
+				p.teleport(PlayersSetting.getRedPos());
+				p.setBedSpawnLocation(PlayersSetting.getRedPos());
+
+				p.setGameMode(GameMode.SURVIVAL);
+				p.setSneaking(true);
+			} else {
+				PlayersSetting.addPlayerToTeam(Teams.SPECTATOR, p);
+				p.setGameMode(GameMode.SPECTATOR);
+			}
 		}
 	}
 

@@ -90,6 +90,17 @@ public class Config {
 		return this.defaultTime;
 	}
 
+	public void setConfRedPos(String confRedPos) {
+	}
+
+	public void setConfBluePos(String confBluePos) {
+		this.confBluePos = confBluePos;
+	}
+
+	public void setConfLobbyPos(String confLobbyPos) {
+		this.confLobbyPos = confLobbyPos;
+	}
+
 	public int getArrowrange() {
 		return arrowrange;
 	}

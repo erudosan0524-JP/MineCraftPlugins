@@ -22,7 +22,7 @@ public class PlayersSetting {
 	}
 
 	public static Location getRedPos() {
-		return redPos;
+		return PlayersSetting.redPos;
 	}
 
 	public static void setRedPos(Location redPos) {
@@ -30,7 +30,7 @@ public class PlayersSetting {
 	}
 
 	public static Location getBluePos() {
-		return bluePos;
+		return PlayersSetting.bluePos;
 	}
 
 	public static void setBluePos(Location bluePos) {

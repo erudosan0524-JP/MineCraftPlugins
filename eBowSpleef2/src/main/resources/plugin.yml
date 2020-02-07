@@ -5,3 +5,20 @@ author: 'erudo'
 commands:
    ebs:
     description: ebowspleef command
+permissions:
+  ebs.commands.start:
+    default: op
+  ebs.commands.set:
+    default: op
+  ebs.commands.setred:
+    default: op
+  ebs.commands.setblue:
+    default: op
+  ebs.commands.redpos:
+    default: op
+  ebs.commands.bluepos:
+    default: op
+  ebs.commands.lobbypos:
+    default: op
+  ebs.commands.version:
+    default: true
