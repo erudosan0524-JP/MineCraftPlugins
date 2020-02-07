@@ -10,6 +10,7 @@ import org.bukkit.scoreboard.Score;
 import com.github.jp.erudo.ebowspleef2.enums.GameState;
 import com.github.jp.erudo.ebowspleef2.enums.Teams;
 import com.github.jp.erudo.ebowspleef2.utils.MessageManager;
+import com.github.jp.erudo.ebowspleef2.utils.TitleSender;
 
 public class Game extends BukkitRunnable {
 
@@ -43,11 +44,17 @@ public class Game extends BukkitRunnable {
 				Score TimeScore = plg.getObj().getScore(ChatColor.GOLD + "残り時間: ");
 				TimeScore.setScore(count);
 
-				Score PlayersNumScore = plg.getObj().getScore(ChatColor.DARK_BLUE + "赤チーム人数: ");
-				PlayersNumScore.setScore(plg.getTeam(Teams.RED).getEntries().size());
+				Score RedPoint = plg.getObj().getScore(ChatColor.DARK_BLUE + "赤チーム獲得ポイント: ");
+				RedPoint.setScore(plg.getRedPoint());
 
-				Score OnisNumScore = plg.getObj().getScore(ChatColor.DARK_RED + "青チーム人数: ");
-				OnisNumScore.setScore(+plg.getTeam(Teams.BLUE).getEntries().size());
+				Score BluePoint = plg.getObj().getScore(ChatColor.DARK_RED + "青チーム獲得ポイント: ");
+				BluePoint.setScore(plg.getBluePoint());
+
+				TitleSender title = new TitleSender();
+				for(Player p : plg.getServer().getOnlinePlayers()) {
+					title.sendTitle(p, null, null, "赤チーム残り人数: " + plg.getTeam(Teams.RED).getEntries().size()
+							+ "  " + "青チーム残り人数: " + plg.getTeam(Teams.BLUE).getEntries().size());
+				}
 
 				if (plg.getTeam(Teams.RED).getEntries().size() <= 0) {
 					plg.setCurrentGameState(GameState.END);

@@ -12,6 +12,7 @@ import org.bukkit.scoreboard.Team;
 import com.github.jp.erudo.ebowspleef2.enums.GameState;
 import com.github.jp.erudo.ebowspleef2.enums.Teams;
 import com.github.jp.erudo.ebowspleef2.listener.ArrowListener;
+import com.github.jp.erudo.ebowspleef2.listener.DeathListener;
 import com.github.jp.erudo.ebowspleef2.utils.Config;
 
 public class Main extends JavaPlugin {
@@ -25,6 +26,10 @@ public class Main extends JavaPlugin {
 	private static Team red;
 	private static Team blue;
 	private static Team spectator;
+
+	//両者ポイント
+	private int redPoint = 0;
+	private int bluePoint = 0;
 
 	//ゲーム状態
 	private GameState currentState;
@@ -112,6 +117,7 @@ public class Main extends JavaPlugin {
 		///		Listener		///
 		///////////////////////////
 		new ArrowListener(this);
+		new DeathListener(this);
 
 		setCurrentGameState(GameState.PREPARE);
 	}
@@ -162,6 +168,22 @@ public class Main extends JavaPlugin {
 
 	public static void setSpectator(Team spectator) {
 		Main.spectator = spectator;
+	}
+
+	public int getRedPoint() {
+		return redPoint;
+	}
+
+	public void setRedPoint(int num) {
+		this.redPoint += num;
+	}
+
+	public int getBluePoint() {
+		return bluePoint;
+	}
+
+	public void setBluePoint(int num) {
+		this.bluePoint += num;
 	}
 
 }

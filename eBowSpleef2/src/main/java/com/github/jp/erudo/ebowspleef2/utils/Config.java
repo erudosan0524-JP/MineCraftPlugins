@@ -17,6 +17,7 @@ public class Config {
 	private String confBluePos;
 	private String confLobbyPos;
 	private int arrowrange;
+	private boolean canRespawn;
 
 	public Config(Main plg) {
 		this.plg = plg;
@@ -34,6 +35,8 @@ public class Config {
 		confRedPos = config.getString("RedPosition");
 		confBluePos = config.getString("BluePosition");
 		confLobbyPos = config.getString("LobbyPosition");
+		arrowrange = config.getInt("ArrowRange");
+		canRespawn = config.getBoolean("canRespawn");
 	}
 
 	//座標を取得
@@ -95,5 +98,12 @@ public class Config {
 		this.arrowrange = arrowrange;
 	}
 
+	public boolean isCanRespawn() {
+		return canRespawn;
+	}
+
+	public void setCanRespawn(boolean canRespawn) {
+		this.canRespawn = canRespawn;
+	}
 
 }
