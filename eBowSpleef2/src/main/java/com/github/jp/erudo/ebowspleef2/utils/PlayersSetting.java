@@ -11,6 +11,7 @@ public class PlayersSetting {
 
 	private static Location bluePos;
 	private static Location redPos;
+	private static Location lobbyPos;
 
 	public static void addPlayerToTeam(Teams teams, Player p) {
 		if (teams == Teams.RED) {
@@ -34,6 +35,14 @@ public class PlayersSetting {
 
 	public static void setBluePos(Location bluePos) {
 		PlayersSetting.bluePos = bluePos;
+	}
+
+	public static Location getLobbyPos() {
+		return lobbyPos;
+	}
+
+	public static void setLobbyPos(Location lobbyPos) {
+		PlayersSetting.lobbyPos = lobbyPos;
 	}
 
 }

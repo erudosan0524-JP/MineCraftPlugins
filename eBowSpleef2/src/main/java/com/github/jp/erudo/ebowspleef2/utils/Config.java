@@ -16,6 +16,7 @@ public class Config {
 	private String confRedPos;
 	private String confBluePos;
 	private String confLobbyPos;
+	private int arrowrange;
 
 	public Config(Main plg) {
 		this.plg = plg;
@@ -84,6 +85,14 @@ public class Config {
 
 	public int getDefaultTime() {
 		return this.defaultTime;
+	}
+
+	public int getArrowrange() {
+		return arrowrange;
+	}
+
+	public void setArrowrange(int arrowrange) {
+		this.arrowrange = arrowrange;
 	}
 
 

@@ -9,9 +9,9 @@ public class MessageManager {
 
 	private static final String[] commandMessage = {
 			"・/ebs start [時間]","ゲームを指定時間で開始します。","※時間を省略した場合はConfigに書いてある時間で開始します。",
-			"・/ebs wp","ランダムでチーム分けをします",
-			"・/ebs redwp [プレイヤー]","指定プレイヤーを赤チームに設定します。",
-			"・/ebs bluewp [プレイヤー]","指定プレイヤーを青チームに設定します。",
+			"・/ebs set","ランダムでチーム分けをします",
+			"・/ebs setred [プレイヤー]","指定プレイヤーを赤チームに設定します。",
+			"・/ebs setblue [プレイヤー]","指定プレイヤーを青チームに設定します。",
 			"・/ebs setredpos","現在位置をレッドチームのスタート位置に設定します。",
 			"・/ebs setbluepos","現在位置をブルーチームのスタート位置に設定します。",
 			"・/ebs setlobbypos","現在位置をロビーのスポーン位置とします。"

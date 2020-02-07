@@ -3,6 +3,7 @@ package com.github.jp.erudo.ebowspleef2;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -12,14 +13,20 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginDescriptionFile;
+import org.bukkit.scheduler.BukkitTask;
 
+import com.github.jp.erudo.ebowspleef2.enums.GameState;
 import com.github.jp.erudo.ebowspleef2.enums.Teams;
 import com.github.jp.erudo.ebowspleef2.utils.MessageManager;
 import com.github.jp.erudo.ebowspleef2.utils.PlayersSetting;
 
+import net.md_5.bungee.api.ChatColor;
+
 public class CommandManager implements CommandExecutor {
 
 	private Main plg;
+	private Game game;
+	private BukkitTask task;
 
 	public CommandManager(Main plg) {
 		this.plg = plg;
@@ -34,8 +41,40 @@ public class CommandManager implements CommandExecutor {
 		}
 
 		if (args[0].equalsIgnoreCase("start")) {
+			if (!player.hasPermission("ebs.commands.start")) {
+				return true;
+			}
 
-		} else if (args[0].equalsIgnoreCase("wp")) {
+			if (args.length > 1) {
+				int i = 0;
+				try {
+					i = Integer.parseInt(args[1]);
+				} catch (NumberFormatException e) {
+					MessageManager.sendMessage(player, "数値を入力してください");
+					return true;
+				}
+
+				gameStart(i, player);
+
+				return true;
+
+			} else {
+				int i = plg.getMyConfig().getDefaultTime();
+
+				try {
+					gameStart(i, player);
+				} catch (NullPointerException e) {
+					MessageManager.sendMessage(player, "Nullが検知されました。");
+				}
+
+				return true;
+
+			}
+		} else if (args[0].equalsIgnoreCase("set")) {
+			if (!player.hasPermission("ebs.commands.set")) {
+				return true;
+			}
+
 			MessageManager.messageAll("チームの振り分けを開始します・・・");
 			List<Player> wpPlayerList = new ArrayList<Player>();
 
@@ -43,45 +82,125 @@ public class CommandManager implements CommandExecutor {
 			for (Player p : Bukkit.getServer().getOnlinePlayers()) {
 				if (p.getLocation().getBlock().getRelative(BlockFace.DOWN).getType() == Material.BEDROCK) {
 					wpPlayerList.add(p);
+				} else {
+					MessageManager.sendMessage(player, "岩盤の上にいるプレイヤーが見つかりませんでした");
+					return true;
 				}
 			}
 
 			Collections.shuffle(wpPlayerList);
 
-			try {
-				//シャッフルされたリストから交互にチーム分け
-				Player wpPlayer;
-				for(int i=0; i < wpPlayerList.size(); i++) {
-					wpPlayer = wpPlayerList.get(i);
-					if((i/2) % 2 == 0) {
-						PlayersSetting.addPlayerToTeam(Teams.RED,wpPlayer);
-					} else {
-						PlayersSetting.addPlayerToTeam(Teams.BLUE,wpPlayer);
-					}
+			//シャッフルされたリストから交互にチーム分け
+			Player wpPlayer;
+			for (int i = 0; i < wpPlayerList.size(); i++) {
+				wpPlayer = wpPlayerList.get(i);
+				if ((i / 2) % 2 == 0) {
+					PlayersSetting.addPlayerToTeam(Teams.RED, wpPlayer);
+				} else {
+					PlayersSetting.addPlayerToTeam(Teams.BLUE, wpPlayer);
 				}
-				MessageManager.messageAll("チームの振り分けが完了しました");
-			} catch (IllegalArgumentException e) {
-				MessageManager.sendMessage(player, "岩盤の上にいるプレイヤーが見つかりませんでした");
 			}
+			MessageManager.messageAll("チームの振り分けが完了しました");
 
 			return true;
-		} else if (args[0].equalsIgnoreCase("redwp")) {
+		} else if (args[0].equalsIgnoreCase("setred")) {
+			if (!player.hasPermission("ebs.commands.setred")) {
+				return true;
+			}
 
-		} else if (args[0].equalsIgnoreCase("bluewp")) {
+			if (args.length > 1) {
+				if (Objects.isNull(plg.getServer().getPlayer(args[1]))) {
+					MessageManager.sendMessage(player, "指定したプレイヤーは存在しません");
+				} else {
+					Player p = plg.getServer().getPlayer(args[1]);
+					PlayersSetting.addPlayerToTeam(Teams.RED, p);
+					MessageManager.sendMessage(player,
+							p.getName() + "を" + ChatColor.RED + "赤チーム" + ChatColor.WHITE + "に設定しました");
+				}
+			}
+			return true;
+		} else if (args[0].equalsIgnoreCase("setblue")) {
+			if (!player.hasPermission("ebs.commands.setblue")) {
+				return true;
+			}
 
+			if (Objects.isNull(plg.getServer().getPlayer(args[1]))) {
+				MessageManager.sendMessage(player, "指定したプレイヤーは存在しません");
+			} else {
+				Player p = plg.getServer().getPlayer(args[1]);
+				PlayersSetting.addPlayerToTeam(Teams.BLUE, p);
+				MessageManager.sendMessage(player,
+						p.getName() + "を" + ChatColor.BLUE + "青チーム" + ChatColor.WHITE + "に設定しました");
+			}
+			return true;
 		} else if (args[0].equalsIgnoreCase("setredpos")) {
+			if (!player.hasPermission("ebs.commands.redpos")) {
+				return true;
+			}
 
+			MessageManager.sendMessage(player, "赤チームのスポーン位置を現在位置に指定しました");
+			PlayersSetting.setRedPos(player.getLocation());
+			return true;
 		} else if (args[0].equalsIgnoreCase("setbluepos")) {
+			if (!player.hasPermission("ebs.commands.bluepos")) {
+				return true;
+			}
 
+			MessageManager.sendMessage(player, "青チームのスポーン位置を現在位置に指定しました");
+			PlayersSetting.setBluePos(player.getLocation());
+			return true;
 		} else if (args[0].equalsIgnoreCase("setlobbypos")) {
+			if (!player.hasPermission("ebs.commands.lobbypos")) {
+				return true;
+			}
 
+			MessageManager.sendMessage(player, "ロビーの位置を現在位置に指定しました");
+			PlayersSetting.setLobbyPos(player.getLocation());
+			return true;
 		} else if (args[0].equalsIgnoreCase("version")) {
+			if (!player.hasPermission("ebs.commands.version")) {
+				return true;
+			}
+
 			PluginDescriptionFile pdf = plg.getDescription();
 			MessageManager.sendMessage(player, "Version: " + pdf.getVersion());
 			return true;
 		}
 		MessageManager.CommandContent(player);
 		return false;
+	}
+
+	@SuppressWarnings("deprecation")
+	private void gameStart(int time, Player player) {
+		//ゲーム状態をGAMINGに変更
+		plg.setCurrentGameState(GameState.GAMING);
+
+		if (!player.getWorld().getPVP()) {
+			player.getWorld().setPVP(true);
+		}
+
+		if (Objects.isNull(PlayersSetting.getRedPos()) || Objects.isNull(PlayersSetting.getBluePos())
+				|| Objects.isNull(PlayersSetting.getLobbyPos())) {
+			PlayersSetting.setRedPos(plg.getMyConfig().getRedPosition(player.getWorld()));
+			PlayersSetting.setBluePos(plg.getMyConfig().getBluePosition(player.getWorld()));
+			PlayersSetting.setLobbyPos(plg.getMyConfig().getLobbyPosition(player.getWorld()));
+		}
+
+		game = new Game(plg, time);
+		task = plg.getServer().getScheduler().runTaskTimer(plg, game, 0L, 20L);
+
+		MessageManager.broadcastMessage("試合開始！！");
+		game.setTask(task);
+
+		//青でも赤でもないプレイヤーを観戦者に
+		for (Player p : Bukkit.getServer().getOnlinePlayers()) {
+			if (!plg.getTeam(Teams.RED).hasEntry(p.getName()) || !plg.getTeam(Teams.BLUE).hasEntry(p.getName())) {
+				PlayersSetting.addPlayerToTeam(Teams.SPECTATOR, p);
+			}
+
+			//全員シフト状態に
+			p.setSneaking(true);
+		}
 	}
 
 }

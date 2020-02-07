@@ -29,8 +29,13 @@
 			<groupId>org.spigotmc</groupId>
 			<artifactId>spigot-api</artifactId>
 			<version>1.14.2-R0.1-SNAPSHOT</version>
-			<scope>provided</scope>
 		</dependency>
+		<dependency>
+            <groupId>org.spigotmc</groupId>
+            <artifactId>spigot</artifactId>
+            <version>1.12.2-R0.1-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
 		<!--Bukkit API -->
 		<!--You only need one of the two, don't put both. Spigot is recommended. -->
 		<dependency>
@@ -40,4 +45,13 @@
 			<scope>provided</scope>
 		</dependency>
 	</dependencies>
+	<build>
+		<resources>
+			<resource>
+				<targetPath>.</targetPath>
+				<filtering>true</filtering>
+				<directory>src/main/resources/</directory>
+			</resource>
+		</resources>
+	</build>
 </project>

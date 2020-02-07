@@ -11,6 +11,7 @@ import org.bukkit.scoreboard.Team;
 
 import com.github.jp.erudo.ebowspleef2.enums.GameState;
 import com.github.jp.erudo.ebowspleef2.enums.Teams;
+import com.github.jp.erudo.ebowspleef2.listener.ArrowListener;
 import com.github.jp.erudo.ebowspleef2.utils.Config;
 
 public class Main extends JavaPlugin {
@@ -107,6 +108,11 @@ public class Main extends JavaPlugin {
 		spectator.setDisplayName("観戦");
 		spectator.setAllowFriendlyFire(false);
 
+		///////////////////////////
+		///		Listener		///
+		///////////////////////////
+		new ArrowListener(this);
+
 		setCurrentGameState(GameState.PREPARE);
 	}
 
@@ -116,6 +122,18 @@ public class Main extends JavaPlugin {
 
 	public void setCurrentGameState(GameState state) {
 		this.currentState = state;
+	}
+
+	public Objective getObj() {
+		return this.obj;
+	}
+
+	public Team getTeam(Teams teams) {
+		if (teams == Teams.RED) {
+			return red;
+		} else {
+			return blue;
+		}
 	}
 
 	public Config getMyConfig() {
@@ -145,7 +163,5 @@ public class Main extends JavaPlugin {
 	public static void setSpectator(Team spectator) {
 		Main.spectator = spectator;
 	}
-
-
 
 }
