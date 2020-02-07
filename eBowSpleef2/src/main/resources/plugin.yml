@@ -20,5 +20,7 @@ permissions:
     default: op
   ebs.commands.lobbypos:
     default: op
+  ebs.commands.shopper:
+    default: op
   ebs.commands.version:
     default: true

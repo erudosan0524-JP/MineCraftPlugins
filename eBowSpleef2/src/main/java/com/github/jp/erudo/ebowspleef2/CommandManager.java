@@ -6,13 +6,17 @@ import java.util.List;
 import java.util.Objects;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Villager;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.scheduler.BukkitTask;
 
@@ -20,8 +24,6 @@ import com.github.jp.erudo.ebowspleef2.enums.GameState;
 import com.github.jp.erudo.ebowspleef2.enums.Teams;
 import com.github.jp.erudo.ebowspleef2.utils.MessageManager;
 import com.github.jp.erudo.ebowspleef2.utils.PlayersSetting;
-
-import net.md_5.bungee.api.ChatColor;
 
 public class CommandManager implements CommandExecutor {
 
@@ -33,6 +35,7 @@ public class CommandManager implements CommandExecutor {
 		this.plg = plg;
 	}
 
+	@SuppressWarnings("deprecation")
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
 		Player player = (Player) sender;
@@ -158,6 +161,24 @@ public class CommandManager implements CommandExecutor {
 			MessageManager.sendMessage(player, "ロビーの位置を現在位置に指定しました");
 			PlayersSetting.setLobbyPos(player.getLocation());
 			return true;
+		} else if (args[0].equalsIgnoreCase("shopper")) {
+			if(!player.hasPermission("ebs.commands.shopper")) {
+				return true;
+			}
+
+			Location l = new Location(null, player.getLocation().getX(), player.getLocation().getY() -1, player.getLocation().getZ());
+			Villager villager = (Villager) player.getWorld().spawnEntity(l,EntityType.VILLAGER);
+			villager.setAI(false);
+			villager.setGlowing(true);
+			villager.setAdult();
+			villager.setCanPickupItems(false);
+			villager.setCustomName(ChatColor.GREEN + "SettingVillager");
+			villager.setCustomNameVisible(true);
+			villager.setGravity(true);
+			villager.setMaxHealth(Math.pow(10,3));
+			MessageManager.sendMessage(player, "設定用の村人を召喚しました");
+
+			return true;
 		} else if (args[0].equalsIgnoreCase("version")) {
 			if (!player.hasPermission("ebs.commands.version")) {
 				return true;
@@ -187,8 +208,6 @@ public class CommandManager implements CommandExecutor {
 			PlayersSetting.setLobbyPos(plg.getMyConfig().getLobbyPosition(player.getWorld()));
 		}
 
-
-
 		game = new Game(plg, time);
 		task = plg.getServer().getScheduler().runTaskTimer(plg, game, 0L, 20L);
 
@@ -196,14 +215,14 @@ public class CommandManager implements CommandExecutor {
 		game.setTask(task);
 
 		for (Player p : Bukkit.getServer().getOnlinePlayers()) {
-			if(plg.getTeam(Teams.BLUE).hasEntry(p.getName())) {
+			if (plg.getTeam(Teams.BLUE).hasEntry(p.getName())) {
 				//テレポート＆スポーン地点設定
 				p.teleport(PlayersSetting.getBluePos());
 				p.setBedSpawnLocation(PlayersSetting.getBluePos());
 
 				p.setGameMode(GameMode.SURVIVAL);
 				p.setSneaking(true);
-			}else if(plg.getTeam(Teams.RED).hasEntry(p.getName())) {
+			} else if (plg.getTeam(Teams.RED).hasEntry(p.getName())) {
 				p.teleport(PlayersSetting.getRedPos());
 				p.setBedSpawnLocation(PlayersSetting.getRedPos());
 

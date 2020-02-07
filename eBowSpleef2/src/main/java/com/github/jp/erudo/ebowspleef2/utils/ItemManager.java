@@ -6,6 +6,8 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import net.md_5.bungee.api.ChatColor;
+
 public class ItemManager {
 
 	public ItemStack makeItem(Material m, String name, String desc, int amount) {
@@ -13,7 +15,7 @@ public class ItemManager {
 
 		//メタデータ作成
 		ItemMeta meta = item.getItemMeta();
-		meta.setDisplayName(name);
+		meta.setDisplayName(ChatColor.BOLD + name);
 
 		//説明文作成
 		ArrayList<String> lore = new ArrayList<String>();
@@ -23,6 +25,11 @@ public class ItemManager {
 		item.setItemMeta(meta);
 
 		return item;
+	}
+
+	public ItemStack makeBow(String name, String desc, int amount) {
+		ItemStack bow = this.makeItem(Material.BOW, name, desc, amount);
+		return bow;
 	}
 
 }
