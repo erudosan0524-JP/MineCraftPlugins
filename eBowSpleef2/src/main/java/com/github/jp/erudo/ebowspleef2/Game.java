@@ -2,6 +2,7 @@ package com.github.jp.erudo.ebowspleef2;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
@@ -10,6 +11,7 @@ import org.bukkit.scoreboard.Score;
 import com.github.jp.erudo.ebowspleef2.enums.GameState;
 import com.github.jp.erudo.ebowspleef2.enums.Teams;
 import com.github.jp.erudo.ebowspleef2.utils.MessageManager;
+import com.github.jp.erudo.ebowspleef2.utils.PlayersSetting;
 import com.github.jp.erudo.ebowspleef2.utils.TitleSender;
 
 public class Game extends BukkitRunnable {
@@ -29,12 +31,15 @@ public class Game extends BukkitRunnable {
 			count = 0;
 			for (Player player : Bukkit.getServer().getOnlinePlayers()) {
 				player.setSneaking(false);
+				player.teleport(PlayersSetting.getLobbyPos());
+				player.setGameMode(GameMode.SURVIVAL);
 
 				if (player.getWorld().getPVP()) {
 					continue;
 				} else {
 					player.getWorld().setPVP(false);
 				}
+
 			}
 			plg.setCurrentGameState(GameState.PREPARE);
 			plg.getServer().getScheduler().cancelTask(task.getTaskId());

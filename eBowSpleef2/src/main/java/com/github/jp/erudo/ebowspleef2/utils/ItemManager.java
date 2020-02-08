@@ -6,9 +6,14 @@ import java.util.List;
 
 import org.bukkit.Color;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
+import org.bukkit.inventory.meta.PotionMeta;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import com.github.jp.erudo.ebowspleef2.enums.ArmorType;
 
@@ -27,6 +32,8 @@ public class ItemManager {
 		ArrayList<String> lore = new ArrayList<String>();
 		lore.add(desc);
 		meta.setLore(lore);
+		meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+		meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
 
 		item.setItemMeta(meta);
 
@@ -42,14 +49,41 @@ public class ItemManager {
 
 		//説明文作成
 		meta.setLore(lore);
+		meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+		meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
 
 		item.setItemMeta(meta);
 
 		return item;
 	}
 
+	public ItemStack makePotion(String name, List<String> lore, PotionEffectType effect1, PotionEffectType effect2,
+			PotionEffectType effect3, int level1, int level2, int level3, Color color) {
+
+		ItemStack potion = new ItemStack(Material.SPLASH_POTION, 5);
+		PotionMeta potmeta = (PotionMeta) potion.getItemMeta();
+
+		potmeta.setDisplayName(name);
+
+		potmeta.setLore(lore);
+
+		potmeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+		potmeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+
+		potmeta.setColor(color);
+
+		potmeta.addCustomEffect(new PotionEffect(effect1, 10 * 20, level1), false);
+		potmeta.addCustomEffect(new PotionEffect(effect2, 10 * 20, level2), false);
+		potmeta.addCustomEffect(new PotionEffect(effect3,10 * 20, level3), false);
+
+		potion.setItemMeta(potmeta);
+
+		return potion;
+	}
+
 	//helmet,chestplate,leggings,bootsの４つをキーとしたマップを返す
-	public HashMap<ArmorType,ItemStack> makeLeatherEquipment(String hel, String chest, String leg, String boot,Color color) {
+	public HashMap<ArmorType, ItemStack> makeLeatherEquipment(String hel, String chest, String leg, String boot,
+			Color color) {
 		ItemStack helmet = new ItemStack(Material.LEATHER_HELMET);
 		ItemStack chestplate = new ItemStack(Material.LEATHER_CHESTPLATE);
 		ItemStack leggings = new ItemStack(Material.LEATHER_LEGGINGS);
@@ -75,7 +109,7 @@ public class ItemManager {
 		leggings.setItemMeta(leglm);
 		boots.setItemMeta(bootslm);
 
-		HashMap<ArmorType,ItemStack> map = new HashMap<ArmorType,ItemStack>();
+		HashMap<ArmorType, ItemStack> map = new HashMap<ArmorType, ItemStack>();
 		map.put(ArmorType.HELMET, helmet);
 		map.put(ArmorType.CHESTPLATE, chestplate);
 		map.put(ArmorType.LEGGINGS, leggings);
@@ -87,7 +121,13 @@ public class ItemManager {
 
 	public ItemStack makeBow(String name, String desc, int amount) {
 		ItemStack bow = this.makeItem(Material.BOW, name, desc, amount);
+		bow.addEnchantment(Enchantment.ARROW_INFINITE, 1);
 		return bow;
 	}
 
+	public ItemStack makeBow(String name, List<String> desc, int amount) {
+		ItemStack bow = this.makeItem(Material.BOW, name, desc, amount);
+		bow.addEnchantment(Enchantment.ARROW_INFINITE, 1);
+		return bow;
+	}
 }
