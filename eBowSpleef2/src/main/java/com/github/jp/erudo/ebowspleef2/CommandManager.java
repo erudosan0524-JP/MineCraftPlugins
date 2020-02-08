@@ -2,11 +2,13 @@ package com.github.jp.erudo.ebowspleef2;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Color;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -17,11 +19,14 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.scheduler.BukkitTask;
 
+import com.github.jp.erudo.ebowspleef2.enums.ArmorType;
 import com.github.jp.erudo.ebowspleef2.enums.GameState;
 import com.github.jp.erudo.ebowspleef2.enums.Teams;
+import com.github.jp.erudo.ebowspleef2.utils.ItemManager;
 import com.github.jp.erudo.ebowspleef2.utils.MessageManager;
 import com.github.jp.erudo.ebowspleef2.utils.PlayersSetting;
 
@@ -197,6 +202,9 @@ public class CommandManager implements CommandExecutor {
 		//ゲーム状態をGAMINGに変更
 		plg.setCurrentGameState(GameState.GAMING);
 
+		//アイテム作成用
+		ItemManager itemManager = new ItemManager();
+
 		if (!player.getWorld().getPVP()) {
 			player.getWorld().setPVP(true);
 		}
@@ -215,6 +223,7 @@ public class CommandManager implements CommandExecutor {
 		game.setTask(task);
 
 		for (Player p : Bukkit.getServer().getOnlinePlayers()) {
+			//青チームだったら
 			if (plg.getTeam(Teams.BLUE).hasEntry(p.getName())) {
 				//テレポート＆スポーン地点設定
 				p.teleport(PlayersSetting.getBluePos());
@@ -222,12 +231,32 @@ public class CommandManager implements CommandExecutor {
 
 				p.setGameMode(GameMode.SURVIVAL);
 				p.setSneaking(true);
+
+				//皮装備装着
+				final String teamname = ChatColor.BLUE + "青チーム";
+				HashMap<ArmorType, ItemStack> map = new HashMap<ArmorType,ItemStack>();
+				map = itemManager.makeLeatherEquipment(teamname + "ヘルメット", teamname + "チェストプレート", teamname + "レギンス", teamname + "ブーツ", Color.BLUE);
+				p.getInventory().setHelmet(map.get(ArmorType.HELMET));
+				p.getInventory().setChestplate(map.get(ArmorType.CHESTPLATE));
+				p.getInventory().setLeggings(map.get(ArmorType.LEGGINGS));
+				p.getInventory().setBoots(map.get(ArmorType.BOOTS));
+
+			//赤チームだったら
 			} else if (plg.getTeam(Teams.RED).hasEntry(p.getName())) {
 				p.teleport(PlayersSetting.getRedPos());
 				p.setBedSpawnLocation(PlayersSetting.getRedPos());
 
 				p.setGameMode(GameMode.SURVIVAL);
 				p.setSneaking(true);
+
+				//皮装備装着
+				final String teamname = ChatColor.RED + "赤チーム";
+				HashMap<ArmorType, ItemStack> map = new HashMap<ArmorType,ItemStack>();
+				map = itemManager.makeLeatherEquipment(teamname + "ヘルメット", teamname + "チェストプレート", teamname + "レギンス", teamname + "ブーツ", Color.BLUE);
+				p.getInventory().setHelmet(map.get(ArmorType.HELMET));
+				p.getInventory().setChestplate(map.get(ArmorType.CHESTPLATE));
+				p.getInventory().setLeggings(map.get(ArmorType.LEGGINGS));
+				p.getInventory().setBoots(map.get(ArmorType.BOOTS));
 			} else {
 				PlayersSetting.addPlayerToTeam(Teams.SPECTATOR, p);
 				p.setGameMode(GameMode.SPECTATOR);

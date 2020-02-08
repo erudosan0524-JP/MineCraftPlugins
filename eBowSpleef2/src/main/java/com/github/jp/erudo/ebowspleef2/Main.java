@@ -12,7 +12,7 @@ import org.bukkit.scoreboard.Team;
 import com.github.jp.erudo.ebowspleef2.enums.GameState;
 import com.github.jp.erudo.ebowspleef2.enums.Teams;
 import com.github.jp.erudo.ebowspleef2.listener.ArrowListener;
-import com.github.jp.erudo.ebowspleef2.listener.ClickEntityListener;
+import com.github.jp.erudo.ebowspleef2.listener.ClickVillagerListener;
 import com.github.jp.erudo.ebowspleef2.listener.DeathListener;
 import com.github.jp.erudo.ebowspleef2.utils.Config;
 
@@ -119,9 +119,12 @@ public class Main extends JavaPlugin {
 		///////////////////////////
 		new ArrowListener(this);
 		new DeathListener(this);
-		new ClickEntityListener(this);
+		new ClickVillagerListener(this);
 
 		setCurrentGameState(GameState.PREPARE);
+
+		EquipmentObserver eo = new EquipmentObserver(this);
+		this.getServer().getScheduler().runTaskTimer(this, eo, 0, 20L);
 	}
 
 	public GameState getCurrentGameState() {

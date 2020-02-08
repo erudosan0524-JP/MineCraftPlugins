@@ -36,6 +36,7 @@ public class Game extends BukkitRunnable {
 					player.getWorld().setPVP(false);
 				}
 			}
+			plg.setCurrentGameState(GameState.PREPARE);
 			plg.getServer().getScheduler().cancelTask(task.getTaskId());
 		}
 
