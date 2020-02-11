@@ -1,4 +1,4 @@
-package com.github.jp.erudo.ebowspleef2;
+package com.github.jp.erudo.ebowspleef2.runnable;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -8,6 +8,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.scoreboard.Score;
 
+import com.github.jp.erudo.ebowspleef2.Main;
 import com.github.jp.erudo.ebowspleef2.enums.GameState;
 import com.github.jp.erudo.ebowspleef2.enums.Teams;
 import com.github.jp.erudo.ebowspleef2.utils.MessageManager;
@@ -57,9 +58,11 @@ public class Game extends BukkitRunnable {
 				BluePoint.setScore(plg.getBluePoint());
 
 				TitleSender title = new TitleSender();
-				for(Player p : plg.getServer().getOnlinePlayers()) {
-					title.sendTitle(p, null, null, "赤チーム残り人数: " + plg.getTeam(Teams.RED).getEntries().size()
-							+ "  " + "青チーム残り人数: " + plg.getTeam(Teams.BLUE).getEntries().size());
+				if(!plg.getMyConfig().isCanRespawn()) {
+					for(Player p : plg.getServer().getOnlinePlayers()) {
+						title.sendTitle(p, null, null, "赤チーム残り人数: " + plg.getTeam(Teams.RED).getEntries().size()
+								+ "  " + "青チーム残り人数: " + plg.getTeam(Teams.BLUE).getEntries().size());
+					}
 				}
 
 				if (plg.getTeam(Teams.RED).getEntries().size() <= 0) {

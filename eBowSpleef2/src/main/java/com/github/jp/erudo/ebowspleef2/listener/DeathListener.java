@@ -24,14 +24,24 @@ public class DeathListener implements Listener {
 		Player player = e.getEntity();
 
 		if(plg.getMyConfig().isCanRespawn()) {
+			//リスポーン可能ならポイント増やすだけ
 			if(plg.getTeam(Teams.BLUE).hasEntry(player.getName())) {
 				plg.setRedPoint(1);
 			}else if(plg.getTeam(Teams.RED).hasEntry(player.getName())) {
 				plg.setBluePoint(1);
 			}
 		} else {
+			//リスポーン不可ならチームから抜ける
 			player.setGameMode(GameMode.SPECTATOR);
 			PlayersSetting.addPlayerToTeam(Teams.SPECTATOR, player);
+			player.setSneaking(false);
+			if(plg.getTeam(Teams.BLUE).hasEntry(player.getName())) {
+				plg.getTeam(Teams.BLUE).removeEntry(player.getName());
+				plg.setRedPoint(1);
+			}else if(plg.getTeam(Teams.RED).hasEntry(player.getName())) {
+				plg.getTeam(Teams.RED).removeEntry(player.getName());
+				plg.setBluePoint(1);
+			}
 		}
 	}
 }

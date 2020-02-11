@@ -1,4 +1,4 @@
-package com.github.jp.erudo.ebowspleef2;
+package com.github.jp.erudo.ebowspleef2.runnable;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -7,6 +7,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import com.github.jp.erudo.ebowspleef2.Main;
 
 public class EquipmentObserver extends BukkitRunnable {
 

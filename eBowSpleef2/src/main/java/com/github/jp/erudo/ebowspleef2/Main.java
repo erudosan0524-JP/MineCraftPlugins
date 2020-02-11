@@ -14,6 +14,7 @@ import com.github.jp.erudo.ebowspleef2.enums.Teams;
 import com.github.jp.erudo.ebowspleef2.listener.ArrowListener;
 import com.github.jp.erudo.ebowspleef2.listener.ClickVillagerListener;
 import com.github.jp.erudo.ebowspleef2.listener.DeathListener;
+import com.github.jp.erudo.ebowspleef2.runnable.EquipmentObserver;
 import com.github.jp.erudo.ebowspleef2.utils.Config;
 
 public class Main extends JavaPlugin {

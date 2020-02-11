@@ -73,6 +73,7 @@ public class ArrowListener implements Listener {
 			}
 
 			//あたったブロックが羊毛だったら消去
+			//あたったブロックの周り4マス
 			Block block = e.getHitBlock();
 			Location blockLoc1 = new Location(block.getWorld(), block.getLocation().getX() + 1,
 					block.getLocation().getY(),
@@ -90,6 +91,9 @@ public class ArrowListener implements Listener {
 
 				block.setType(Material.AIR);
 				block.getLocation().getWorld().spawnParticle(Particle.BLOCK_CRACK, block.getLocation(), 1, 1, 1, 1);
+				blockLoc1.getWorld().spawnParticle(Particle.BLOCK_CRACK, block.getLocation(), 3, 2, 2, 2);
+				blockLoc2.getWorld().spawnParticle(Particle.BLOCK_CRACK, block.getLocation(), 3, 2, 2, 2);
+				blockLoc3.getWorld().spawnParticle(Particle.BLOCK_CRACK, block.getLocation(), 3, 2, 2, 2);
 				block.getLocation().getWorld().playSound(block.getLocation(), Sound.BLOCK_WOOD_BREAK, 1, 1);
 				block.getLocation().getWorld().createExplosion(block.getLocation().getX(), block.getLocation().getY(),
 						block.getLocation().getZ(), 10, false, false);
@@ -102,7 +106,10 @@ public class ArrowListener implements Listener {
 				blockLoc1.getBlock().setType(Material.AIR);
 				blockLoc2.getBlock().setType(Material.AIR);
 				blockLoc3.getBlock().setType(Material.AIR);
-				block.getLocation().getWorld().spawnParticle(Particle.BLOCK_CRACK, block.getLocation(), 1, 1, 1, 1);
+				block.getLocation().getWorld().spawnParticle(Particle.BLOCK_CRACK, block.getLocation(), 3, 2, 2, 2);
+				blockLoc1.getWorld().spawnParticle(Particle.BLOCK_CRACK, block.getLocation(), 3, 2, 2, 2);
+				blockLoc2.getWorld().spawnParticle(Particle.BLOCK_CRACK, block.getLocation(), 3, 2, 2, 2);
+				blockLoc3.getWorld().spawnParticle(Particle.BLOCK_CRACK, block.getLocation(), 3, 2, 2, 2);
 				block.getLocation().getWorld().playSound(block.getLocation(), Sound.BLOCK_WOOD_BREAK, 1, 1);
 				block.getLocation().getWorld().createExplosion(block.getLocation().getX(), block.getLocation().getY(),
 						block.getLocation().getZ(), 10, false, false);
@@ -126,10 +133,17 @@ public class ArrowListener implements Listener {
 
 					}
 					Location loc = entity.getLocation();
-					PacketPlayOutWorldParticles packet = new PacketPlayOutWorldParticles(EnumParticle.SPELL,
-							true, (float) loc.getX(), (float) loc.getY(), (float) loc.getZ(),
-							0, 0, 0,
-							20, 1, null);
+					PacketPlayOutWorldParticles packet = new PacketPlayOutWorldParticles(EnumParticle.HEART, 	//パーティクルの種類
+							true, 		//true
+							(float) loc.getX(), 	//位置X
+							(float) loc.getY(), 	//位置Y
+							(float) loc.getZ(),		//位置Z
+							0,				//x方面の拡散offset
+							0, 				//y方面の拡散
+							0,				//z方面の拡散
+							20, 			//パーティクル出現スピード(tick) 20tick=1s
+							10, 				//パーティクルの量
+							null);
 
 					for (Map.Entry<Player, Location> entry : locationCache.entrySet()) {
 						if (entry.getKey().isOnline()) {

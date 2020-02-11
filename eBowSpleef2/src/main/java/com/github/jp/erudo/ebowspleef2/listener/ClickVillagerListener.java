@@ -21,6 +21,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
 import com.github.jp.erudo.ebowspleef2.Main;
+import com.github.jp.erudo.ebowspleef2.enums.GameState;
 import com.github.jp.erudo.ebowspleef2.utils.ItemManager;
 import com.github.jp.erudo.ebowspleef2.utils.MessageManager;
 
@@ -32,15 +33,17 @@ public class ClickVillagerListener implements Listener {
 	private final String VillagerName = ChatColor.GREEN + "SettingVillager";
 	private final String bowName = ChatColor.WHITE + "ふつうの弓";
 	private final String bowDesc1 = ChatColor.GRAY + "シンプル・イズ・ザ・ベスト！";
-	private final String bowDesc2 = "効果が何もついてない弓。";
+	private final String bowDesc2 = ChatColor.GRAY + "効果が何もついてない弓。";
 	private final String bow1Name = ChatColor.GOLD + "アイオロス"; //ギリシャ神話に登場する風神アイオロスから
 	private final String bow1Desc1 = ChatColor.GRAY + "風の神の加護を受けている。";
-	private final String bow1Desc2 = "持つと移動速度が上昇する弓。";
+	private final String bow1Desc2 = ChatColor.GRAY + "持つと移動速度が上昇する弓。";
 	private final String bow2Name = ChatColor.GREEN + "ウラノス"; //ギリシャ神話。天空神ウラノス(ウラーノス）から
 	private final String bow2Desc1 = ChatColor.GRAY + "空の神の加護を受けている。";
-	private final String bow2Desc2 = "持つと跳躍力が上昇する弓。";
+	private final String bow2Desc2 = ChatColor.GRAY + "持つと跳躍力が上昇する弓。";
 	private final String potName = ChatColor.DARK_PURPLE + "魔法のポーション";
-	private final String potDesc = ChatColor.GRAY + "相手を10秒間移動不能にする。";
+	private final String potDesc1 = ChatColor.GRAY + "相手を10秒間移動不能にする。";
+	private final String potDesc2 = ChatColor.GRAY + "「ふつうの弓」と一緒に使うことができる。";
+	private final String potDesc3 = ChatColor.AQUA + "使用した15秒後に自動補充される";
 
 	public ClickVillagerListener(Main main) {
 		this.plg = main;
@@ -49,6 +52,11 @@ public class ClickVillagerListener implements Listener {
 
 	@EventHandler
 	public void onClickVillager(PlayerInteractEntityEvent e) {
+		if(!(plg.getCurrentGameState() == GameState.PREPARE)){
+			return;
+		}
+
+
 		Entity entity = e.getRightClicked();
 
 		if (entity.getType() != EntityType.VILLAGER) {
@@ -72,6 +80,11 @@ public class ClickVillagerListener implements Listener {
 
 	@EventHandler
 	public void onClickInventory(InventoryClickEvent e) {
+		if(!(plg.getCurrentGameState() == GameState.PREPARE)){
+			return;
+		}
+
+
 		Player player = (Player) e.getWhoClicked();
 		ItemManager itemManager = new ItemManager();
 
@@ -89,14 +102,15 @@ public class ClickVillagerListener implements Listener {
 		bow2Lore.add(bow2Desc2);
 
 		List<String> potionLore = new ArrayList<String>();
-		potionLore.add(potDesc);
-		potionLore.add(ChatColor.GRAY + "「ふつうの弓」と一緒に使うことができる。");
+		potionLore.add(potDesc1);
+		potionLore.add(potDesc2);
+		potionLore.add(potDesc3);
 
 		ItemStack bow = itemManager.makeBow(bowName, normalBowLore, 1);
 		ItemStack bow1 = itemManager.makeBow(bow1Name, bow1Lore, 1);
 		ItemStack bow2 = itemManager.makeBow(bow2Name, bow2Lore, 1);
 		ItemStack potion = itemManager.makePotion(potName, potionLore, PotionEffectType.SLOW,
-				PotionEffectType.BLINDNESS, PotionEffectType.CONFUSION, 127, 127, 127, Color.BLACK);
+				PotionEffectType.BLINDNESS, PotionEffectType.CONFUSION, 127, 127, 1, Color.BLACK);
 
 		if (Objects.isNull(e.getCurrentItem()) || e.getCurrentItem().getType().equals(Material.AIR)
 				|| !e.getCurrentItem().hasItemMeta()) {
@@ -217,14 +231,15 @@ public class ClickVillagerListener implements Listener {
 		bow2Lore.add(bow2Desc2);
 
 		List<String> potionLore = new ArrayList<String>();
-		potionLore.add(potDesc);
-		potionLore.add(ChatColor.GRAY + "「ふつうの弓」と一緒に使うことができる。");
+		potionLore.add(potDesc1);
+		potionLore.add(potDesc2);
+		potionLore.add(potDesc3);
 
 		ItemStack bow = itemManager.makeBow(bowName, normalBowLore, 1);
 		ItemStack bow1 = itemManager.makeBow(bow1Name, bow1Lore, 1);
 		ItemStack bow2 = itemManager.makeBow(bow2Name, bow2Lore, 1);
 		ItemStack potion = itemManager.makePotion(potName, potionLore, PotionEffectType.SLOW,
-				PotionEffectType.BLINDNESS, PotionEffectType.CONFUSION, 127, 127, 127, Color.BLACK);
+				PotionEffectType.BLINDNESS, PotionEffectType.CONFUSION, 127, 127, 1, Color.BLACK);
 
 		inv.setItem(1, bow);
 		inv.setItem(3, bow1);
