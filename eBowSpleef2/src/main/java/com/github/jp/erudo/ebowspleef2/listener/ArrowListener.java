@@ -63,6 +63,7 @@ public class ArrowListener implements Listener {
 			if (e.getHitEntity() != null) {
 				if (e.getHitEntity() instanceof Player) {
 					Player player = (Player) e.getHitEntity();
+					player.damage(2);
 					player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 5 * 20, 1));
 					player.getLocation().getWorld().spawnParticle(Particle.VILLAGER_HAPPY, player.getLocation(), 50, 5,
 							3, 5);

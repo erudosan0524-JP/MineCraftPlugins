@@ -143,6 +143,11 @@ public class CommandManager implements CommandExecutor {
 						p.getName() + "を" + ChatColor.BLUE + "青チーム" + ChatColor.WHITE + "に設定しました");
 			}
 			return true;
+		} else if(args[0].equalsIgnoreCase("setspe")){
+			if(!player.hasPermission("")) {
+
+			}
+
 		} else if (args[0].equalsIgnoreCase("setredpos")) {
 			if (!player.hasPermission("ebs.commands.redpos")) {
 				return true;
@@ -253,7 +258,7 @@ public class CommandManager implements CommandExecutor {
 				//皮装備装着
 				final String teamname = ChatColor.RED + "赤チーム";
 				HashMap<ArmorType, ItemStack> map = new HashMap<ArmorType,ItemStack>();
-				map = itemManager.makeLeatherEquipment(teamname + "ヘルメット", teamname + "チェストプレート", teamname + "レギンス", teamname + "ブーツ", Color.BLUE);
+				map = itemManager.makeLeatherEquipment(teamname + "ヘルメット", teamname + "チェストプレート", teamname + "レギンス", teamname + "ブーツ", Color.RED);
 				p.getInventory().setHelmet(map.get(ArmorType.HELMET));
 				p.getInventory().setChestplate(map.get(ArmorType.CHESTPLATE));
 				p.getInventory().setLeggings(map.get(ArmorType.LEGGINGS));

@@ -30,6 +30,10 @@ public class Game extends BukkitRunnable {
 		if (plg.getCurrentGameState() == GameState.END) {
 			MessageManager.broadcastMessage("試合終了！！");
 			count = 0;
+
+			plg.setBluePoint(0);
+			plg.setRedPoint(0);
+
 			for (Player player : Bukkit.getServer().getOnlinePlayers()) {
 				player.setSneaking(false);
 				player.teleport(PlayersSetting.getLobbyPos());
