@@ -43,7 +43,6 @@ public class ClickVillagerListener implements Listener {
 	private final String potName = ChatColor.DARK_PURPLE + "魔法のポーション";
 	private final String potDesc1 = ChatColor.GRAY + "相手を10秒間移動不能にする。";
 	private final String potDesc2 = ChatColor.GRAY + "「ふつうの弓」と一緒に使うことができる。";
-	private final String potDesc3 = ChatColor.AQUA + "使用した15秒後に自動補充される";
 
 	public ClickVillagerListener(Main main) {
 		this.plg = main;
@@ -81,6 +80,7 @@ public class ClickVillagerListener implements Listener {
 	@EventHandler
 	public void onClickInventory(InventoryClickEvent e) {
 		if(!(plg.getCurrentGameState() == GameState.PREPARE)){
+			e.setCancelled(true);
 			return;
 		}
 
@@ -104,7 +104,7 @@ public class ClickVillagerListener implements Listener {
 		List<String> potionLore = new ArrayList<String>();
 		potionLore.add(potDesc1);
 		potionLore.add(potDesc2);
-		potionLore.add(potDesc3);
+		potionLore.add(ChatColor.AQUA + "使用した" + plg.getMyConfig().getPotionInterval() +"秒後に自動補充される");
 
 		ItemStack bow = itemManager.makeBow(bowName, normalBowLore, 1);
 		ItemStack bow1 = itemManager.makeBow(bow1Name, bow1Lore, 1);
@@ -233,7 +233,7 @@ public class ClickVillagerListener implements Listener {
 		List<String> potionLore = new ArrayList<String>();
 		potionLore.add(potDesc1);
 		potionLore.add(potDesc2);
-		potionLore.add(potDesc3);
+		potionLore.add(ChatColor.AQUA + "使用した" + plg.getMyConfig().getPotionInterval() +"秒後に自動補充される");
 
 		ItemStack bow = itemManager.makeBow(bowName, normalBowLore, 1);
 		ItemStack bow1 = itemManager.makeBow(bow1Name, bow1Lore, 1);

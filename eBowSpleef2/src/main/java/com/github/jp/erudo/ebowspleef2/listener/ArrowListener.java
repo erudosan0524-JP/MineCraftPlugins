@@ -85,7 +85,7 @@ public class ArrowListener implements Listener {
 					block.getLocation().getZ() + 1);
 
 			if (plg.getMyConfig().getArrowrange() <= 1) {
-				if (!block.getType().equals(Material.WHITE_WOOL)) {
+				if (!block.getType().equals(Material.WOOL)) {
 					return;
 				}
 
@@ -98,7 +98,7 @@ public class ArrowListener implements Listener {
 				block.getLocation().getWorld().createExplosion(block.getLocation().getX(), block.getLocation().getY(),
 						block.getLocation().getZ(), 10, false, false);
 			} else {
-				if (!block.getType().equals(Material.WHITE_WOOL)) {
+				if (!block.getType().equals(Material.WOOL)) {
 					return;
 				}
 

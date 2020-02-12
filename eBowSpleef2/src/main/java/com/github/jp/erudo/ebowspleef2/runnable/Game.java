@@ -51,10 +51,10 @@ public class Game extends BukkitRunnable {
 				Score TimeScore = plg.getObj().getScore(ChatColor.GOLD + "残り時間: ");
 				TimeScore.setScore(count);
 
-				Score RedPoint = plg.getObj().getScore(ChatColor.DARK_BLUE + "赤チーム獲得ポイント: ");
+				Score RedPoint = plg.getObj().getScore(ChatColor.DARK_RED + "赤チーム獲得ポイント: ");
 				RedPoint.setScore(plg.getRedPoint());
 
-				Score BluePoint = plg.getObj().getScore(ChatColor.DARK_RED + "青チーム獲得ポイント: ");
+				Score BluePoint = plg.getObj().getScore(ChatColor.DARK_BLUE + "青チーム獲得ポイント: ");
 				BluePoint.setScore(plg.getBluePoint());
 
 				TitleSender title = new TitleSender();
