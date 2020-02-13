@@ -14,6 +14,7 @@ import com.github.jp.erudo.ebowspleef2.enums.Teams;
 import com.github.jp.erudo.ebowspleef2.listener.ArrowListener;
 import com.github.jp.erudo.ebowspleef2.listener.ClickVillagerListener;
 import com.github.jp.erudo.ebowspleef2.listener.DeathListener;
+import com.github.jp.erudo.ebowspleef2.listener.EntityDamageListener;
 import com.github.jp.erudo.ebowspleef2.listener.ItemDropListener;
 import com.github.jp.erudo.ebowspleef2.listener.MoveListener;
 import com.github.jp.erudo.ebowspleef2.listener.PotionSplashListener;
@@ -127,6 +128,7 @@ public class Main extends JavaPlugin {
 		new ItemDropListener(this);
 		new MoveListener(this);
 		new PotionSplashListener(this);
+		new EntityDamageListener(this);
 
 		setCurrentGameState(GameState.PREPARE);
 		this.getServer().getWorld("world").setPVP(false);

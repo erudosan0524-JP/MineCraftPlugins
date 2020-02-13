@@ -193,7 +193,6 @@ public class CommandManager implements CommandExecutor {
 			villager.setCustomName(ChatColor.GREEN + "SettingVillager");
 			villager.setCustomNameVisible(true);
 			villager.setGravity(true);
-			villager.setMaxHealth(Math.pow(10,3));
 			MessageManager.sendMessage(player, "設定用の村人を召喚しました");
 
 			return true;
