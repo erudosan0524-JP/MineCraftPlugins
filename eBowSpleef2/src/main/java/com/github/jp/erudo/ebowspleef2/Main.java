@@ -194,7 +194,7 @@ public class Main extends JavaPlugin {
 	}
 
 	public void setRedPoint(int num) {
-		this.redPoint += num;
+		this.redPoint = num;
 	}
 
 	public int getBluePoint() {
@@ -202,7 +202,7 @@ public class Main extends JavaPlugin {
 	}
 
 	public void setBluePoint(int num) {
-		this.bluePoint += num;
+		this.bluePoint = num;
 	}
 
 }

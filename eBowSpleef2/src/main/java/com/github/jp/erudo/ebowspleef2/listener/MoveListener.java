@@ -32,7 +32,7 @@ public class MoveListener implements Listener {
 
 		if(downBlock.getType() == Material.CONCRETE) {
 			if(downBlock.getData() == 14 || downBlock.getData() == 11) { //赤コンクリートまたは青コンクリート
-				player.damage(1);
+				player.damage(3); //♡1.5
 			}
 		}
 	}
