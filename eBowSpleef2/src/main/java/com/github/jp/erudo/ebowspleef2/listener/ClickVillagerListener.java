@@ -37,9 +37,9 @@ public class ClickVillagerListener implements Listener {
 	private final String bow1Name = ChatColor.GOLD + "アイオロス"; //ギリシャ神話に登場する風神アイオロスから
 	private final String bow1Desc1 = ChatColor.GRAY + "風の神の加護を受けている。";
 	private final String bow1Desc2 = ChatColor.GRAY + "持つと移動速度が上昇する弓。";
-	private final String bow2Name = ChatColor.GREEN + "ウラノス"; //ギリシャ神話。天空神ウラノス(ウラーノス）から
-	private final String bow2Desc1 = ChatColor.GRAY + "空の神の加護を受けている。";
-	private final String bow2Desc2 = ChatColor.GRAY + "持つと跳躍力が上昇する弓。";
+	private final String bow2Name = ChatColor.RED + "アレス"; //ギリシャ神話。戦闘神アレスから
+	private final String bow2Desc1 = ChatColor.GRAY + "戦闘の神の加護を受けている。";
+	private final String bow2Desc2 = ChatColor.GRAY + "持つと鈍足となるが、矢が3本同時に打てる。";
 	private final String potName = ChatColor.DARK_PURPLE + "魔法のポーション";
 	private final String potDesc1 = ChatColor.GRAY + "相手を10秒間移動不能にする。";
 	private final String potDesc2 = ChatColor.GRAY + "「ふつうの弓」と一緒に使うことができる。";
@@ -156,7 +156,7 @@ public class ClickVillagerListener implements Listener {
 				player.getInventory().addItem(bow1);
 
 			} else if (ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName().toString())
-					.equals("ウラノス")) {
+					.equals("アレス")) {
 				if (player.getInventory().contains(Material.BOW)) {
 					player.closeInventory();
 					MessageManager.sendMessage(player, "弓は一つまでしか持てません。");

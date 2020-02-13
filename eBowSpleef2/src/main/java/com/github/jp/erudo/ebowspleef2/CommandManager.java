@@ -41,7 +41,6 @@ public class CommandManager implements CommandExecutor {
 		this.plg = plg;
 	}
 
-	@SuppressWarnings("deprecation")
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
 		Player player = (Player) sender;
@@ -241,7 +240,7 @@ public class CommandManager implements CommandExecutor {
 				p.teleport(PlayersSetting.getBluePos());
 				p.setBedSpawnLocation(PlayersSetting.getBluePos());
 
-				p.setGameMode(GameMode.SURVIVAL);
+				p.setGameMode(GameMode.ADVENTURE);
 				p.setSneaking(true);
 
 				//皮装備装着
@@ -258,7 +257,7 @@ public class CommandManager implements CommandExecutor {
 				p.teleport(PlayersSetting.getRedPos());
 				p.setBedSpawnLocation(PlayersSetting.getRedPos());
 
-				p.setGameMode(GameMode.SURVIVAL);
+				p.setGameMode(GameMode.ADVENTURE);
 				p.setSneaking(true);
 
 				//皮装備装着

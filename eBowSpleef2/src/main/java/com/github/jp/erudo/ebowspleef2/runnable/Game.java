@@ -49,6 +49,9 @@ public class Game extends BukkitRunnable {
 				player.getInventory().setChestplate(null);
 				player.getInventory().setLeggings(null);
 				player.getInventory().setBoots(null);
+				for(int i=0; i < 35; i++) { //35はインベントリのサイズ
+					player.getInventory().setItem(i, null);
+				}
 
 				player.getWorld().setPVP(false);
 

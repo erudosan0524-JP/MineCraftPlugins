@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -19,8 +20,11 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
+import org.bukkit.event.entity.ProjectileLaunchEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.projectiles.ProjectileSource;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import com.github.jp.erudo.ebowspleef2.Main;
@@ -120,6 +124,34 @@ public class ArrowListener implements Listener {
 			}
 
 		}
+	}
+
+	@EventHandler
+	public void onLaunchProjectile(ProjectileLaunchEvent e) { //マルチボウ（仮）のコード
+//		if(!(plg.getCurrentGameState() == GameState.GAMING)) {
+//			return;
+//		}
+
+		Projectile projectile = e.getEntity();
+		ProjectileSource source = projectile.getShooter();
+
+		if(!(source instanceof Player)) {
+			return;
+		}
+
+		Player player = (Player) source;
+		ItemStack handItem = player.getInventory().getItemInMainHand();
+
+		if(handItem != null && handItem.getType() == Material.BOW) {
+			if(handItem.hasItemMeta()) {
+				if(ChatColor.stripColor(handItem.getItemMeta().getDisplayName().toString()).equals("アレス")) {
+					for(int i=0; i < 3; i++) {
+//						player.launchProjectile(Arrow.class); //矢を三本出現
+					}
+				}
+			}
+		}
+
 	}
 
 	public void addParticleEffect(final Projectile entity) {

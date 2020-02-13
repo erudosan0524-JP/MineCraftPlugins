@@ -1,5 +1,7 @@
 package com.github.jp.erudo.ebowspleef2.listener;
 
+import java.util.Objects;
+
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.event.EventHandler;
@@ -21,6 +23,10 @@ public class EntityDamageListener implements Listener {
 		Entity entity = e.getEntity();
 
 		if(entity.getType() == EntityType.VILLAGER) {
+			if(Objects.isNull(entity.getCustomName())) {
+				return;
+			}
+
 			if(ChatColor.stripColor(entity.getCustomName()).equals("SettingVillager")) {
 				e.setCancelled(true);
 			}

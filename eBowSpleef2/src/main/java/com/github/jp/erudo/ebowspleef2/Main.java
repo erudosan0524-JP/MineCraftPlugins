@@ -18,6 +18,7 @@ import com.github.jp.erudo.ebowspleef2.listener.EntityDamageListener;
 import com.github.jp.erudo.ebowspleef2.listener.ItemDropListener;
 import com.github.jp.erudo.ebowspleef2.listener.MoveListener;
 import com.github.jp.erudo.ebowspleef2.listener.PotionSplashListener;
+import com.github.jp.erudo.ebowspleef2.listener.RespawnListener;
 import com.github.jp.erudo.ebowspleef2.runnable.EquipmentObserver;
 import com.github.jp.erudo.ebowspleef2.utils.Config;
 
@@ -129,12 +130,15 @@ public class Main extends JavaPlugin {
 		new MoveListener(this);
 		new PotionSplashListener(this);
 		new EntityDamageListener(this);
+		new RespawnListener(this);
 
 		setCurrentGameState(GameState.PREPARE);
 		this.getServer().getWorld("world").setPVP(false);
 
 		EquipmentObserver eo = new EquipmentObserver(this);
 		this.getServer().getScheduler().runTaskTimer(this, eo, 0, 20L);
+
+		getServer().getWorld("world").setGameRuleValue("keepInventory","true");
 	}
 
 	public GameState getCurrentGameState() {

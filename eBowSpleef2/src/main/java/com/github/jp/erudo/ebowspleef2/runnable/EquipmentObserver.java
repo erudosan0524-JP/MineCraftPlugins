@@ -27,8 +27,8 @@ public class EquipmentObserver extends BukkitRunnable {
 					if(ChatColor.stripColor(handItem.getItemMeta().getDisplayName().toString()).equals("アイオロス")) {
 						p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED,2 *20,2), true);
 
-					} else if(ChatColor.stripColor(handItem.getItemMeta().getDisplayName().toString()).equals("ウラノス")) {
-						p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP,2 *20,2), true);
+					} else if(ChatColor.stripColor(handItem.getItemMeta().getDisplayName().toString()).equals("アレス")) {
+						p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW,2 *20,2), true);
 					}
 				}
 			}
