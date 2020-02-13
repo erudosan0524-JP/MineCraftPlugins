@@ -92,9 +92,6 @@ public class CommandManager implements CommandExecutor {
 			for (Player p : Bukkit.getServer().getOnlinePlayers()) {
 				if (p.getLocation().getBlock().getRelative(BlockFace.DOWN).getType() == Material.BEDROCK) {
 					wpPlayerList.add(p);
-				} else {
-					MessageManager.sendMessage(player, "岩盤の上にいるプレイヤーが見つかりませんでした");
-					return true;
 				}
 			}
 
@@ -144,9 +141,19 @@ public class CommandManager implements CommandExecutor {
 			}
 			return true;
 		} else if(args[0].equalsIgnoreCase("setspe")){
-			if(!player.hasPermission("")) {
-
+			if(!player.hasPermission("ebs.commands.setspe")) {
+				return true;
 			}
+
+			if (Objects.isNull(plg.getServer().getPlayer(args[1]))) {
+				MessageManager.sendMessage(player, "指定したプレイヤーは存在しません");
+			} else {
+				Player p = plg.getServer().getPlayer(args[1]);
+				PlayersSetting.addPlayerToTeam(Teams.SPECTATOR, p);
+				MessageManager.sendMessage(player,
+						p.getName() + "を" + ChatColor.GRAY + "スペクテイターチーム" + ChatColor.WHITE + "に設定しました");
+			}
+			return true;
 
 		} else if (args[0].equalsIgnoreCase("setredpos")) {
 			if (!player.hasPermission("ebs.commands.redpos")) {

@@ -37,13 +37,20 @@ public class Game extends BukkitRunnable {
 			for (Player player : Bukkit.getServer().getOnlinePlayers()) {
 				player.setSneaking(false);
 				player.teleport(PlayersSetting.getLobbyPos());
-				player.setGameMode(GameMode.SURVIVAL);
+				player.setGameMode(GameMode.ADVENTURE);
 
-				if (player.getWorld().getPVP()) {
-					continue;
-				} else {
-					player.getWorld().setPVP(false);
+				if (plg.getTeam(Teams.BLUE).hasEntry(player.getName())) {
+					plg.getTeam(Teams.BLUE).removeEntry(player.getName());
+				} else if (plg.getTeam(Teams.RED).hasEntry(player.getName())) {
+					plg.getTeam(Teams.RED).removeEntry(player.getName());
 				}
+
+				player.getInventory().setHelmet(null);
+				player.getInventory().setChestplate(null);
+				player.getInventory().setLeggings(null);
+				player.getInventory().setBoots(null);
+
+				player.getWorld().setPVP(false);
 
 			}
 			plg.setCurrentGameState(GameState.PREPARE);
@@ -62,10 +69,10 @@ public class Game extends BukkitRunnable {
 				BluePoint.setScore(plg.getBluePoint());
 
 				TitleSender title = new TitleSender();
-				if(!plg.getMyConfig().isCanRespawn()) {
-					for(Player p : plg.getServer().getOnlinePlayers()) {
-						title.sendTitle(p, null, null, "赤チーム残り人数: " + plg.getTeam(Teams.RED).getEntries().size()
-								+ "  " + "青チーム残り人数: " + plg.getTeam(Teams.BLUE).getEntries().size());
+				if (!plg.getMyConfig().isCanRespawn()) {
+					for (Player p : plg.getServer().getOnlinePlayers()) {
+						title.sendTitle(p, null, null, ChatColor.RED + "赤チーム残り人数: " + plg.getTeam(Teams.RED).getEntries().size()
+								+ "  " + ChatColor.BLUE + "青チーム残り人数: " + plg.getTeam(Teams.BLUE).getEntries().size());
 					}
 				}
 

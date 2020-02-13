@@ -69,21 +69,24 @@ public class ArrowListener implements Listener {
 							3, 5);
 					player.getLocation().getWorld().playSound(player.getLocation(), Sound.BLOCK_ANVIL_PLACE,
 							(float) 0.5, 5);
+					return;
 				}
-
+				return;
 			}
 
 			//あたったブロックが羊毛だったら消去
 			//あたったブロックの周り4マス
+
 			Block block = e.getHitBlock();
 			Location blockLoc1 = new Location(block.getWorld(), block.getLocation().getX() + 1,
-					block.getLocation().getY(),
-					block.getLocation().getZ());
+						block.getLocation().getY(),
+						block.getLocation().getZ());
 			Location blockLoc2 = new Location(block.getWorld(), block.getLocation().getX(), block.getLocation().getY(),
-					block.getLocation().getZ() + 1);
+						block.getLocation().getZ() + 1);
 			Location blockLoc3 = new Location(block.getWorld(), block.getLocation().getX() + 1,
-					block.getLocation().getY(),
-					block.getLocation().getZ() + 1);
+						block.getLocation().getY(),
+						block.getLocation().getZ() + 1);
+
 
 			if (plg.getMyConfig().getArrowrange() <= 1) {
 				if (!block.getType().equals(Material.WOOL)) {

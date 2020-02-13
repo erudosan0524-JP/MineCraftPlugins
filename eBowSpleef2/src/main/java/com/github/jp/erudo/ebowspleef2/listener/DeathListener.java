@@ -7,6 +7,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 
 import com.github.jp.erudo.ebowspleef2.Main;
+import com.github.jp.erudo.ebowspleef2.enums.GameState;
 import com.github.jp.erudo.ebowspleef2.enums.Teams;
 import com.github.jp.erudo.ebowspleef2.utils.PlayersSetting;
 
@@ -21,6 +22,10 @@ public class DeathListener implements Listener {
 
 	@EventHandler
 	public void onDeath(PlayerDeathEvent e) {
+		if(!(plg.getCurrentGameState() == GameState.GAMING)) {
+			return;
+		}
+
 		Player player = e.getEntity();
 
 		if(plg.getMyConfig().isCanRespawn()) {
