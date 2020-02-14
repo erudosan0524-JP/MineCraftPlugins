@@ -1,8 +1,6 @@
 package com.github.jp.erudo.ebowspleef2;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import org.bukkit.Bukkit;
@@ -27,18 +25,14 @@ import com.github.jp.erudo.ebowspleef2.listener.MoveListener;
 import com.github.jp.erudo.ebowspleef2.listener.RespawnListener;
 import com.github.jp.erudo.ebowspleef2.runnable.EquipmentObserver;
 import com.github.jp.erudo.ebowspleef2.utils.Config;
+import com.sk89q.worldedit.CuboidClipboard;
 import com.sk89q.worldedit.EditSession;
-import com.sk89q.worldedit.WorldEdit;
-import com.sk89q.worldedit.WorldEditException;
-import com.sk89q.worldedit.extent.clipboard.Clipboard;
-import com.sk89q.worldedit.extent.clipboard.io.ClipboardFormat;
-import com.sk89q.worldedit.extent.clipboard.io.ClipboardFormats;
-import com.sk89q.worldedit.extent.clipboard.io.ClipboardReader;
-import com.sk89q.worldedit.function.operation.Operation;
-import com.sk89q.worldedit.function.operation.Operations;
-import com.sk89q.worldedit.math.BlockVector3;
-import com.sk89q.worldedit.session.ClipboardHolder;
-import com.sk89q.worldedit.world.World;
+import com.sk89q.worldedit.MaxChangedBlocksException;
+import com.sk89q.worldedit.Vector;
+import com.sk89q.worldedit.bukkit.BukkitWorld;
+import com.sk89q.worldedit.bukkit.WorldEditPlugin;
+import com.sk89q.worldedit.schematic.MCEditSchematicFormat;
+import com.sk89q.worldedit.world.DataException;
 
 public class Main extends JavaPlugin {
 
@@ -230,30 +224,21 @@ public class Main extends JavaPlugin {
 		this.bluePoint += 1;
 	}
 
+	@SuppressWarnings("deprecation")
 	public void loadSchematic(Player player, String fileName) {
 		Location location = player.getLocation();
+		WorldEditPlugin worldEditPlugin = (WorldEditPlugin) Bukkit.getPluginManager().getPlugin("WorldEdit");
 		File schematic = new File(this.getDataFolder() + File.separator + "/schematics/" + fileName + ".schematic");
+		EditSession settion = worldEditPlugin.getWorldEdit().getEditSessionFactory().getEditSession(new BukkitWorld(location.getWorld()), 10000);
 
-		Clipboard clipboard;
-		ClipboardFormat format = ClipboardFormats.findByFile(schematic);
-		try (ClipboardReader reader = format.getReader(new FileInputStream(schematic))) {
-			clipboard = reader.read();
-
-			try (EditSession editSettion = WorldEdit.getInstance().getEditSessionFactory()
-					.getEditSession((World) this.getServer().getWorld("world"), -1)) {
-				Operation operation = new ClipboardHolder(clipboard).createPaste(editSettion)
-						.to(BlockVector3.at(location.getX(), location.getY(), location.getZ())).build();
-
-				Operations.complete(operation);
-
-			} catch (WorldEditException e) {
-				e.printStackTrace();
-			}
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
+		try {
+			CuboidClipboard clipboard = MCEditSchematicFormat.getFormat(schematic).load(schematic);
+			clipboard.rotate2D(90);
+			clipboard.paste(settion, new Vector(location.getX(),location.getY(),location.getZ()), false);
+		} catch(MaxChangedBlocksException | DataException | IndexOutOfBoundsException | IOException e) {
 			e.printStackTrace();
 		}
+
 	}
 
 }

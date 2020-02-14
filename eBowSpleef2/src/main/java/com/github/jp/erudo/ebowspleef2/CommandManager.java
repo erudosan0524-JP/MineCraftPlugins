@@ -205,6 +205,7 @@ public class CommandManager implements CommandExecutor {
 			return true;
 		} else if(args[0].equalsIgnoreCase("build")) {
 			plg.loadSchematic(player, "stage2");
+			return true;
 		}
 		MessageManager.CommandContent(player);
 		return false;
