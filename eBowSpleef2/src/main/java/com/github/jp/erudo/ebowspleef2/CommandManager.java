@@ -30,6 +30,7 @@ import com.github.jp.erudo.ebowspleef2.item.ItemManager;
 import com.github.jp.erudo.ebowspleef2.runnable.Game;
 import com.github.jp.erudo.ebowspleef2.utils.MessageManager;
 import com.github.jp.erudo.ebowspleef2.utils.PlayersSetting;
+import com.github.jp.erudo.ebowspleef2.utils.WorldManager;
 
 public class CommandManager implements CommandExecutor {
 
@@ -204,7 +205,9 @@ public class CommandManager implements CommandExecutor {
 			MessageManager.sendMessage(player, "Version: " + pdf.getVersion());
 			return true;
 		} else if(args[0].equalsIgnoreCase("build")) {
-			plg.loadSchematic(player, "stage2");
+			WorldManager wm = new WorldManager();
+			Location loc = new Location(player.getWorld(), plg.getMyConfig().getBeginCoordinate()[0], plg.getMyConfig().getBeginCoordinate()[1], plg.getMyConfig().getBeginCoordinate()[2]);
+			wm.loadSchematic(loc, "stage2");
 			return true;
 		}
 		MessageManager.CommandContent(player);

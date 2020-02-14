@@ -4,4 +4,4 @@ BluePosition:
 LobbyPosition: 
 ArrowRange: 2
 canRespawn: true
-potionInterval: 15
+beginCoordinate: 

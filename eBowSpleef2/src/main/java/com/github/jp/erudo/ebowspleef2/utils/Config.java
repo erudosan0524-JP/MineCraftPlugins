@@ -18,7 +18,7 @@ public class Config {
 	private String confLobbyPos;
 	private int arrowrange;
 	private boolean canRespawn;
-	private int potionInterval;
+	private String beginCoordinate;
 
 	public Config(Main plg) {
 		this.plg = plg;
@@ -38,7 +38,7 @@ public class Config {
 		confLobbyPos = config.getString("LobbyPosition");
 		arrowrange = config.getInt("ArrowRange");
 		canRespawn = config.getBoolean("canRespawn");
-		potionInterval = config.getInt("potionInterval");
+		beginCoordinate = config.getString("beginCoordinate");
 	}
 
 	//座標を取得
@@ -119,12 +119,14 @@ public class Config {
 		this.canRespawn = canRespawn;
 	}
 
-	public int getPotionInterval() {
-		return potionInterval;
+	public int[] getBeginCoordinate() {
+		String[] str = this.beginCoordinate.split(" ");
+
+		return getCoordinates(str);
 	}
 
-	public void setPotionInterval(int potionInterval) {
-		this.potionInterval = potionInterval;
+	public void setBeginCoordinate(String beginCoordinate) {
+		this.beginCoordinate = beginCoordinate;
 	}
 
 }

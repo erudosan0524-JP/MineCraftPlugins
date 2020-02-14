@@ -74,22 +74,6 @@ public class ClickVillagerListener implements Listener {
 			return;
 		}
 
-
-		Player player = (Player) e.getWhoClicked();
-		ItemManager itemManager = new ItemManager();
-
-		List<String> potionLore = new ArrayList<String>();
-		potionLore.add(Items.potDesc1);
-		potionLore.add(Items.potDesc2);
-
-		ItemStack bow = itemManager.makeBow(Items.bowName,1, Items.bowDesc1,Items.bowDesc2, Items.bowDesc3);
-		ItemStack bow1 = itemManager.makeBow(Items.bow1Name, 1, Items.bow1Desc1,Items.bow1Desc2);
-		ItemStack bow2 = itemManager.makeBow(Items.bow2Name, 1, Items.bow2Desc1,Items.bow2Desc2);
-		bow2.addEnchantment(Enchantment.KNOCKBACK, 1);
-		bow.addEnchantment(Enchantment.ARROW_KNOCKBACK, 1);
-		ItemStack potion = itemManager.makePotion(Items.potName, potionLore, PotionEffectType.SLOW,
-				PotionEffectType.BLINDNESS, PotionEffectType.CONFUSION, 127, 127, 1, Color.BLACK);
-
 		if (Objects.isNull(e.getCurrentItem()) || e.getCurrentItem().getType().equals(Material.AIR)
 				|| !e.getCurrentItem().hasItemMeta()) {
 			return;
@@ -101,6 +85,26 @@ public class ClickVillagerListener implements Listener {
 
 		if (e.getClickedInventory().getSize() != 9)
 			return;
+
+		if(!ChatColor.stripColor(e.getClickedInventory().getTitle()).equals(ChatColor.stripColor(VillagerName))) {
+			return;
+		}
+
+
+		Player player = (Player) e.getWhoClicked();
+		ItemManager itemManager = new ItemManager();
+
+		List<String> potionLore = new ArrayList<String>();
+		potionLore.add(Items.potDesc1);
+		potionLore.add(Items.potDesc2);
+
+		ItemStack bow = itemManager.makeBow(Items.bowName,1, Items.bowDesc1,Items.bowDesc2, Items.bowDesc3);
+		ItemStack bow1 = itemManager.makeBow(Items.bow1Name, 1, Items.bow1Desc1,Items.bow1Desc2);
+		ItemStack bow2 = itemManager.makeBow(Items.bow2Name, 1, Items.bow2Desc1,Items.bow2Desc2);
+		bow.addEnchantment(Enchantment.ARROW_KNOCKBACK, 1);
+		ItemStack potion = itemManager.makePotion(Items.potName, potionLore, PotionEffectType.SLOW,
+				PotionEffectType.BLINDNESS, PotionEffectType.CONFUSION, 127, 127, 1, Color.BLACK);
+
 
 		String judgeItem = ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName().toString());
 
@@ -202,7 +206,6 @@ public class ClickVillagerListener implements Listener {
 		ItemStack bow = itemManager.makeBow(Items.bowName, 1, Items.bowDesc1,Items.bowDesc2,Items.bowDesc3);
 		ItemStack bow1 = itemManager.makeBow(Items.bow1Name, 1, Items.bow1Desc1,Items.bow1Desc2);
 		ItemStack bow2 = itemManager.makeBow(Items.bow2Name, 1, Items.bow2Desc1,Items.bow2Desc2);
-		bow2.addEnchantment(Enchantment.KNOCKBACK, 1);
 		bow.addEnchantment(Enchantment.ARROW_KNOCKBACK, 1);
 		ItemStack potion = itemManager.makePotion(Items.potName, potionLore, PotionEffectType.SLOW,
 				PotionEffectType.BLINDNESS, PotionEffectType.CONFUSION, 127, 127, 1, Color.BLACK);
