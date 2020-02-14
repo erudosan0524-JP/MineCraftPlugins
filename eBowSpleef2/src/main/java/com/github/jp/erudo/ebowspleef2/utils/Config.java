@@ -19,6 +19,7 @@ public class Config {
 	private int arrowrange;
 	private boolean canRespawn;
 	private String beginCoordinate;
+	private String stageName;
 
 	public Config(Main plg) {
 		this.plg = plg;
@@ -39,6 +40,7 @@ public class Config {
 		arrowrange = config.getInt("ArrowRange");
 		canRespawn = config.getBoolean("canRespawn");
 		beginCoordinate = config.getString("beginCoordinate");
+		stageName = config.getString("stageName","stage1"); //デフォルトはstage1
 	}
 
 	//座標を取得
@@ -128,5 +130,15 @@ public class Config {
 	public void setBeginCoordinate(String beginCoordinate) {
 		this.beginCoordinate = beginCoordinate;
 	}
+
+	public String getStageName() {
+		return stageName;
+	}
+
+	public void setStageName(String stageName) {
+		this.stageName = stageName;
+	}
+
+
 
 }

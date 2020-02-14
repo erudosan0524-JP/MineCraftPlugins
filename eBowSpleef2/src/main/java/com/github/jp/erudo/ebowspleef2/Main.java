@@ -43,6 +43,9 @@ public class Main extends JavaPlugin {
 	//コンフィグ
 	private Config config;
 
+	//使用ステージ
+	private String stageName;
+
 	@Override
 	public void onDisable() {
 		getLogger().info("プラグインが停止しました");
@@ -75,6 +78,7 @@ public class Main extends JavaPlugin {
 		///		Config		///
 		///////////////////////
 		config = new Config(this);
+		stageName = config.getStageName();
 
 		///////////////////////////
 		///		ScoreBoard		///
@@ -211,6 +215,12 @@ public class Main extends JavaPlugin {
 		this.bluePoint += 1;
 	}
 
+	public String getStageName() {
+		return stageName;
+	}
 
+	public void setStageName(String stageName) {
+		this.stageName = stageName;
+	}
 
 }

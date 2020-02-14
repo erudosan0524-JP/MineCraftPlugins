@@ -16,9 +16,9 @@ import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 import com.sk89q.worldedit.schematic.MCEditSchematicFormat;
 import com.sk89q.worldedit.world.DataException;
 
+@SuppressWarnings("deprecation")
 public class WorldManager {
 
-	@SuppressWarnings("deprecation")
 	public void loadSchematic(Player player, String fileName) {
 		Location location = player.getLocation();
 		WorldEditPlugin worldEditPlugin = (WorldEditPlugin) Bukkit.getPluginManager().getPlugin("WorldEdit");
@@ -35,7 +35,6 @@ public class WorldManager {
 
 	}
 
-	@SuppressWarnings("deprecation")
 	public void loadSchematic(Location loc, String fileName) {
 		WorldEditPlugin worldEditPlugin = (WorldEditPlugin) Bukkit.getPluginManager().getPlugin("WorldEdit");
 		File schematic = new File(worldEditPlugin.getDataFolder() + File.separator + "/schematics/" + fileName + ".schematic");

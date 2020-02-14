@@ -123,9 +123,9 @@ public class CommandManager implements CommandExecutor {
 					PlayersSetting.addPlayerToTeam(Teams.RED, p);
 					MessageManager.sendMessage(player,
 							p.getName() + "を" + ChatColor.RED + "赤チーム" + ChatColor.WHITE + "に設定しました");
+					return true;
 				}
 			}
-			return true;
 		} else if (args[0].equalsIgnoreCase("setblue")) {
 			if (!player.hasPermission("ebs.commands.setblue")) {
 				return true;
@@ -138,8 +138,8 @@ public class CommandManager implements CommandExecutor {
 				PlayersSetting.addPlayerToTeam(Teams.BLUE, p);
 				MessageManager.sendMessage(player,
 						p.getName() + "を" + ChatColor.BLUE + "青チーム" + ChatColor.WHITE + "に設定しました");
+				return true;
 			}
-			return true;
 		} else if(args[0].equalsIgnoreCase("setspe")){
 			if(!player.hasPermission("ebs.commands.setspe")) {
 				return true;
@@ -152,9 +152,8 @@ public class CommandManager implements CommandExecutor {
 				PlayersSetting.addPlayerToTeam(Teams.SPECTATOR, p);
 				MessageManager.sendMessage(player,
 						p.getName() + "を" + ChatColor.GRAY + "スペクテイターチーム" + ChatColor.WHITE + "に設定しました");
+				return true;
 			}
-			return true;
-
 		} else if (args[0].equalsIgnoreCase("setredpos")) {
 			if (!player.hasPermission("ebs.commands.redpos")) {
 				return true;
@@ -196,6 +195,22 @@ public class CommandManager implements CommandExecutor {
 			MessageManager.sendMessage(player, "設定用の村人を召喚しました");
 
 			return true;
+
+		}else if (args[0].equalsIgnoreCase("setstage")) {
+			if (Objects.isNull(args[1])) {
+				return true;
+			} else {
+				plg.setStageName(args[1]);
+				MessageManager.sendMessage(player, "ステージを" + ChatColor.AQUA + plg.getStageName() + ChatColor.WHITE + "に設定しました");
+				return true;
+			}
+		}else if(args[0].equalsIgnoreCase("build")) {
+			MessageManager.messageAll("ワールドを修復中です・・・");
+			WorldManager wm = new WorldManager();
+			Location loc = new Location(player.getWorld(), plg.getMyConfig().getBeginCoordinate()[0], plg.getMyConfig().getBeginCoordinate()[1], plg.getMyConfig().getBeginCoordinate()[2]);
+			wm.loadSchematic(loc, plg.getStageName());
+			MessageManager.messageAll("修復が完了しました！");
+			return true;
 		} else if (args[0].equalsIgnoreCase("version")) {
 			if (!player.hasPermission("ebs.commands.version")) {
 				return true;
@@ -203,11 +218,6 @@ public class CommandManager implements CommandExecutor {
 
 			PluginDescriptionFile pdf = plg.getDescription();
 			MessageManager.sendMessage(player, "Version: " + pdf.getVersion());
-			return true;
-		} else if(args[0].equalsIgnoreCase("build")) {
-			WorldManager wm = new WorldManager();
-			Location loc = new Location(player.getWorld(), plg.getMyConfig().getBeginCoordinate()[0], plg.getMyConfig().getBeginCoordinate()[1], plg.getMyConfig().getBeginCoordinate()[2]);
-			wm.loadSchematic(loc, "stage2");
 			return true;
 		}
 		MessageManager.CommandContent(player);
@@ -251,14 +261,15 @@ public class CommandManager implements CommandExecutor {
 
 				//皮装備装着
 				final String teamname = ChatColor.BLUE + "青チーム";
-				HashMap<ArmorType, ItemStack> map = new HashMap<ArmorType,ItemStack>();
-				map = itemManager.makeLeatherEquipment(teamname + "ヘルメット", teamname + "チェストプレート", teamname + "レギンス", teamname + "ブーツ", Color.BLUE);
+				HashMap<ArmorType, ItemStack> map = new HashMap<ArmorType, ItemStack>();
+				map = itemManager.makeLeatherEquipment(teamname + "ヘルメット", teamname + "チェストプレート", teamname + "レギンス",
+						teamname + "ブーツ", Color.BLUE);
 				p.getInventory().setHelmet(map.get(ArmorType.HELMET));
 				p.getInventory().setChestplate(map.get(ArmorType.CHESTPLATE));
 				p.getInventory().setLeggings(map.get(ArmorType.LEGGINGS));
 				p.getInventory().setBoots(map.get(ArmorType.BOOTS));
 
-			//赤チームだったら
+				//赤チームだったら
 			} else if (plg.getTeam(Teams.RED).hasEntry(p.getName())) {
 				p.teleport(PlayersSetting.getRedPos());
 				p.setBedSpawnLocation(PlayersSetting.getRedPos());
@@ -268,8 +279,9 @@ public class CommandManager implements CommandExecutor {
 
 				//皮装備装着
 				final String teamname = ChatColor.RED + "赤チーム";
-				HashMap<ArmorType, ItemStack> map = new HashMap<ArmorType,ItemStack>();
-				map = itemManager.makeLeatherEquipment(teamname + "ヘルメット", teamname + "チェストプレート", teamname + "レギンス", teamname + "ブーツ", Color.RED);
+				HashMap<ArmorType, ItemStack> map = new HashMap<ArmorType, ItemStack>();
+				map = itemManager.makeLeatherEquipment(teamname + "ヘルメット", teamname + "チェストプレート", teamname + "レギンス",
+						teamname + "ブーツ", Color.RED);
 				p.getInventory().setHelmet(map.get(ArmorType.HELMET));
 				p.getInventory().setChestplate(map.get(ArmorType.CHESTPLATE));
 				p.getInventory().setLeggings(map.get(ArmorType.LEGGINGS));
