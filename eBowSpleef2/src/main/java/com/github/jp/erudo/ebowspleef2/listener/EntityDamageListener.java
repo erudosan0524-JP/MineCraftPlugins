@@ -23,7 +23,6 @@ public class EntityDamageListener implements Listener {
 		plg.getServer().getPluginManager().registerEvents(this, plg);
 	}
 
-	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void onDamageEntity(EntityDamageByEntityEvent e) {
 		Entity entity = e.getEntity();
@@ -37,19 +36,20 @@ public class EntityDamageListener implements Listener {
 			if(ChatColor.stripColor(entity.getCustomName()).equals("SettingVillager")) {
 				e.setCancelled(true);
 			}
-		} else if(entity.getType() == EntityType.PLAYER && damager.getType() == EntityType.PLAYER) {
+
+		} else if(entity instanceof Player && damager instanceof Player) {
 			Player player = (Player) damager;
-			if(player.getItemInHand() != null) {
-				ItemStack item = player.getItemInHand();
+			if(player.getInventory().getItemInMainHand() != null) {
+				ItemStack item = player.getInventory().getItemInMainHand();
 				if(item.getType() == Material.BOW && item.hasItemMeta()) {
-					if(ChatColor.stripColor(item.getItemMeta().getDisplayName().toString()).equals(Items.bow2Name)) {
+					if(ChatColor.stripColor(item.getItemMeta().getDisplayName().toString()).equals(ChatColor.stripColor(Items.bow2Name))) {
 						e.setCancelled(true);
 
 						//ノックバック処理
 						Vector vector1 = entity.getLocation().toVector();
 						Vector vector2 = player.getLocation().toVector();
 
-						Vector vector = vector1.subtract(vector2).setY(0.5);
+						Vector vector = vector1.subtract(vector2).setY(0.5).multiply(0.6D);
 
 						entity.setVelocity(vector);
 					}
