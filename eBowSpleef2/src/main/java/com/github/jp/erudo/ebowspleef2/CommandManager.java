@@ -205,11 +205,18 @@ public class CommandManager implements CommandExecutor {
 				return true;
 			}
 		}else if(args[0].equalsIgnoreCase("build")) {
-			MessageManager.messageAll("ワールドを修復中です・・・");
+			MessageManager.messageAll("ワールドを復元中です・・・");
 			WorldManager wm = new WorldManager();
 			Location loc = new Location(player.getWorld(), plg.getMyConfig().getBeginCoordinate()[0], plg.getMyConfig().getBeginCoordinate()[1], plg.getMyConfig().getBeginCoordinate()[2]);
 			wm.loadSchematic(loc, plg.getStageName());
-			MessageManager.messageAll("修復が完了しました！");
+			MessageManager.messageAll("復元が完了しました！");
+			return true;
+
+		} else if (args[0].equalsIgnoreCase("resetscore")){
+			MessageManager.sendMessage(player, "スコアボードをリセットします");
+			plg.setBluePoint(0);
+			plg.setRedPoint(0);
+			MessageManager.sendMessage(player, "完了しました");
 			return true;
 		} else if (args[0].equalsIgnoreCase("version")) {
 			if (!player.hasPermission("ebs.commands.version")) {

@@ -3,6 +3,7 @@ package com.github.jp.erudo.ebowspleef2.runnable;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
@@ -14,6 +15,7 @@ import com.github.jp.erudo.ebowspleef2.enums.Teams;
 import com.github.jp.erudo.ebowspleef2.utils.MessageManager;
 import com.github.jp.erudo.ebowspleef2.utils.PlayersSetting;
 import com.github.jp.erudo.ebowspleef2.utils.TitleSender;
+import com.github.jp.erudo.ebowspleef2.utils.WorldManager;
 
 public class Game extends BukkitRunnable {
 
@@ -33,6 +35,12 @@ public class Game extends BukkitRunnable {
 
 			plg.setBluePoint(0);
 			plg.setRedPoint(0);
+
+			MessageManager.messageAll("ワールドを復元中です・・・");
+			WorldManager wm = new WorldManager();
+			Location loc = new Location(plg.getServer().getWorld("world"), plg.getMyConfig().getBeginCoordinate()[0], plg.getMyConfig().getBeginCoordinate()[1], plg.getMyConfig().getBeginCoordinate()[2]);
+			wm.loadSchematic(loc, plg.getStageName());
+			MessageManager.messageAll("復元が完了しました！");
 
 			for (Player player : Bukkit.getServer().getOnlinePlayers()) {
 				player.setSneaking(false);
