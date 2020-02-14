@@ -203,6 +203,8 @@ public class CommandManager implements CommandExecutor {
 			PluginDescriptionFile pdf = plg.getDescription();
 			MessageManager.sendMessage(player, "Version: " + pdf.getVersion());
 			return true;
+		} else if(args[0].equalsIgnoreCase("build")) {
+			plg.loadSchematic(player, "stage2");
 		}
 		MessageManager.CommandContent(player);
 		return false;

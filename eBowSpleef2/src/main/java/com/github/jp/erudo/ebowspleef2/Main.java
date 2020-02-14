@@ -1,7 +1,14 @@
 package com.github.jp.erudo.ebowspleef2;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
@@ -17,10 +24,21 @@ import com.github.jp.erudo.ebowspleef2.listener.DeathListener;
 import com.github.jp.erudo.ebowspleef2.listener.EntityDamageListener;
 import com.github.jp.erudo.ebowspleef2.listener.ItemDropListener;
 import com.github.jp.erudo.ebowspleef2.listener.MoveListener;
-import com.github.jp.erudo.ebowspleef2.listener.PotionSplashListener;
 import com.github.jp.erudo.ebowspleef2.listener.RespawnListener;
 import com.github.jp.erudo.ebowspleef2.runnable.EquipmentObserver;
 import com.github.jp.erudo.ebowspleef2.utils.Config;
+import com.sk89q.worldedit.EditSession;
+import com.sk89q.worldedit.WorldEdit;
+import com.sk89q.worldedit.WorldEditException;
+import com.sk89q.worldedit.extent.clipboard.Clipboard;
+import com.sk89q.worldedit.extent.clipboard.io.ClipboardFormat;
+import com.sk89q.worldedit.extent.clipboard.io.ClipboardFormats;
+import com.sk89q.worldedit.extent.clipboard.io.ClipboardReader;
+import com.sk89q.worldedit.function.operation.Operation;
+import com.sk89q.worldedit.function.operation.Operations;
+import com.sk89q.worldedit.math.BlockVector3;
+import com.sk89q.worldedit.session.ClipboardHolder;
+import com.sk89q.worldedit.world.World;
 
 public class Main extends JavaPlugin {
 
@@ -128,7 +146,6 @@ public class Main extends JavaPlugin {
 		new ClickVillagerListener(this);
 		new ItemDropListener(this);
 		new MoveListener(this);
-		new PotionSplashListener(this);
 		new EntityDamageListener(this);
 		new RespawnListener(this);
 
@@ -138,7 +155,7 @@ public class Main extends JavaPlugin {
 		EquipmentObserver eo = new EquipmentObserver(this);
 		this.getServer().getScheduler().runTaskTimer(this, eo, 0, 20L);
 
-		getServer().getWorld("world").setGameRuleValue("keepInventory","true");
+		getServer().getWorld("world").setGameRuleValue("keepInventory", "true");
 	}
 
 	public GameState getCurrentGameState() {
@@ -211,7 +228,32 @@ public class Main extends JavaPlugin {
 
 	public void addBluePoint() {
 		this.bluePoint += 1;
+	}
 
+	public void loadSchematic(Player player, String fileName) {
+		Location location = player.getLocation();
+		File schematic = new File(this.getDataFolder() + File.separator + "/schematics/" + fileName + ".schematic");
+
+		Clipboard clipboard;
+		ClipboardFormat format = ClipboardFormats.findByFile(schematic);
+		try (ClipboardReader reader = format.getReader(new FileInputStream(schematic))) {
+			clipboard = reader.read();
+
+			try (EditSession editSettion = WorldEdit.getInstance().getEditSessionFactory()
+					.getEditSession((World) this.getServer().getWorld("world"), -1)) {
+				Operation operation = new ClipboardHolder(clipboard).createPaste(editSettion)
+						.to(BlockVector3.at(location.getX(), location.getY(), location.getZ())).build();
+
+				Operations.complete(operation);
+
+			} catch (WorldEditException e) {
+				e.printStackTrace();
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 }
