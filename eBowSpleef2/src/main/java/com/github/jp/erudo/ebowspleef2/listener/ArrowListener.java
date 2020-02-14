@@ -75,7 +75,7 @@ public class ArrowListener implements Listener {
 			}
 
 			//あたったブロックが羊毛だったら消去
-			//あたったブロックの周り4マス
+			//あたったブロックを含む2*2*2の立方体
 
 			Block block = e.getHitBlock();
 			Location blockLoc1 = new Location(block.getWorld(), block.getLocation().getX() + 1,
@@ -86,6 +86,18 @@ public class ArrowListener implements Listener {
 			Location blockLoc3 = new Location(block.getWorld(), block.getLocation().getX() + 1,
 						block.getLocation().getY(),
 						block.getLocation().getZ() + 1);
+			Location blockLoc4 = new Location(block.getWorld(), block.getLocation().getX(),
+					block.getLocation().getY()+1,
+					block.getLocation().getZ());
+			Location blockLoc5 = new Location(block.getWorld(), block.getLocation().getX()+1,
+					block.getLocation().getY()+1,
+					block.getLocation().getZ());
+			Location blockLoc6 = new Location(block.getWorld(), block.getLocation().getX(),
+					block.getLocation().getY()+1,
+					block.getLocation().getZ()+1);
+			Location blockLoc7 = new Location(block.getWorld(), block.getLocation().getX()+1,
+					block.getLocation().getY()+1,
+					block.getLocation().getZ()+1);
 
 
 			if (plg.getMyConfig().getArrowrange() <= 1) {
@@ -110,6 +122,10 @@ public class ArrowListener implements Listener {
 				blockLoc1.getBlock().setType(Material.AIR);
 				blockLoc2.getBlock().setType(Material.AIR);
 				blockLoc3.getBlock().setType(Material.AIR);
+				blockLoc4.getBlock().setType(Material.AIR);
+				blockLoc5.getBlock().setType(Material.AIR);
+				blockLoc6.getBlock().setType(Material.AIR);
+				blockLoc7.getBlock().setType(Material.AIR);
 				block.getLocation().getWorld().spawnParticle(Particle.BLOCK_CRACK, block.getLocation(), 3, 2, 2, 2);
 				blockLoc1.getWorld().spawnParticle(Particle.BLOCK_CRACK, block.getLocation(), 3, 2, 2, 2);
 				blockLoc2.getWorld().spawnParticle(Particle.BLOCK_CRACK, block.getLocation(), 3, 2, 2, 2);

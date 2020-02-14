@@ -9,6 +9,7 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import com.github.jp.erudo.ebowspleef2.Main;
+import com.github.jp.erudo.ebowspleef2.item.Items;
 
 public class EquipmentObserver extends BukkitRunnable {
 
@@ -24,10 +25,10 @@ public class EquipmentObserver extends BukkitRunnable {
 			ItemStack handItem = p.getInventory().getItemInMainHand();
 			if(handItem != null && handItem.getType() == Material.BOW) {
 				if(handItem.hasItemMeta()) {
-					if(ChatColor.stripColor(handItem.getItemMeta().getDisplayName().toString()).equals("アイオロス")) {
+					if(ChatColor.stripColor(handItem.getItemMeta().getDisplayName().toString()).equals(Items.bow1Name)) {
 						p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED,2 *20,2), true);
 
-					} else if(ChatColor.stripColor(handItem.getItemMeta().getDisplayName().toString()).equals("アレス")) {
+					} else if(ChatColor.stripColor(handItem.getItemMeta().getDisplayName().toString()).equals(Items.bow2Name)) {
 						p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW,2 *20,2), true);
 					}
 				}

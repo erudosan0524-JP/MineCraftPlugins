@@ -99,10 +99,12 @@ public class ClickVillagerListener implements Listener {
 		if (e.getClickedInventory().getSize() != 9)
 			return;
 
+		String judgeItem = ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName().toString());
+
 		switch (e.getCurrentItem().getType()) {
 		case BOW:
 			//名前判定
-			if (e.getCurrentItem().getItemMeta().getDisplayName().toString().equals(Items.bowName)) {
+			if (judgeItem.equals(ChatColor.stripColor(Items.bowName))) {
 				//ほかの種類の弓を持っているかどうか
 				if (player.getInventory().contains(Material.BOW)) {
 					player.closeInventory();
@@ -113,7 +115,7 @@ public class ClickVillagerListener implements Listener {
 				player.getInventory().addItem(bow);
 				player.getInventory().addItem(new ItemStack(Material.ARROW, 64));
 
-			} else if (e.getCurrentItem().getItemMeta().getDisplayName().toString().equals(Items.bow1Name)) {
+			} else if (judgeItem.equals(ChatColor.stripColor(Items.bow1Name))) {
 				if (player.getInventory().contains(Material.BOW)) {
 					player.closeInventory();
 					MessageManager.sendMessage(player, "弓は一つまでしか持てません。");
@@ -129,7 +131,7 @@ public class ClickVillagerListener implements Listener {
 				player.getInventory().addItem(new ItemStack(Material.ARROW, 64));
 				player.getInventory().addItem(bow1);
 
-			} else if (e.getCurrentItem().getItemMeta().getDisplayName().toString().equals(Items.bow2Name)) {
+			} else if (judgeItem.equals(ChatColor.stripColor(Items.bow2Name))) {
 				if (player.getInventory().contains(Material.BOW)) {
 					player.closeInventory();
 					MessageManager.sendMessage(player, "弓は一つまでしか持てません。");
@@ -148,7 +150,7 @@ public class ClickVillagerListener implements Listener {
 			e.setCancelled(true);
 			break;
 		case SPLASH_POTION:
-			if (e.getCurrentItem().getItemMeta().getDisplayName().toString().equals(Items.potName)) {
+			if (judgeItem.equals(Items.potName)) {
 				//弓を持っているか
 				if (player.getInventory().contains(Material.BOW)) {
 					//弓を持っていてかつポーションを持っている状態
@@ -160,7 +162,7 @@ public class ClickVillagerListener implements Listener {
 
 					ItemStack item = player.getInventory().getItem(player.getInventory().first(Material.BOW));
 
-					if(ChatColor.stripColor(item.getItemMeta().getDisplayName().toString()).equals("ふつうの弓")) {
+					if(item.getItemMeta().getDisplayName().toString().equals(Items.bowName)) {
 						player.getInventory().addItem(potion);
 
 					} else {
