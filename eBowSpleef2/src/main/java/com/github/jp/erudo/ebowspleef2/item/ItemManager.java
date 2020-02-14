@@ -1,4 +1,4 @@
-package com.github.jp.erudo.ebowspleef2.utils;
+package com.github.jp.erudo.ebowspleef2.item;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,7 +21,7 @@ import net.md_5.bungee.api.ChatColor;
 
 public class ItemManager {
 
-	public ItemStack makeItem(Material m, String name, String desc, int amount) {
+	public ItemStack makeItem(Material m, String name,int amount,String... descs) {
 		ItemStack item = new ItemStack(m, amount);
 
 		//メタデータ作成
@@ -30,24 +30,10 @@ public class ItemManager {
 
 		//説明文作成
 		ArrayList<String> lore = new ArrayList<String>();
-		lore.add(desc);
-		meta.setLore(lore);
-		meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-		meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+		for(String desc : descs) {
+			lore.add(desc);
+		}
 
-		item.setItemMeta(meta);
-
-		return item;
-	}
-
-	public ItemStack makeItem(Material m, String name, List<String> lore, int amount) {
-		ItemStack item = new ItemStack(m, amount);
-
-		//メタデータ作成
-		ItemMeta meta = item.getItemMeta();
-		meta.setDisplayName(ChatColor.BOLD + name);
-
-		//説明文作成
 		meta.setLore(lore);
 		meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 		meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
@@ -119,14 +105,8 @@ public class ItemManager {
 
 	}
 
-	public ItemStack makeBow(String name, String desc, int amount) {
-		ItemStack bow = this.makeItem(Material.BOW, name, desc, amount);
-		bow.addEnchantment(Enchantment.ARROW_INFINITE, 1);
-		return bow;
-	}
-
-	public ItemStack makeBow(String name, List<String> desc, int amount) {
-		ItemStack bow = this.makeItem(Material.BOW, name, desc, amount);
+	public ItemStack makeBow(String name,int amount, String... descs) {
+		ItemStack bow = this.makeItem(Material.BOW, name, amount,descs);
 		bow.addEnchantment(Enchantment.ARROW_INFINITE, 1);
 		return bow;
 	}

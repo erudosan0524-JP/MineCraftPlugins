@@ -31,9 +31,9 @@ public class DeathListener implements Listener {
 		if(plg.getMyConfig().isCanRespawn()) {
 			//リスポーン可能ならポイント増やすだけ
 			if(plg.getTeam(Teams.BLUE).hasEntry(player.getName())) {
-				plg.setRedPoint(1);
+				plg.addRedPoint();
 			}else if(plg.getTeam(Teams.RED).hasEntry(player.getName())) {
-				plg.setBluePoint(1);
+				plg.addBluePoint();
 			}
 		} else {
 			//リスポーン不可ならチームから抜ける

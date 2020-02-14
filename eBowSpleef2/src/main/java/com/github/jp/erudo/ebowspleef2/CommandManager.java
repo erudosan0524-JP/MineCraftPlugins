@@ -26,8 +26,8 @@ import org.bukkit.scheduler.BukkitTask;
 import com.github.jp.erudo.ebowspleef2.enums.ArmorType;
 import com.github.jp.erudo.ebowspleef2.enums.GameState;
 import com.github.jp.erudo.ebowspleef2.enums.Teams;
+import com.github.jp.erudo.ebowspleef2.item.ItemManager;
 import com.github.jp.erudo.ebowspleef2.runnable.Game;
-import com.github.jp.erudo.ebowspleef2.utils.ItemManager;
 import com.github.jp.erudo.ebowspleef2.utils.MessageManager;
 import com.github.jp.erudo.ebowspleef2.utils.PlayersSetting;
 

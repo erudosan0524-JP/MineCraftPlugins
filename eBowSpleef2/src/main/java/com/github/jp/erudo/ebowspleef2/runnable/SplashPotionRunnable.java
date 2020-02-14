@@ -12,7 +12,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
 import com.github.jp.erudo.ebowspleef2.Main;
-import com.github.jp.erudo.ebowspleef2.utils.ItemManager;
+import com.github.jp.erudo.ebowspleef2.item.ItemManager;
 
 public class SplashPotionRunnable extends BukkitRunnable {
 

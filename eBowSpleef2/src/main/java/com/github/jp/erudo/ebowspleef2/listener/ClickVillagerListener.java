@@ -22,27 +22,16 @@ import org.bukkit.potion.PotionEffectType;
 
 import com.github.jp.erudo.ebowspleef2.Main;
 import com.github.jp.erudo.ebowspleef2.enums.GameState;
-import com.github.jp.erudo.ebowspleef2.utils.ItemManager;
+import com.github.jp.erudo.ebowspleef2.item.ItemManager;
+import com.github.jp.erudo.ebowspleef2.item.Items;
 import com.github.jp.erudo.ebowspleef2.utils.MessageManager;
 
 public class ClickVillagerListener implements Listener {
 
 	private Main plg;
 
-	//名前とか
+	//名前
 	private final String VillagerName = ChatColor.GREEN + "SettingVillager";
-	private final String bowName = ChatColor.WHITE + "ふつうの弓";
-	private final String bowDesc1 = ChatColor.GRAY + "シンプル・イズ・ザ・ベスト！";
-	private final String bowDesc2 = ChatColor.GRAY + "効果が何もついてない弓。";
-	private final String bow1Name = ChatColor.GOLD + "アイオロス"; //ギリシャ神話に登場する風神アイオロスから
-	private final String bow1Desc1 = ChatColor.GRAY + "風の神の加護を受けている。";
-	private final String bow1Desc2 = ChatColor.GRAY + "持つと移動速度が上昇する弓。";
-	private final String bow2Name = ChatColor.RED + "アレス"; //ギリシャ神話。戦闘神アレスから
-	private final String bow2Desc1 = ChatColor.GRAY + "戦闘の神の加護を受けている。";
-	private final String bow2Desc2 = ChatColor.GRAY + "持つと鈍足となるが、矢が3本同時に打てる。";
-	private final String potName = ChatColor.DARK_PURPLE + "魔法のポーション";
-	private final String potDesc1 = ChatColor.GRAY + "相手を10秒間移動不能にする。";
-	private final String potDesc2 = ChatColor.GRAY + "「ふつうの弓」と一緒に使うことができる。";
 
 	public ClickVillagerListener(Main main) {
 		this.plg = main;
@@ -88,28 +77,14 @@ public class ClickVillagerListener implements Listener {
 		Player player = (Player) e.getWhoClicked();
 		ItemManager itemManager = new ItemManager();
 
-		List<String> normalBowLore = new ArrayList<String>();
-		normalBowLore.add(bowDesc1);
-		normalBowLore.add(bowDesc2);
-		normalBowLore.add(ChatColor.GRAY + "しかし、特殊なポーションを追加で持つことができる。");
-
-		List<String> bow1Lore = new ArrayList<String>();
-		bow1Lore.add(bow1Desc1);
-		bow1Lore.add(bow1Desc2);
-
-		List<String> bow2Lore = new ArrayList<String>();
-		bow2Lore.add(bow2Desc1);
-		bow2Lore.add(bow2Desc2);
-
 		List<String> potionLore = new ArrayList<String>();
-		potionLore.add(potDesc1);
-		potionLore.add(potDesc2);
-		potionLore.add(ChatColor.AQUA + "使用した" + plg.getMyConfig().getPotionInterval() +"秒後に自動補充される");
+		potionLore.add(Items.potDesc1);
+		potionLore.add(Items.potDesc2);
 
-		ItemStack bow = itemManager.makeBow(bowName, normalBowLore, 1);
-		ItemStack bow1 = itemManager.makeBow(bow1Name, bow1Lore, 1);
-		ItemStack bow2 = itemManager.makeBow(bow2Name, bow2Lore, 1);
-		ItemStack potion = itemManager.makePotion(potName, potionLore, PotionEffectType.SLOW,
+		ItemStack bow = itemManager.makeBow(Items.bowName,1, Items.bowDesc1,Items.bowDesc2, Items.bowDesc3);
+		ItemStack bow1 = itemManager.makeBow(Items.bow1Name, 1, Items.bow1Desc1,Items.bow1Desc2);
+		ItemStack bow2 = itemManager.makeBow(Items.bow2Name, 1, Items.bow2Desc1,Items.bow2Desc2);
+		ItemStack potion = itemManager.makePotion(Items.potName, potionLore, PotionEffectType.SLOW,
 				PotionEffectType.BLINDNESS, PotionEffectType.CONFUSION, 127, 127, 1, Color.BLACK);
 
 		if (Objects.isNull(e.getCurrentItem()) || e.getCurrentItem().getType().equals(Material.AIR)
@@ -127,7 +102,7 @@ public class ClickVillagerListener implements Listener {
 		switch (e.getCurrentItem().getType()) {
 		case BOW:
 			//名前判定
-			if (ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName().toString()).equals("ふつうの弓")) {
+			if (e.getCurrentItem().getItemMeta().getDisplayName().toString().equals(Items.bowName)) {
 				//ほかの種類の弓を持っているかどうか
 				if (player.getInventory().contains(Material.BOW)) {
 					player.closeInventory();
@@ -138,8 +113,7 @@ public class ClickVillagerListener implements Listener {
 				player.getInventory().addItem(bow);
 				player.getInventory().addItem(new ItemStack(Material.ARROW, 64));
 
-			} else if (ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName().toString())
-					.equals("アイオロス")) {
+			} else if (e.getCurrentItem().getItemMeta().getDisplayName().toString().equals(Items.bow1Name)) {
 				if (player.getInventory().contains(Material.BOW)) {
 					player.closeInventory();
 					MessageManager.sendMessage(player, "弓は一つまでしか持てません。");
@@ -155,8 +129,7 @@ public class ClickVillagerListener implements Listener {
 				player.getInventory().addItem(new ItemStack(Material.ARROW, 64));
 				player.getInventory().addItem(bow1);
 
-			} else if (ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName().toString())
-					.equals("アレス")) {
+			} else if (e.getCurrentItem().getItemMeta().getDisplayName().toString().equals(Items.bow2Name)) {
 				if (player.getInventory().contains(Material.BOW)) {
 					player.closeInventory();
 					MessageManager.sendMessage(player, "弓は一つまでしか持てません。");
@@ -175,7 +148,7 @@ public class ClickVillagerListener implements Listener {
 			e.setCancelled(true);
 			break;
 		case SPLASH_POTION:
-			if (ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName().toString()).equals("魔法のポーション")) {
+			if (e.getCurrentItem().getItemMeta().getDisplayName().toString().equals(Items.potName)) {
 				//弓を持っているか
 				if (player.getInventory().contains(Material.BOW)) {
 					//弓を持っていてかつポーションを持っている状態
@@ -217,28 +190,14 @@ public class ClickVillagerListener implements Listener {
 		ItemManager itemManager = new ItemManager();
 		Inventory inv = Bukkit.createInventory(null, 9, VillagerName);
 
-		List<String> normalBowLore = new ArrayList<String>();
-		normalBowLore.add(bowDesc1);
-		normalBowLore.add(bowDesc2);
-		normalBowLore.add(ChatColor.GRAY + "しかし、特殊なポーションを追加で持つことができる。");
-
-		List<String> bow1Lore = new ArrayList<String>();
-		bow1Lore.add(bow1Desc1);
-		bow1Lore.add(bow1Desc2);
-
-		List<String> bow2Lore = new ArrayList<String>();
-		bow2Lore.add(bow2Desc1);
-		bow2Lore.add(bow2Desc2);
-
 		List<String> potionLore = new ArrayList<String>();
-		potionLore.add(potDesc1);
-		potionLore.add(potDesc2);
-		potionLore.add(ChatColor.AQUA + "使用した" + plg.getMyConfig().getPotionInterval() +"秒後に自動補充される");
+		potionLore.add(Items.potDesc1);
+		potionLore.add(Items.potDesc2);
 
-		ItemStack bow = itemManager.makeBow(bowName, normalBowLore, 1);
-		ItemStack bow1 = itemManager.makeBow(bow1Name, bow1Lore, 1);
-		ItemStack bow2 = itemManager.makeBow(bow2Name, bow2Lore, 1);
-		ItemStack potion = itemManager.makePotion(potName, potionLore, PotionEffectType.SLOW,
+		ItemStack bow = itemManager.makeBow(Items.bowName, 1, Items.bowDesc1,Items.bowDesc2,Items.bowDesc3);
+		ItemStack bow1 = itemManager.makeBow(Items.bow1Name, 1, Items.bow1Desc1,Items.bow1Desc2);
+		ItemStack bow2 = itemManager.makeBow(Items.bow2Name, 1, Items.bow2Desc1,Items.bow2Desc2);
+		ItemStack potion = itemManager.makePotion(Items.potName, potionLore, PotionEffectType.SLOW,
 				PotionEffectType.BLINDNESS, PotionEffectType.CONFUSION, 127, 127, 1, Color.BLACK);
 
 		inv.setItem(1, bow);

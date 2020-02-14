@@ -205,4 +205,13 @@ public class Main extends JavaPlugin {
 		this.bluePoint = num;
 	}
 
+	public void addRedPoint() {
+		this.redPoint += 1;
+	}
+
+	public void addBluePoint() {
+		this.bluePoint += 1;
+
+	}
+
 }
