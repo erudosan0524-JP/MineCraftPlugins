@@ -29,12 +29,18 @@ public class BowShotListener implements Listener {
 		Location loc = player.getLocation();
 
 		double arrowAngle = 45; //45度
-		double totalAngle = loc.getYaw() + arrowAngle;
-		double arrowDirX = Math.sin(Math.toRadians(totalAngle));
-		double arrowDirZ =  Math.cos(Math.toRadians(totalAngle));
+		double totalAngle1 = loc.getYaw() + arrowAngle;
+		double arrowDirX1 = Math.sin(Math.toRadians(totalAngle1));
+		double arrowDirZ1 =  Math.cos(Math.toRadians(totalAngle1));
 
-		Vector arrowDir = new Vector(arrowDirX,loc.getDirection().getY(),arrowDirZ);
+		double totalAngle2 = loc.getYaw() - arrowAngle;
+		double arrowDirX2 = Math.sin(Math.toRadians(totalAngle2));
+		double arrowDirZ2 = Math.cos(Math.toRadians(totalAngle2));
 
-		player.launchProjectile(Arrow.class,arrowDir);
+		Vector arrowDir1 = new Vector(arrowDirX1,loc.getDirection().getY(),arrowDirZ1);
+		Vector arrowDir2 = new Vector(arrowDirX2,loc.getDirection().getY(),arrowDirZ2);
+
+		player.launchProjectile(Arrow.class,arrowDir1);
+		player.launchProjectile(Arrow.class,arrowDir2);
 	}
 }
