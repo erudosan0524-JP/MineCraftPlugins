@@ -95,7 +95,7 @@ public class ClickVillagerListener implements Listener {
 		ItemManager itemManager = new ItemManager();
 
 
-		ItemStack bow = itemManager.makeBow(Items.bowName,1, Items.bowDesc1,Items.bowDesc2, Items.bowDesc3);
+		ItemStack bow = itemManager.makeBow(Items.bowName,1, Items.bowDesc1,Items.bowDesc2);
 		ItemStack bow1 = itemManager.makeBow(Items.bow1Name, 1, Items.bow1Desc1,Items.bow1Desc2);
 		ItemStack bow2 = itemManager.makeBow(Items.bow2Name, 1, Enchantment.ARROW_KNOCKBACK, 1 ,Items.bow2Desc1,Items.bow2Desc2,Items.bow2Desc3);
 		ItemStack bow3 = itemManager.makeBow(Items.bow3Name, 1, Items.bow3Desc1,Items.bow3Desc2,Items.bow3Desc3);
@@ -158,7 +158,7 @@ public class ClickVillagerListener implements Listener {
 		ItemManager itemManager = new ItemManager();
 		Inventory inv = Bukkit.createInventory(null, 9, VillagerName);
 
-		ItemStack bow = itemManager.makeBow(Items.bowName, 1, Items.bowDesc1,Items.bowDesc2,Items.bowDesc3);
+		ItemStack bow = itemManager.makeBow(Items.bowName, 1, Items.bowDesc1,Items.bowDesc2);
 		ItemStack bow1 = itemManager.makeBow(Items.bow1Name, 1, Items.bow1Desc1,Items.bow1Desc2);
 		ItemStack bow2 = itemManager.makeBow(Items.bow2Name, 1, Enchantment.ARROW_KNOCKBACK, 1 ,Items.bow2Desc1,Items.bow2Desc2,Items.bow2Desc3);
 		ItemStack bow3 = itemManager.makeBow(Items.bow3Name, 1, Items.bow3Desc1,Items.bow3Desc2,Items.bow3Desc3);
