@@ -1,12 +1,9 @@
 package com.github.jp.erudo.ebowspleef2.listener;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
@@ -19,7 +16,6 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.potion.PotionEffectType;
 
 import com.github.jp.erudo.ebowspleef2.Main;
 import com.github.jp.erudo.ebowspleef2.enums.GameState;
@@ -98,16 +94,10 @@ public class ClickVillagerListener implements Listener {
 		Player player = (Player) e.getWhoClicked();
 		ItemManager itemManager = new ItemManager();
 
-		List<String> potionLore = new ArrayList<String>();
-		potionLore.add(Items.potDesc1);
-		potionLore.add(Items.potDesc2);
 
 		ItemStack bow = itemManager.makeBow(Items.bowName,1, Items.bowDesc1,Items.bowDesc2, Items.bowDesc3);
 		ItemStack bow1 = itemManager.makeBow(Items.bow1Name, 1, Items.bow1Desc1,Items.bow1Desc2);
 		ItemStack bow2 = itemManager.makeBow(Items.bow2Name, 1, Enchantment.ARROW_KNOCKBACK, 1 ,Items.bow2Desc1,Items.bow2Desc2);
-		ItemStack potion = itemManager.makePotion(Items.potName, potionLore, PotionEffectType.SLOW,
-				PotionEffectType.BLINDNESS, PotionEffectType.CONFUSION, 127, 127, 1, Color.BLACK);
-
 
 		String judgeItem = ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName().toString());
 
@@ -159,40 +149,7 @@ public class ClickVillagerListener implements Listener {
 			}
 			e.setCancelled(true);
 			break;
-		case SPLASH_POTION:
-			if (judgeItem.equals(Items.potName)) {
-				//弓を持っているか
-				if (player.getInventory().contains(Material.BOW)) {
-					//弓を持っていてかつポーションを持っている状態
-					if (player.getInventory().contains(Material.SPLASH_POTION)) {
-						player.closeInventory();
-						MessageManager.sendMessage(player, "ポーションは一つまでしか持てません。");
-						return;
-					}
 
-					ItemStack item = player.getInventory().getItem(player.getInventory().first(Material.BOW));
-
-					if(item.getItemMeta().getDisplayName().toString().equals(Items.bowName)) {
-						player.getInventory().addItem(potion);
-
-					} else {
-						player.closeInventory();
-						MessageManager.sendMessage(player, "このポーションは「ふつうの弓」と一緒にしか使えません。");
-						return;
-					}
-				} else {
-					if (player.getInventory().contains(Material.SPLASH_POTION)) {
-						player.closeInventory();
-						MessageManager.sendMessage(player, "ポーションは一つまでしか持てません。");
-						return;
-					}
-
-					player.getInventory().addItem(potion);
-				}
-
-			}
-			e.setCancelled(true);
-			break;
 		default:
 			break;
 		}
@@ -202,20 +159,13 @@ public class ClickVillagerListener implements Listener {
 		ItemManager itemManager = new ItemManager();
 		Inventory inv = Bukkit.createInventory(null, 9, VillagerName);
 
-		List<String> potionLore = new ArrayList<String>();
-		potionLore.add(Items.potDesc1);
-		potionLore.add(Items.potDesc2);
-
 		ItemStack bow = itemManager.makeBow(Items.bowName, 1, Items.bowDesc1,Items.bowDesc2,Items.bowDesc3);
 		ItemStack bow1 = itemManager.makeBow(Items.bow1Name, 1, Items.bow1Desc1,Items.bow1Desc2);
 		ItemStack bow2 = itemManager.makeBow(Items.bow2Name, 1, Enchantment.ARROW_KNOCKBACK, 1 ,Items.bow2Desc1,Items.bow2Desc2);
-		ItemStack potion = itemManager.makePotion(Items.potName, potionLore, PotionEffectType.SLOW,
-				PotionEffectType.BLINDNESS, PotionEffectType.CONFUSION, 127, 127, 1, Color.BLACK);
 
 		inv.setItem(1, bow);
 		inv.setItem(3, bow1);
 		inv.setItem(5, bow2);
-		inv.setItem(7, potion);
 
 		player.openInventory(inv);
 	}
