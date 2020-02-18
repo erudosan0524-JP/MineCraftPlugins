@@ -98,6 +98,7 @@ public class ClickVillagerListener implements Listener {
 		ItemStack bow = itemManager.makeBow(Items.bowName,1, Items.bowDesc1,Items.bowDesc2, Items.bowDesc3);
 		ItemStack bow1 = itemManager.makeBow(Items.bow1Name, 1, Items.bow1Desc1,Items.bow1Desc2);
 		ItemStack bow2 = itemManager.makeBow(Items.bow2Name, 1, Enchantment.ARROW_KNOCKBACK, 1 ,Items.bow2Desc1,Items.bow2Desc2);
+		ItemStack bow3 = itemManager.makeBow(Items.bow3Name, 1, Items.bow3Desc1,Items.bow3Desc2,Items.bow3Desc3);
 
 		String judgeItem = ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName().toString());
 
@@ -122,12 +123,6 @@ public class ClickVillagerListener implements Listener {
 					return;
 				}
 
-				if (player.getInventory().contains(Material.SPLASH_POTION)) {
-					player.closeInventory();
-					MessageManager.sendMessage(player, "この弓はポーションといっしょに使えません。");
-					return;
-				}
-
 				player.getInventory().addItem(new ItemStack(Material.ARROW, 64));
 				player.getInventory().addItem(bow1);
 
@@ -138,14 +133,18 @@ public class ClickVillagerListener implements Listener {
 					return;
 				}
 
-				if (player.getInventory().contains(Material.SPLASH_POTION)) {
-					player.closeInventory();
-					MessageManager.sendMessage(player, "この弓はポーションといっしょに使えません。");
-					return;
-				}
 				player.getInventory().addItem(new ItemStack(Material.ARROW, 64));
 				player.getInventory().addItem(bow2);
 
+			}else if(judgeItem.equals(ChatColor.stripColor(Items.bow3Name))) {
+				if(player.getInventory().contains(Material.BOW)) {
+					player.closeInventory();
+					MessageManager.sendMessage(player, "弓は一つまでしか持てません。");
+					return;
+				}
+
+				player.getInventory().addItem(new ItemStack(Material.ARROW,64));
+				player.getInventory().addItem(bow3);
 			}
 			e.setCancelled(true);
 			break;
@@ -162,10 +161,12 @@ public class ClickVillagerListener implements Listener {
 		ItemStack bow = itemManager.makeBow(Items.bowName, 1, Items.bowDesc1,Items.bowDesc2,Items.bowDesc3);
 		ItemStack bow1 = itemManager.makeBow(Items.bow1Name, 1, Items.bow1Desc1,Items.bow1Desc2);
 		ItemStack bow2 = itemManager.makeBow(Items.bow2Name, 1, Enchantment.ARROW_KNOCKBACK, 1 ,Items.bow2Desc1,Items.bow2Desc2);
+		ItemStack bow3 = itemManager.makeBow(Items.bow3Name, 1, Items.bow3Desc1,Items.bow3Desc2,Items.bow3Desc3);
 
 		inv.setItem(1, bow);
 		inv.setItem(3, bow1);
 		inv.setItem(5, bow2);
+		inv.setItem(7, bow3);
 
 		player.openInventory(inv);
 	}

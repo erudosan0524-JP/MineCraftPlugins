@@ -22,10 +22,13 @@ import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.util.Vector;
 
 import com.github.jp.erudo.ebowspleef2.Main;
 import com.github.jp.erudo.ebowspleef2.enums.GameState;
+import com.github.jp.erudo.ebowspleef2.item.Items;
 
+import net.md_5.bungee.api.ChatColor;
 import net.minecraft.server.v1_12_R1.EnumParticle;
 import net.minecraft.server.v1_12_R1.PacketPlayOutWorldParticles;
 
@@ -39,10 +42,43 @@ public class ArrowListener implements Listener {
 		plg.getServer().getPluginManager().registerEvents(this, plg);
 	}
 
+	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void onShoot(EntityShootBowEvent e) {
-		if (!plg.getCurrentGameState().equals(GameState.GAMING)) {
+//		if (!plg.getCurrentGameState().equals(GameState.GAMING)) {
+//			return;
+//		}
+
+		if(!(e.getEntity() instanceof Player)) {
 			return;
+		}
+
+		Player player = (Player) e.getEntity();
+
+		if(player.getInventory().getItemInMainHand().getType() == Material.BOW) {
+			if(player.getInventory().getItemInHand().hasItemMeta()
+					&& player.getInventory().getItemInHand().getItemMeta().getDisplayName().equals(ChatColor.stripColor(Items.bow3Name))) {
+
+				double multiply = e.getProjectile().getVelocity().length();
+
+				Location loc = player.getLocation();
+
+				double arrowAngle = 15; //15度
+
+				double totalAngle1 = (((loc.getYaw()+90) + arrowAngle) * Math.PI)/180;
+				double arrowDirX1 = Math.cos(totalAngle1);
+				double arrowDirZ1 =  Math.sin(totalAngle1);
+
+				double totalAngle2 = (((loc.getYaw()+90) - arrowAngle) * Math.PI)/180;
+				double arrowDirX2 = Math.cos(totalAngle2);
+				double arrowDirZ2 = Math.sin(totalAngle2);
+
+				Vector arrowDir1 = new Vector(arrowDirX1,loc.getDirection().getY(),arrowDirZ1).normalize().multiply(multiply);
+				Vector arrowDir2 = new Vector(arrowDirX2,loc.getDirection().getY(),arrowDirZ2).normalize().multiply(multiply);
+
+				player.launchProjectile(Arrow.class,arrowDir1);
+				player.launchProjectile(Arrow.class,arrowDir2);
+			}
 		}
 
 		//矢の軌道
