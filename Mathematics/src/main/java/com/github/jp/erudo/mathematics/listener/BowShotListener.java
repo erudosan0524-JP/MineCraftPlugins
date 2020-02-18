@@ -30,15 +30,15 @@ public class BowShotListener implements Listener {
 		Player player = (Player) e.getEntity();
 		Location loc = player.getLocation();
 
-		double arrowAngle1 = 45; //45度
-		double totalAngle1 = loc.getYaw() + arrowAngle1;
-		double arrowDirX1 = Math.sin(Math.toRadians(totalAngle1));
-		double arrowDirZ1 =  Math.cos(Math.toRadians(totalAngle1));
+		double arrowAngle = 15; //45度
 
-		double arrowAngle2 = 315;
-		double totalAngle2 = loc.getYaw() + arrowAngle2;
-		double arrowDirX2 = Math.sin(Math.toRadians(totalAngle2));
-		double arrowDirZ2 = Math.cos(Math.toRadians(totalAngle2));
+		double totalAngle1 = (((loc.getYaw()+90) + arrowAngle) * Math.PI)/180;
+		double arrowDirX1 = Math.cos(totalAngle1);
+		double arrowDirZ1 =  Math.sin(totalAngle1);
+
+		double totalAngle2 = (((loc.getYaw()+90) - arrowAngle) * Math.PI)/180;
+		double arrowDirX2 = Math.cos(totalAngle2);
+		double arrowDirZ2 = Math.sin(totalAngle2);
 
 		Vector arrowDir1 = new Vector(arrowDirX1,loc.getDirection().getY(),arrowDirZ1).normalize().multiply(multiply);
 		Vector arrowDir2 = new Vector(arrowDirX2,loc.getDirection().getY(),arrowDirZ2).normalize().multiply(multiply);
