@@ -11,25 +11,27 @@ import com.github.jp.erudo.mathematics.Main;
 
 public class EntityDamageListener implements Listener {
 
-	private Main plg;
-
 	public EntityDamageListener(Main plg) {
-		this.plg = plg;
 		plg.getServer().getPluginManager().registerEvents(this, plg);
 	}
 
 	@EventHandler
 	public void onDamageEntity(EntityDamageByEntityEvent e) {
-		if(e.getDamager() instanceof Player) {
+		if(!(e.getDamager() instanceof Player)) {
 			return;
 		}
 
-		Player damager = (Player) e.getDamager();
-		Entity entity = e.getEntity();
+		System.out.println("event fire");
+		e.setCancelled(true);
 
+		Entity damager =  (Player) e.getDamager();
+		Entity entity =  e.getEntity();
 
-		entity.setVelocity(new Vector(entity.getLocation().getX() - damager.getLocation().getX(),
-										entity.getLocation().getY() - damager.getLocation().getY(),
-										entity.getLocation().getZ() - damager.getLocation().getZ()).normalize().multiply(-1.5D));
+		Vector vector1 = entity.getLocation().toVector();
+		Vector vector2 = damager.getLocation().toVector();
+
+		Vector vector = vector1.subtract(vector2).setY(0.5).multiply(0.6D);
+
+		entity.setVelocity(vector);
 	}
 }

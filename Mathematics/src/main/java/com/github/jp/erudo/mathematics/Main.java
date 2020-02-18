@@ -2,7 +2,7 @@ package com.github.jp.erudo.mathematics;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.github.jp.erudo.mathematics.listener.EntityDamageListener;
+import com.github.jp.erudo.mathematics.listener.BowShotListener;
 
 public class Main extends JavaPlugin {
 
@@ -15,7 +15,7 @@ public class Main extends JavaPlugin {
 	public void onEnable() {
 		getLogger().info("プラグインが起動しました");
 
-		new EntityDamageListener(this);
+		new BowShotListener(this);
 	}
 
 }
