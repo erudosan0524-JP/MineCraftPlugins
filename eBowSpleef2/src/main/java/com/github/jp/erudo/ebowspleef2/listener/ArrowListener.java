@@ -45,9 +45,9 @@ public class ArrowListener implements Listener {
 	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void onShoot(EntityShootBowEvent e) {
-//		if (!plg.getCurrentGameState().equals(GameState.GAMING)) {
-//			return;
-//		}
+		if (!plg.getCurrentGameState().equals(GameState.GAMING)) {
+			return;
+		}
 
 		if(!(e.getEntity() instanceof Player)) {
 			return;
