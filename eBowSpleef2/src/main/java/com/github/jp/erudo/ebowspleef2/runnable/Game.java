@@ -4,6 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
@@ -22,14 +23,34 @@ public class Game extends BukkitRunnable {
 	private final Main plg;
 	private BukkitTask task;
 	private int count;
+	private TitleSender title;
 
 	public Game(Main plg, int count) {
 		this.plg = plg;
 		this.count = count;
+		title = new TitleSender();
 	}
 
 	public void run() {
+
 		if (plg.getCurrentGameState() == GameState.END) {
+			if(plg.getMyConfig().isCanRespawn()) {
+				if(plg.getBluePoint() > plg.getRedPoint()) { //青の勝ち
+					for(Player p : plg.getServer().getOnlinePlayers()) {
+						title.sendTitle(p, ChatColor.BLUE + "青チーム" + ChatColor.WHITE + "の勝利！！！", null, null);
+					}
+				} else if (plg.getRedPoint() < plg.getBluePoint()) { //赤の勝ち
+					for(Player p : plg.getServer().getOnlinePlayers()) {
+						title.sendTitle(p, ChatColor.RED + "赤チーム" + ChatColor.WHITE + "の勝利！！！", null, null);
+					}
+				} else { //引き分け
+					for(Player p : plg.getServer().getOnlinePlayers()) {
+						title.sendTitle(p,ChatColor.WHITE + "引き分け！！！", null, null);
+					}
+				}
+			}
+
+
 			MessageManager.broadcastMessage("試合終了！！");
 			count = 0;
 
@@ -79,7 +100,16 @@ public class Game extends BukkitRunnable {
 				Score BluePoint = plg.getObj().getScore(ChatColor.DARK_BLUE + "青チーム獲得ポイント: ");
 				BluePoint.setScore(plg.getBluePoint());
 
-				TitleSender title = new TitleSender();
+
+				//カウントダウン
+				if(count <= 3) { //0<count<=3
+					for (Player p : plg.getServer().getOnlinePlayers()) {
+						title.sendTitle(p, String.valueOf(count), null, null);
+						p.playSound(p.getLocation(), Sound.BLOCK_ANVIL_PLACE, 0.7F, 1);
+					}
+				}
+
+
 				if (!plg.getMyConfig().isCanRespawn()) {
 					for (Player p : plg.getServer().getOnlinePlayers()) {
 						title.sendTitle(p, null, null, ChatColor.RED + "赤チーム残り人数: " + plg.getTeam(Teams.RED).getEntries().size()
@@ -89,11 +119,18 @@ public class Game extends BukkitRunnable {
 
 				if (plg.getTeam(Teams.RED).getEntries().size() <= 0) {
 					plg.setCurrentGameState(GameState.END);
+					for(Player p : plg.getServer().getOnlinePlayers()) {
+						title.sendTitle(p, ChatColor.BLUE + "青チーム" + ChatColor.WHITE + "の勝利！！！", null, null);
+					}
+
 					return;
 				}
 
 				if (plg.getTeam(Teams.BLUE).getEntries().size() <= 0) {
 					plg.setCurrentGameState(GameState.END);
+					for(Player p : plg.getServer().getOnlinePlayers()) {
+						title.sendTitle(p, ChatColor.RED + "赤チーム" + ChatColor.WHITE + "の勝利！！！", null, null);
+					}
 					return;
 				}
 
