@@ -3,6 +3,9 @@ package com.github.jp.erudo.enowater;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.github.jp.erudo.enowater.listener.WaterDispenceListener;
+import com.github.jp.erudo.enowater.listener.WaterPlaceListener;
+
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ClickEvent.Action;
@@ -19,6 +22,8 @@ public class Main extends JavaPlugin {
 	@Override
 	public void onEnable() {
 		getLogger().info("プラグインが起動しました");
+		new WaterDispenceListener(this);
+		new WaterPlaceListener(this);
 	}
 
 	public static void sendHoverText(Player p, String text, String hoverText, String command) {
