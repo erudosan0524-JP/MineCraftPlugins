@@ -1,4 +1,4 @@
-package jp.github.erudo.eantitroll.events;
+package com.github.jp.erudo.eantitroll.events;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -11,9 +11,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerBucketEmptyEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import jp.github.erudo.eantitroll.utils.Config;
-import jp.github.erudo.eantitroll.utils.MessageManager;
-import jp.github.erudo.eantitroll.utils.User;
+import com.github.jp.erudo.eantitroll.utils.Config;
+import com.github.jp.erudo.eantitroll.utils.MessageManager;
+import com.github.jp.erudo.eantitroll.utils.User;
 
 public class LavaListener implements Listener {
 

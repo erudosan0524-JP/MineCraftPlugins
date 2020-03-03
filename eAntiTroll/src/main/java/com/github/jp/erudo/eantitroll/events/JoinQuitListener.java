@@ -1,4 +1,4 @@
-package jp.github.erudo.eantitroll.events;
+package com.github.jp.erudo.eantitroll.events;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -7,7 +7,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import jp.github.erudo.eantitroll.utils.User;
+import com.github.jp.erudo.eantitroll.utils.User;
 
 public class JoinQuitListener implements Listener {
 

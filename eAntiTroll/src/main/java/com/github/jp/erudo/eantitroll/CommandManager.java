@@ -1,4 +1,4 @@
-package jp.github.erudo.eantitroll;
+package com.github.jp.erudo.eantitroll;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -8,7 +8,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import jp.github.erudo.eantitroll.utils.User;
+import com.github.jp.erudo.eantitroll.utils.User;
+
 
 public class CommandManager implements CommandExecutor {
 

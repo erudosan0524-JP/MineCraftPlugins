@@ -1,4 +1,4 @@
-package jp.github.erudo.eantitroll.utils;
+package com.github.jp.erudo.eantitroll.utils;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.Plugin;

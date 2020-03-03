@@ -1,4 +1,4 @@
-package jp.github.erudo.eantitroll.events;
+package com.github.jp.erudo.eantitroll.events;
 
 import java.util.ArrayList;
 
@@ -20,10 +20,11 @@ import org.bukkit.event.entity.ExplosionPrimeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import jp.github.erudo.eantitroll.utils.Config;
-import jp.github.erudo.eantitroll.utils.MathUtils;
-import jp.github.erudo.eantitroll.utils.MessageManager;
-import jp.github.erudo.eantitroll.utils.User;
+import com.github.jp.erudo.eantitroll.Main;
+import com.github.jp.erudo.eantitroll.utils.Config;
+import com.github.jp.erudo.eantitroll.utils.MathUtils;
+import com.github.jp.erudo.eantitroll.utils.MessageManager;
+import com.github.jp.erudo.eantitroll.utils.User;
 
 public class TNTListener implements Listener {
 
@@ -142,10 +143,21 @@ public class TNTListener implements Listener {
 
 				for (Player p : Bukkit.getServer().getOnlinePlayers()) {
 					if (p.isOp() || p.hasPermission("eantitroll.admin")) {
-						MessageManager.sendHoverText(p, ChatColor.RED + "発生場所(" + loc.getWorld().getName() + " , "
-								+ x + " , " + y + " , " + z + ")にテレポートする", "クリックしてテレポート",
-								"/mv tp " + p.getName() + " " + loc.getWorld().getName());
-
+						if (Main.MVFlag) {
+							if (loc.getWorld() == p.getLocation().getWorld()) {
+								MessageManager.sendHoverText(p,
+										ChatColor.RED + "発生場所(" + x + " , " + y + " , " + z + ")にテレポートする",
+										"クリックしてテレポート", "/tp " + p.getName() + " " + x + " " + y + " " + z);
+							} else {
+								MessageManager.sendHoverText(p, ChatColor.RED + "発生場所(" + loc.getWorld().getName() + " , "
+										+ x + " , " + y + " , " + z + ")にテレポートする", "クリックしてテレポート",
+										"/mv tp " + p.getName() + " " + loc.getWorld().getName());
+							}
+						} else {
+							MessageManager.sendHoverText(p,
+									ChatColor.RED + "発生場所(" + x + " , " + y + " , " + z + ")にテレポートする",
+									"クリックしてテレポート", "/tp " + p.getName() + " " + x + " " + y + " " + z);
+						}
 					}
 				}
 			}

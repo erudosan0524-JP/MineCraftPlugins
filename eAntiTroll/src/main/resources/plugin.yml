@@ -1,8 +1,9 @@
-name: eAntiTroll
-version: 1.4.1
-main: jp.github.erudo.eantitroll.EAntiTroll
+name: "${project.name}"
+version: "${project.version}"
+main: "${project.groupId}.Main"
+softdepend: [Multiverse-Core]
 website: https://github.com/erudosan0524-JP
-author: 'Ld0'
+author: 'erudo'
 commands:
    eAntiTroll:
     description: kaijo/on/off

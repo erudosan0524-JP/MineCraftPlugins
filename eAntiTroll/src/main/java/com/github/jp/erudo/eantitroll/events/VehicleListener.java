@@ -1,4 +1,4 @@
-package jp.github.erudo.eantitroll.events;
+package com.github.jp.erudo.eantitroll.events;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -11,8 +11,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.vehicle.VehicleCreateEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import jp.github.erudo.eantitroll.utils.MathUtils;
-import jp.github.erudo.eantitroll.utils.MessageManager;
+import com.github.jp.erudo.eantitroll.Main;
+import com.github.jp.erudo.eantitroll.utils.MathUtils;
+import com.github.jp.erudo.eantitroll.utils.MessageManager;
 
 public class VehicleListener implements Listener {
 
@@ -39,14 +40,20 @@ public class VehicleListener implements Listener {
 
 			for (Player p : Bukkit.getOnlinePlayers()) {
 				if (p.isOp() || p.hasPermission("eantitroll.admin")) {
-//					if (EAntiTroll.MVFlag) {
-//						EAntiTroll.sendHoverText(p, ChatColor.RED + "発生場所(" +loc.getWorld().getName() + " , "
-//								+ x + " , " + y + " , " + z + ")にテレポートする"
-//								, "クリックしてテレポート", "/mv tp " + p.getName() + " " + loc.getWorld().getName());
-//					} else {
+					if (Main.MVFlag) {
+						if (loc.getWorld() == p.getLocation().getWorld()) {
+							MessageManager.sendHoverText(p,
+									ChatColor.RED + "発生場所(" + x + " , " + y + " , " + z + ")にテレポートする",
+									"クリックしてテレポート", "/tp " + p.getName() + " " + x + " " + y + " " + z);
+						} else {
+							MessageManager.sendHoverText(p, ChatColor.RED + "発生場所(" + loc.getWorld().getName() + " , "
+									+ x + " , " + y + " , " + z + ")にテレポートする", "クリックしてテレポート",
+									"/mv tp " + p.getName() + " " + loc.getWorld().getName());
+						}
+					} else {
 						MessageManager.sendHoverText(p, ChatColor.RED + "発生場所(" + x + " , " + y + " , " + z + ")にテレポートする",
-								"クリックしてテレポート", "/minecraft:tp " + p.getName() + " " + x + " " + y + " " + z);
-//					}
+								"クリックしてテレポート", "/tp " + p.getName() + " " + x + " " + y + " " + z);
+					}
 				}
 			}
 
