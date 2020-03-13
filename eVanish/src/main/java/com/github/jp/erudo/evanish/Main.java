@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.github.jp.erudo.evanish.listener.PlayerJoinListener;
+import com.github.jp.erudo.evanish.listener.WorldChangeListener;
 
 import net.md_5.bungee.api.ChatColor;
 
@@ -24,8 +25,10 @@ public class Main extends JavaPlugin {
 	@Override
 	public void onEnable() {
 		getLogger().info("プラグインが起動しました");
-		new PlayerJoinListener(this);
 
+		//Listeners
+		new PlayerJoinListener(this);
+		new WorldChangeListener(this);
 	}
 
 	@Override
@@ -40,6 +43,10 @@ public class Main extends JavaPlugin {
 		if (player.isOp() || player.hasPermission("evanish.admin")) {
 			if (isVanished.get(player)) { //true
 				for (Player online : Bukkit.getServer().getOnlinePlayers()) {
+					if(online == player) {
+						continue;
+					}
+
 					online.showPlayer(this, player);
 				}
 
@@ -49,6 +56,10 @@ public class Main extends JavaPlugin {
 
 			} else {
 				for (Player online : Bukkit.getServer().getOnlinePlayers()) {
+					if(online == player) {
+						continue;
+					}
+
 					online.hidePlayer(this, player);
 				}
 
