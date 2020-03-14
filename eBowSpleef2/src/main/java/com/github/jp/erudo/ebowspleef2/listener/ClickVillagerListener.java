@@ -5,7 +5,6 @@ import java.util.Objects;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -97,7 +96,7 @@ public class ClickVillagerListener implements Listener {
 
 		ItemStack bow = itemManager.makeBow(Items.bowName,1, Items.bowDesc1,Items.bowDesc2);
 		ItemStack bow1 = itemManager.makeBow(Items.bow1Name, 1, Items.bow1Desc1,Items.bow1Desc2);
-		ItemStack bow2 = itemManager.makeBow(Items.bow2Name, 1, Enchantment.ARROW_KNOCKBACK, 2,Items.bow2Desc1,Items.bow2Desc2,Items.bow2Desc3);
+		ItemStack bow2 = itemManager.makeBow2(Items.bow2Name, 1,Items.bow2Desc1,Items.bow2Desc2,Items.bow2Desc3);
 		ItemStack bow3 = itemManager.makeBow(Items.bow3Name, 1, Items.bow3Desc1,Items.bow3Desc2,Items.bow3Desc3);
 
 		String judgeItem = ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName().toString());
@@ -160,7 +159,7 @@ public class ClickVillagerListener implements Listener {
 
 		ItemStack bow = itemManager.makeBow(Items.bowName, 1, Items.bowDesc1,Items.bowDesc2);
 		ItemStack bow1 = itemManager.makeBow(Items.bow1Name, 1, Items.bow1Desc1,Items.bow1Desc2);
-		ItemStack bow2 = itemManager.makeBow(Items.bow2Name, 1, Enchantment.ARROW_KNOCKBACK, 2 ,Items.bow2Desc1,Items.bow2Desc2,Items.bow2Desc3);
+		ItemStack bow2 = itemManager.makeBow2(Items.bow2Name, 1,Items.bow2Desc1,Items.bow2Desc2,Items.bow2Desc3);
 		ItemStack bow3 = itemManager.makeBow(Items.bow3Name, 1, Items.bow3Desc1,Items.bow3Desc2,Items.bow3Desc3);
 
 		inv.setItem(1, bow);

@@ -111,9 +111,9 @@ public class ItemManager {
 		return bow;
 	}
 
-	public ItemStack makeBow(String name,int amount,Enchantment enchant ,int level,String... descs) {
+	public ItemStack makeBow2(String name,int amount,String... descs) {
 		ItemStack bow = this.makeItem(Material.BOW, name, amount,descs);
-		bow.addEnchantment(enchant, level);
+		bow.addEnchantment(Enchantment.ARROW_KNOCKBACK, 3);
 		bow.addEnchantment(Enchantment.ARROW_INFINITE, 1);
 		return bow;
 	}
