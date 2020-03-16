@@ -101,7 +101,8 @@ public class CommandManager implements CommandExecutor {
 			Player wpPlayer;
 			for (int i = 0; i < wpPlayerList.size(); i++) {
 				wpPlayer = wpPlayerList.get(i);
-				if ((i / 2) % 2 == 0) {
+				System.out.println(wpPlayer);
+				if (i % 2 == 0) {
 					PlayersSetting.addPlayerToTeam(Teams.RED, wpPlayer);
 				} else {
 					PlayersSetting.addPlayerToTeam(Teams.BLUE, wpPlayer);
