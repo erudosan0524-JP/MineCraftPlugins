@@ -118,19 +118,18 @@ public class Game extends BukkitRunnable {
 				}
 
 				if (plg.getTeam(Teams.RED).getEntries().size() <= 0) {
-					plg.setCurrentGameState(GameState.END);
 					for(Player p : plg.getServer().getOnlinePlayers()) {
 						title.sendTitle(p, ChatColor.BLUE + "青チーム" + ChatColor.WHITE + "の勝利！！！", null, null);
 					}
-
+					plg.setCurrentGameState(GameState.END);
 					return;
 				}
 
 				if (plg.getTeam(Teams.BLUE).getEntries().size() <= 0) {
-					plg.setCurrentGameState(GameState.END);
 					for(Player p : plg.getServer().getOnlinePlayers()) {
 						title.sendTitle(p, ChatColor.RED + "赤チーム" + ChatColor.WHITE + "の勝利！！！", null, null);
 					}
+					plg.setCurrentGameState(GameState.END);
 					return;
 				}
 
