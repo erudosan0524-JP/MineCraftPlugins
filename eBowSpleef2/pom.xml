@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.jp.erudo.ebowspleef2</groupId>
 	<artifactId>eBowSpleef2</artifactId>
-	<version>0.4.8-SNAPSHOT</version>
+	<version>0.4.9-SNAPSHOT</version>
 	<name>eBowSpleef2</name>
 	<description>eBowSpleef(初代)を進化させ、コードを見やすくしたものです。</description>
 	<properties>
