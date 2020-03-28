@@ -2,7 +2,7 @@ defaultTime: 300
 RedPosition: 
 BluePosition: 
 LobbyPosition: 
-ArrowRange: 2
+ArrowRange: 1
 canRespawn: true
 beginCoordinate: 
 stageName: 

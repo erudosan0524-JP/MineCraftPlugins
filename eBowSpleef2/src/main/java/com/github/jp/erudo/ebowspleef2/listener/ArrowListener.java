@@ -140,14 +140,7 @@ public class ArrowListener implements Listener {
 
 
 			if (plg.getMyConfig().getArrowrange() <= 1) {
-				if (!(block.getType() == Material.WOOL)
-						|| !(blockLoc1.getBlock().getType() == Material.WOOL)
-						|| !(blockLoc2.getBlock().getType() == Material.WOOL)
-						|| !(blockLoc3.getBlock().getType() == Material.WOOL)
-						|| !(blockLoc4.getBlock().getType() == Material.WOOL)
-						|| !(blockLoc5.getBlock().getType() == Material.WOOL)
-						|| !(blockLoc6.getBlock().getType() == Material.WOOL)
-						|| !(blockLoc7.getBlock().getType() == Material.WOOL)) {
+				if (!(block.getType() == Material.WOOL)) {
 					return;
 				}
 
@@ -160,14 +153,7 @@ public class ArrowListener implements Listener {
 				block.getLocation().getWorld().createExplosion(block.getLocation().getX(), block.getLocation().getY(),
 						block.getLocation().getZ(), 10, false, false);
 			} else {
-				if (!(block.getType() == Material.WOOL)
-						|| !(blockLoc1.getBlock().getType() == Material.WOOL)
-						|| !(blockLoc2.getBlock().getType() == Material.WOOL)
-						|| !(blockLoc3.getBlock().getType() == Material.WOOL)
-						|| !(blockLoc4.getBlock().getType() == Material.WOOL)
-						|| !(blockLoc5.getBlock().getType() == Material.WOOL)
-						|| !(blockLoc6.getBlock().getType() == Material.WOOL)
-						|| !(blockLoc7.getBlock().getType() == Material.WOOL)) {
+				if (!(block.getType() == Material.WOOL)) {
 					return;
 				}
 

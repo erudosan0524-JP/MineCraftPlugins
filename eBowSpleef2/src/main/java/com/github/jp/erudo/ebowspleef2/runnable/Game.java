@@ -34,22 +34,21 @@ public class Game extends BukkitRunnable {
 	public void run() {
 
 		if (plg.getCurrentGameState() == GameState.END) {
-			if(plg.getMyConfig().isCanRespawn()) {
-				if(plg.getBluePoint() > plg.getRedPoint()) { //青の勝ち
-					for(Player p : plg.getServer().getOnlinePlayers()) {
+			if (plg.getMyConfig().isCanRespawn()) {
+				if (plg.getBluePoint() > plg.getRedPoint()) { //青の勝ち
+					for (Player p : plg.getServer().getOnlinePlayers()) {
 						title.sendTitle(p, ChatColor.BLUE + "青チーム" + ChatColor.WHITE + "の勝利！！！", null, null);
 					}
 				} else if (plg.getRedPoint() < plg.getBluePoint()) { //赤の勝ち
-					for(Player p : plg.getServer().getOnlinePlayers()) {
+					for (Player p : plg.getServer().getOnlinePlayers()) {
 						title.sendTitle(p, ChatColor.RED + "赤チーム" + ChatColor.WHITE + "の勝利！！！", null, null);
 					}
 				} else { //引き分け
-					for(Player p : plg.getServer().getOnlinePlayers()) {
-						title.sendTitle(p,ChatColor.WHITE + "引き分け！！！", null, null);
+					for (Player p : plg.getServer().getOnlinePlayers()) {
+						title.sendTitle(p, ChatColor.WHITE + "引き分け！！！", null, null);
 					}
 				}
 			}
-
 
 			MessageManager.broadcastMessage("試合終了！！");
 			count = 0;
@@ -59,7 +58,8 @@ public class Game extends BukkitRunnable {
 
 			MessageManager.messageAll("ワールドを復元中です・・・");
 			WorldManager wm = new WorldManager();
-			Location loc = new Location(plg.getServer().getWorld("world"), plg.getMyConfig().getBeginCoordinate()[0], plg.getMyConfig().getBeginCoordinate()[1], plg.getMyConfig().getBeginCoordinate()[2]);
+			Location loc = new Location(plg.getServer().getWorld("world"), plg.getMyConfig().getBeginCoordinate()[0],
+					plg.getMyConfig().getBeginCoordinate()[1], plg.getMyConfig().getBeginCoordinate()[2]);
 			wm.loadSchematic(loc, plg.getStageName());
 			MessageManager.messageAll("復元が完了しました！");
 
@@ -78,7 +78,7 @@ public class Game extends BukkitRunnable {
 				player.getInventory().setChestplate(null);
 				player.getInventory().setLeggings(null);
 				player.getInventory().setBoots(null);
-				for(int i=0; i < 35; i++) { //35はインベントリのサイズ
+				for (int i = 0; i < 35; i++) { //35はインベントリのサイズ
 					player.getInventory().setItem(i, null);
 				}
 
@@ -100,25 +100,17 @@ public class Game extends BukkitRunnable {
 				Score BluePoint = plg.getObj().getScore(ChatColor.DARK_BLUE + "青チーム獲得ポイント: ");
 				BluePoint.setScore(plg.getBluePoint());
 
-
-				//カウントダウン
-				if(count <= 3) { //0<count<=3
-					for (Player p : plg.getServer().getOnlinePlayers()) {
-						title.sendTitle(p, String.valueOf(count), null, null);
-						p.playSound(p.getLocation(), Sound.BLOCK_ANVIL_PLACE, 0.7F, 1);
-					}
-				}
-
-
 				if (!plg.getMyConfig().isCanRespawn()) {
 					for (Player p : plg.getServer().getOnlinePlayers()) {
-						title.sendTitle(p, null, null, ChatColor.RED + "赤チーム残り人数: " + plg.getTeam(Teams.RED).getEntries().size()
-								+ "  " + ChatColor.BLUE + "青チーム残り人数: " + plg.getTeam(Teams.BLUE).getEntries().size());
+						title.sendTitle(p, null, null,
+								ChatColor.RED + "赤チーム残り人数: " + plg.getTeam(Teams.RED).getEntries().size()
+										+ "  " + ChatColor.BLUE + "青チーム残り人数: "
+										+ plg.getTeam(Teams.BLUE).getEntries().size());
 					}
 				}
 
 				if (plg.getTeam(Teams.RED).getEntries().size() <= 0) {
-					for(Player p : plg.getServer().getOnlinePlayers()) {
+					for (Player p : plg.getServer().getOnlinePlayers()) {
 						title.sendTitle(p, ChatColor.BLUE + "青チーム" + ChatColor.WHITE + "の勝利！！！", null, null);
 					}
 					plg.setCurrentGameState(GameState.END);
@@ -126,19 +118,24 @@ public class Game extends BukkitRunnable {
 				}
 
 				if (plg.getTeam(Teams.BLUE).getEntries().size() <= 0) {
-					for(Player p : plg.getServer().getOnlinePlayers()) {
+					for (Player p : plg.getServer().getOnlinePlayers()) {
 						title.sendTitle(p, ChatColor.RED + "赤チーム" + ChatColor.WHITE + "の勝利！！！", null, null);
 					}
 					plg.setCurrentGameState(GameState.END);
 					return;
 				}
 
-			} else {
-				plg.setCurrentGameState(GameState.END);
+				//カウントダウン
+			} else if (count <= 3) { //0<count<=3
+				for (Player p : plg.getServer().getOnlinePlayers()) {
+					title.sendTitle(p, String.valueOf(count), null, null);
+					p.playSound(p.getLocation(), Sound.BLOCK_ANVIL_PLACE, 0.5F, 1);
+				}
 			}
-			count--;
+		} else {
+			plg.setCurrentGameState(GameState.END);
 		}
-
+		count--;
 	}
 
 	public void setTask(BukkitTask task) {
