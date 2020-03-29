@@ -42,7 +42,7 @@ public class EquipmentObserver extends BukkitRunnable {
 					ItemStack bow = p.getInventory().getItem(p.getInventory().first(Material.BOW));
 
 					if(bow.hasItemMeta()) {
-						if(ChatColor.stripColor(handItem.getItemMeta().getDisplayName().toString()).equals(ChatColor.stripColor(Items.bow2Name))) {
+						if(ChatColor.stripColor(bow.getItemMeta().getDisplayName().toString()).equals(ChatColor.stripColor(Items.bow2Name))) {
 							p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW,2 * 20,127), true);
 						}
 					}
