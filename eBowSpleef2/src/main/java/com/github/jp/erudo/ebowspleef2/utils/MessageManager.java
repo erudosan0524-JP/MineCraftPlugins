@@ -21,7 +21,8 @@ public class MessageManager {
 			"・/ebs build","設定したステージを生成します。",
 			"・/ebs resetscore","ポイントをリセットします。",
 			"・/ebs reload","コンフィグをリロードします。",
-			"・/ebs version","このプラグインのバージョンを表示します。"
+			"・/ebs version","このプラグインのバージョンを表示します。",
+			"・/ebs help","コマンド一覧を表示します。"
 			};
 
 	public static void sendMessage(Player player, String arg) {

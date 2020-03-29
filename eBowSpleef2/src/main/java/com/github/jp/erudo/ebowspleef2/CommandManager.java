@@ -232,8 +232,11 @@ public class CommandManager implements CommandExecutor {
 			PluginDescriptionFile pdf = plg.getDescription();
 			MessageManager.sendMessage(player, "Version: " + pdf.getVersion());
 			return true;
+
+		} else if(args[0].equalsIgnoreCase("help")) {
+			MessageManager.CommandContent(player);
+			return true;
 		}
-		MessageManager.CommandContent(player);
 		return false;
 	}
 
