@@ -50,11 +50,11 @@ public class Game extends BukkitRunnable {
 				}
 			}
 
-			MessageManager.broadcastMessage("試合終了！！");
-			count = 0;
-
 			plg.setBluePoint(0);
 			plg.setRedPoint(0);
+
+			MessageManager.broadcastMessage("試合終了！！");
+			count = 0;
 
 			MessageManager.messageAll("ワールドを復元中です・・・");
 			WorldManager wm = new WorldManager();
@@ -78,6 +78,7 @@ public class Game extends BukkitRunnable {
 				player.getInventory().setChestplate(null);
 				player.getInventory().setLeggings(null);
 				player.getInventory().setBoots(null);
+
 				for (int i = 0; i < 35; i++) { //35はインベントリのサイズ
 					player.getInventory().setItem(i, null);
 				}
@@ -94,48 +95,51 @@ public class Game extends BukkitRunnable {
 				Score TimeScore = plg.getObj().getScore(ChatColor.GOLD + "残り時間: ");
 				TimeScore.setScore(count);
 
-				Score RedPoint = plg.getObj().getScore(ChatColor.DARK_RED + "赤チーム獲得ポイント: ");
-				RedPoint.setScore(plg.getRedPoint());
+				//カウントダウン
+				if (count <= 3) { //0<count<=3
+					for (Player p : plg.getServer().getOnlinePlayers()) {
+						title.sendTitle(p, String.valueOf(count), null, null);
+						p.playSound(p.getLocation(), Sound.BLOCK_ANVIL_PLACE, 0.5F, 1);
+					}
+				}
 
-				Score BluePoint = plg.getObj().getScore(ChatColor.DARK_BLUE + "青チーム獲得ポイント: ");
-				BluePoint.setScore(plg.getBluePoint());
+				if (plg.getMyConfig().isCanRespawn()) {
+					Score RedPoint = plg.getObj().getScore(ChatColor.DARK_RED + "赤チーム獲得ポイント: ");
+					RedPoint.setScore(plg.getRedPoint());
 
-				if (!plg.getMyConfig().isCanRespawn()) {
+					Score BluePoint = plg.getObj().getScore(ChatColor.DARK_BLUE + "青チーム獲得ポイント: ");
+					BluePoint.setScore(plg.getBluePoint());
+
+				} else {
 					for (Player p : plg.getServer().getOnlinePlayers()) {
 						title.sendTitle(p, null, null,
 								ChatColor.RED + "赤チーム残り人数: " + plg.getTeam(Teams.RED).getEntries().size()
 										+ "  " + ChatColor.BLUE + "青チーム残り人数: "
 										+ plg.getTeam(Teams.BLUE).getEntries().size());
 					}
-				}
 
-				if (plg.getTeam(Teams.RED).getEntries().size() <= 0) {
-					for (Player p : plg.getServer().getOnlinePlayers()) {
-						title.sendTitle(p, ChatColor.BLUE + "青チーム" + ChatColor.WHITE + "の勝利！！！", null, null);
+					if (plg.getTeam(Teams.RED).getEntries().size() <= 0) {
+						for (Player p : plg.getServer().getOnlinePlayers()) {
+							title.sendTitle(p, ChatColor.BLUE + "青チーム" + ChatColor.WHITE + "の勝利！！！", null, null);
+						}
+						plg.setCurrentGameState(GameState.END);
+						return;
 					}
-					plg.setCurrentGameState(GameState.END);
-					return;
-				}
 
-				if (plg.getTeam(Teams.BLUE).getEntries().size() <= 0) {
-					for (Player p : plg.getServer().getOnlinePlayers()) {
-						title.sendTitle(p, ChatColor.RED + "赤チーム" + ChatColor.WHITE + "の勝利！！！", null, null);
+					if (plg.getTeam(Teams.BLUE).getEntries().size() <= 0) {
+						for (Player p : plg.getServer().getOnlinePlayers()) {
+							title.sendTitle(p, ChatColor.RED + "赤チーム" + ChatColor.WHITE + "の勝利！！！", null, null);
+						}
+						plg.setCurrentGameState(GameState.END);
+						return;
 					}
-					plg.setCurrentGameState(GameState.END);
-					return;
 				}
 
-				//カウントダウン
-			} else if (count <= 3) { //0<count<=3
-				for (Player p : plg.getServer().getOnlinePlayers()) {
-					title.sendTitle(p, String.valueOf(count), null, null);
-					p.playSound(p.getLocation(), Sound.BLOCK_ANVIL_PLACE, 0.5F, 1);
-				}
+			} else {
+				plg.setCurrentGameState(GameState.END);
 			}
-		} else {
-			plg.setCurrentGameState(GameState.END);
+			count--;
 		}
-		count--;
 	}
 
 	public void setTask(BukkitTask task) {

@@ -219,6 +219,11 @@ public class CommandManager implements CommandExecutor {
 			plg.setRedPoint(0);
 			MessageManager.sendMessage(player, "完了しました");
 			return true;
+
+		} else if(args[0].equalsIgnoreCase("reload")){
+			plg.getMyConfig().reload();
+			return true;
+
 		} else if (args[0].equalsIgnoreCase("version")) {
 			if (!player.hasPermission("ebs.commands.version")) {
 				return true;

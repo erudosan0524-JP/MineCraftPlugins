@@ -12,10 +12,16 @@ public class MessageManager {
 			"・/ebs set","ランダムでチーム分けをします",
 			"・/ebs setred [プレイヤー]","指定プレイヤーを赤チームに設定します。",
 			"・/ebs setblue [プレイヤー]","指定プレイヤーを青チームに設定します。",
+			"・/ebs setspe [プレイヤー]","指定プレイヤーを観戦者に設定します。",
 			"・/ebs setredpos","現在位置をレッドチームのスタート位置に設定します。",
 			"・/ebs setbluepos","現在位置をブルーチームのスタート位置に設定します。",
-			"・/ebs setlobbypos","現在位置をロビーのスポーン位置とします。"
-			,"・/ebs version","このプラグインのバージョンを表示します。"
+			"・/ebs setlobbypos","現在位置をロビーのスポーン位置とします。",
+			"・/ebs shopper","武器購入用の村人を召喚します。",
+			"・/ebs setstage [ステージ名]","ゲーム用のステージを設定します。",
+			"・/ebs build","設定したステージを生成します。",
+			"・/ebs resetscore","ポイントをリセットします。",
+			"・/ebs reload","コンフィグをリロードします。",
+			"・/ebs version","このプラグインのバージョンを表示します。"
 			};
 
 	public static void sendMessage(Player player, String arg) {

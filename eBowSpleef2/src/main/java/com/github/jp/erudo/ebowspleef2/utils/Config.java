@@ -43,6 +43,10 @@ public class Config {
 		stageName = config.getString("stageName","stage1"); //デフォルトはstage1
 	}
 
+	public void reload() {
+		load();
+	}
+
 	//座標を取得
 	private int[] getCoordinates(String[] str) {
 		for (String arg : str) {
