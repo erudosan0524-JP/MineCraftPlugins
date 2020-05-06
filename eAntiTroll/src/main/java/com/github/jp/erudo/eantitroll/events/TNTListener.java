@@ -199,24 +199,34 @@ public class TNTListener implements Listener {
 	public void onExplosion(ExplosionPrimeEvent e) {
 		Entity entity = e.getEntity();
 
-		if(!(entity.getType() == EntityType.PRIMED_TNT)) {
-			return;
-		}
-
-		for(Player p : entity.getWorld().getPlayers()) {
-			if(p.hasPermission("eantitroll.admin") || p.hasPermission("eantitroll.tnt."+entity.getWorld().getName())) {
-				return;
-			}
-
+		if(entity.getType() == EntityType.PRIMED_TNT) {
 			e.setCancelled(true);
-			User.addWarning(p.getUniqueId());
 
-			if (User.getWarning(p.getUniqueId()) == Config.getInstance(plg).getWarningCount()) {
-				MessageManager.sendBANMessage(p);
-				User.initWarnig(p.getUniqueId());
+			Location loc = e.getEntity().getLocation();
+			double x = MathUtils.eFloor(loc.getX(), 1);
+			double y = MathUtils.eFloor(loc.getY(), 1);
+			double z = MathUtils.eFloor(loc.getZ(),1);
+
+			for (Player p : Bukkit.getServer().getOnlinePlayers()) {
+				if (p.isOp() || p.hasPermission("eantitroll.admin")) {
+					if (Main.MVFlag) {
+						if (loc.getWorld() == p.getLocation().getWorld()) {
+							MessageManager.sendHoverText(p,
+									ChatColor.RED + "発生場所(" + x + " , " + y + " , " + z + ")にテレポートする",
+									"クリックしてテレポート", "/tp " + p.getName() + " " + x + " " + y + " " + z);
+						} else {
+							MessageManager.sendHoverText(p, ChatColor.RED + "発生場所(" + loc.getWorld().getName() + " , "
+									+ x + " , " + y + " , " + z + ")にテレポートする", "クリックしてテレポート",
+									"/mv tp " + p.getName() + " " + loc.getWorld().getName());
+						}
+					} else {
+						MessageManager.sendHoverText(p,
+								ChatColor.RED + "発生場所(" + x + " , " + y + " , " + z + ")にテレポートする",
+								"クリックしてテレポート", "/tp " + p.getName() + " " + x + " " + y + " " + z);
+					}
+				}
 			}
 
-			User.setFreezing(p.getUniqueId(), true);
 		}
 	}
 

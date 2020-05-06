@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.jp.erudo.eantitroll</groupId>
 	<artifactId>eAntiTroll</artifactId>
-	<version>0.0.2-SNAPSHOT</version>
+	<version>0.0.4-SNAPSHOT</version>
 	<name>eAntiTroll</name>
 	<description>チートや荒らしの対策をします</description>
 	<properties>
