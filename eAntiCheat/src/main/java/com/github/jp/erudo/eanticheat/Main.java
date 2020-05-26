@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.github.jp.erudo.eanticheat.checks.CheckResult;
+import com.github.jp.erudo.eanticheat.listener.JoinLeaveListener;
 import com.github.jp.erudo.eanticheat.listener.PlayerMoveListener;
 import com.github.jp.erudo.eanticheat.utils.MessageManager;
 import com.github.jp.erudo.eanticheat.utils.Settings;
@@ -34,6 +35,7 @@ public class Main extends JavaPlugin {
 		///		Listener		///
 		///////////////////////////
 		new PlayerMoveListener(this);
+		new JoinLeaveListener(this);
 
 		for(Player p : getServer().getOnlinePlayers()) {
 			USERS.put(p.getUniqueId(), new User(p));
