@@ -6,6 +6,8 @@ import com.github.jp.erudo.eanticheat.listener.PlayerMoveListener;
 
 public class Main extends JavaPlugin {
 
+	public static final String pluginName = "eAntiCheat";
+
 	@Override
 	public void onDisable() {
 		getLogger().info("プラグインが停止しました。");

@@ -7,5 +7,5 @@ import com.github.jp.erudo.eanticheat.Main;
 public class MessageManager {
 
 	//pom.xmlに書かれたnameプロパティを取得してprefixに代入
-	public static final String prefix = ChatColor.AQUA + "[" + Main.class.getPackage().getName() + "]";
+	public static final String prefix = ChatColor.AQUA + "[" + Main.pluginName + "]";
 }
