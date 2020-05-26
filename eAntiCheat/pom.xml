@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.jp.erudo.eanticheat</groupId>
 	<artifactId>eAntiCheat</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.4-SNAPSHOT</version>
 	<name>eAntiCheat</name>
 	<description>This is anti cheat plugin. SAIKYO.</description>
 	<properties>

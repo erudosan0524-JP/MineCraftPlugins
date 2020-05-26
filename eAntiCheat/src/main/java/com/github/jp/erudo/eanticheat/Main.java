@@ -41,7 +41,7 @@ public class Main extends JavaPlugin {
 	}
 
 	public static void log(CheckResult cr, User u) {
-		String message = MessageManager.prefix + cr.getType() + "; " + cr.getMessage() + ChatColor.RED + "【" + cr.getLevel() + "】";
+		String message = MessageManager.prefix + u.getPlayer().getName() + ChatColor.GRAY + cr.getType() + "; " + cr.getMessage() + ChatColor.RED + "【" + cr.getLevel() + "】";
 		for(Player p : Bukkit.getOnlinePlayers()) {
 			if(p.hasPermission(Settings.ALERT)) {
 				p.sendMessage(message);

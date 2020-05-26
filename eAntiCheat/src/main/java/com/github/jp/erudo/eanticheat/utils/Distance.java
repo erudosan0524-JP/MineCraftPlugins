@@ -16,9 +16,9 @@ public class Distance {
 		 * fromのx座標がtoのx座標よりも大きい時，fromのxを返し，
 		 * 小さいときはtoX - fromXを返す
 		 */
-		this.xDiff = (from.getX() > to.getX() ? from.getX() : to.getX() - (from.getX() < to.getX() ? from.getX() : to.getX()));
-		this.yDiff = (from.getY() > to.getY() ? from.getY() : to.getY() - (from.getY() < to.getY() ? from.getY() : to.getY()));
-		this.zDiff = (from.getZ() > to.getZ() ? from.getZ() : to.getZ() - (from.getZ() < to.getZ() ? from.getZ() : to.getZ()));
+		this.xDiff = (from.getX() > to.getX() ? from.getX() : to.getX()) - (from.getX() < to.getX() ? from.getX() : to.getX());
+		this.yDiff = (from.getY() > to.getY() ? from.getY() : to.getY()) - (from.getY() < to.getY() ? from.getY() : to.getY());
+		this.zDiff = (from.getZ() > to.getZ() ? from.getZ() : to.getZ()) - (from.getZ() < to.getZ() ? from.getZ() : to.getZ());
 
 	}
 
