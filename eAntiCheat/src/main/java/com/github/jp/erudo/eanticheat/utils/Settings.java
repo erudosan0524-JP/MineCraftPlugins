@@ -10,7 +10,7 @@ public class Settings {
 	//SPEED Settings
 	public static final Double MAX_XZ_SPEED = 0.66D;
 
-	public static final Double MAX_XZ_EATING_SPEED = 0.10178D;
+	public static final Double MAX_XZ_EATING_SPEED = 0.11178D;
 
 	public static final Double MAX_XZ_BLOCKING_SPEED = 0.10224D;
 

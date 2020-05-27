@@ -19,6 +19,8 @@ public class NoSlowDown {
 
 		double xzDist = (d.getxDiff() > d.getzDiff() ? d.getxDiff() : d.getzDiff());
 
+		u.getPlayer().sendMessage("Eat: " + String.valueOf(xzDist));
+
 		if (xzDist > Settings.MAX_XZ_EATING_SPEED && u.getFoodStart() != null
 				&& System.currentTimeMillis() - u.getFoodStart() > 1200) {
 			u.addInvalidFoodEatableCount();
