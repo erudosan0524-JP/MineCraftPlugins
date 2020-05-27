@@ -7,8 +7,10 @@ import org.bukkit.event.player.PlayerMoveEvent;
 
 import com.github.jp.erudo.eanticheat.Main;
 import com.github.jp.erudo.eanticheat.checks.CheckResult;
+import com.github.jp.erudo.eanticheat.checks.movements.NoSlowDown;
 import com.github.jp.erudo.eanticheat.checks.movements.Speed;
 import com.github.jp.erudo.eanticheat.utils.Distance;
+import com.github.jp.erudo.eanticheat.utils.MessageManager;
 import com.github.jp.erudo.eanticheat.utils.User;
 
 public class PlayerMoveListener implements Listener {
@@ -29,7 +31,16 @@ public class PlayerMoveListener implements Listener {
 		if(speed.failed()) {
 			//プレイヤーをtoまでTP
 			e.setTo(e.getFrom());
-			Main.log(speed,u);
+			MessageManager.log(speed,u);
+		}
+
+
+		//NoSlowDown 動き始めたらカウントを増やす→食べる時の足の速さを図るため
+		NoSlowDown.registerMove(d,u);
+		CheckResult noslow = NoSlowDown.runCheck(d, u);
+		if(noslow.failed()) {
+			e.setTo(e.getFrom());
+			MessageManager.log(noslow,u);
 		}
 
 
