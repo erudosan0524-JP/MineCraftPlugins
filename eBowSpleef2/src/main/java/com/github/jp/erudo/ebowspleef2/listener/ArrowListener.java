@@ -19,6 +19,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -49,37 +50,39 @@ public class ArrowListener implements Listener {
 			return;
 		}
 
-		if(!(e.getEntity() instanceof Player)) {
+		if (!(e.getEntity() instanceof Player)) {
 			return;
 		}
 
 		Player player = (Player) e.getEntity();
 
-		if(player.getInventory().getItemInMainHand().getType() == Material.BOW) {
-			if(player.getInventory().getItemInHand().hasItemMeta()){
+		if (player.getInventory().getItemInMainHand().getType() == Material.BOW) {
+			if (player.getInventory().getItemInHand().hasItemMeta()) {
 
 				String str = ChatColor.stripColor(player.getInventory().getItemInHand().getItemMeta().getDisplayName());
 
-				if(str.equals(ChatColor.stripColor(Items.bow3Name))) {
+				if (str.equals(ChatColor.stripColor(Items.bow3Name))) {
 					double multiply = e.getProjectile().getVelocity().length();
 
 					Location loc = player.getLocation();
 
 					double arrowAngle = 15; //15度
 
-					double totalAngle1 = (((loc.getYaw()+90) + arrowAngle) * Math.PI)/180;
+					double totalAngle1 = (((loc.getYaw() + 90) + arrowAngle) * Math.PI) / 180;
 					double arrowDirX1 = Math.cos(totalAngle1);
-					double arrowDirZ1 =  Math.sin(totalAngle1);
+					double arrowDirZ1 = Math.sin(totalAngle1);
 
-					double totalAngle2 = (((loc.getYaw()+90) - arrowAngle) * Math.PI)/180;
+					double totalAngle2 = (((loc.getYaw() + 90) - arrowAngle) * Math.PI) / 180;
 					double arrowDirX2 = Math.cos(totalAngle2);
 					double arrowDirZ2 = Math.sin(totalAngle2);
 
-					Vector arrowDir1 = new Vector(arrowDirX1,loc.getDirection().getY(),arrowDirZ1).normalize().multiply(multiply);
-					Vector arrowDir2 = new Vector(arrowDirX2,loc.getDirection().getY(),arrowDirZ2).normalize().multiply(multiply);
+					Vector arrowDir1 = new Vector(arrowDirX1, loc.getDirection().getY(), arrowDirZ1).normalize()
+							.multiply(multiply);
+					Vector arrowDir2 = new Vector(arrowDirX2, loc.getDirection().getY(), arrowDirZ2).normalize()
+							.multiply(multiply);
 
-					player.launchProjectile(Arrow.class,arrowDir1);
-					player.launchProjectile(Arrow.class,arrowDir2);
+					player.launchProjectile(Arrow.class, arrowDir1);
+					player.launchProjectile(Arrow.class, arrowDir2);
 				}
 			}
 		}
@@ -98,16 +101,48 @@ public class ArrowListener implements Listener {
 		if (e.getEntity() instanceof Arrow) {
 			arrows.remove(e.getEntity());
 
+			Arrow arrow = (Arrow) e.getEntity();
+
 			//プレイヤーに当たったら
 			if (e.getHitEntity() != null) {
 				if (e.getHitEntity() instanceof Player) {
-					Player player = (Player) e.getHitEntity();
-					player.damage(2);
-					player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 5 * 20, 1));
-					player.getLocation().getWorld().spawnParticle(Particle.VILLAGER_HAPPY, player.getLocation(), 50, 5,
-							3, 5);
-					player.getLocation().getWorld().playSound(player.getLocation(), Sound.BLOCK_ANVIL_PLACE,
-							(float) 0.5, 5);
+					Player hitPlayer = (Player) e.getHitEntity();
+
+					//弓を打ったエンティティがプレイヤーなければ除外
+					if (!(arrow.getShooter() instanceof Player)) {
+						return;
+					}
+
+					Player shooter = (Player) arrow.getShooter();
+
+					//シューターとヒットしたプレイヤーが一致しない時
+					if (hitPlayer != shooter) {
+						hitPlayer.damage(2);
+						hitPlayer.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 5 * 20, 1));
+						hitPlayer.getLocation().getWorld().spawnParticle(Particle.VILLAGER_HAPPY,
+								hitPlayer.getLocation(), 50, 5,
+								3, 5);
+						hitPlayer.getLocation().getWorld().playSound(hitPlayer.getLocation(), Sound.BLOCK_ANVIL_PLACE,
+								(float) 0.5, 5);
+
+					} else { //シューターとプレイヤーが一致するとき
+						//シューターの手に持っている弓の条件
+						ItemStack bow = shooter.getInventory().getItemInMainHand();
+
+						if(bow != null && bow.getType() == Material.BOW) {
+							if(bow.hasItemMeta()) {
+								//もし手に持っている弓がアイオロスだったら
+								if(ChatColor.stripColor(bow.getItemMeta().getDisplayName().toString()).equals(ChatColor.stripColor(Items.bow1Name))) {
+
+									Vector boostVec = arrow.getVelocity();
+
+									hitPlayer.setVelocity(boostVec);
+
+								}
+							}
+						}
+					}
+
 					return;
 				}
 				return;
@@ -118,26 +153,25 @@ public class ArrowListener implements Listener {
 
 			Block block = e.getHitBlock();
 			Location blockLoc1 = new Location(block.getWorld(), block.getLocation().getX() + 1,
-						block.getLocation().getY(),
-						block.getLocation().getZ());
-			Location blockLoc2 = new Location(block.getWorld(), block.getLocation().getX(), block.getLocation().getY(),
-						block.getLocation().getZ() + 1);
-			Location blockLoc3 = new Location(block.getWorld(), block.getLocation().getX() + 1,
-						block.getLocation().getY(),
-						block.getLocation().getZ() + 1);
-			Location blockLoc4 = new Location(block.getWorld(), block.getLocation().getX(),
-					block.getLocation().getY()+1,
+					block.getLocation().getY(),
 					block.getLocation().getZ());
-			Location blockLoc5 = new Location(block.getWorld(), block.getLocation().getX()+1,
-					block.getLocation().getY()+1,
+			Location blockLoc2 = new Location(block.getWorld(), block.getLocation().getX(), block.getLocation().getY(),
+					block.getLocation().getZ() + 1);
+			Location blockLoc3 = new Location(block.getWorld(), block.getLocation().getX() + 1,
+					block.getLocation().getY(),
+					block.getLocation().getZ() + 1);
+			Location blockLoc4 = new Location(block.getWorld(), block.getLocation().getX(),
+					block.getLocation().getY() + 1,
+					block.getLocation().getZ());
+			Location blockLoc5 = new Location(block.getWorld(), block.getLocation().getX() + 1,
+					block.getLocation().getY() + 1,
 					block.getLocation().getZ());
 			Location blockLoc6 = new Location(block.getWorld(), block.getLocation().getX(),
-					block.getLocation().getY()+1,
-					block.getLocation().getZ()+1);
-			Location blockLoc7 = new Location(block.getWorld(), block.getLocation().getX()+1,
-					block.getLocation().getY()+1,
-					block.getLocation().getZ()+1);
-
+					block.getLocation().getY() + 1,
+					block.getLocation().getZ() + 1);
+			Location blockLoc7 = new Location(block.getWorld(), block.getLocation().getX() + 1,
+					block.getLocation().getY() + 1,
+					block.getLocation().getZ() + 1);
 
 			if (plg.getMyConfig().getArrowrange() <= 1) {
 				if (!(block.getType() == Material.WOOL)) {
@@ -146,7 +180,8 @@ public class ArrowListener implements Listener {
 
 				block.setType(Material.AIR);
 				block.getLocation().getWorld().spawnParticle(Particle.BLOCK_CRACK, block.getLocation(), 1, 1, 1, 1);
-				block.getLocation().getWorld().spawnParticle(Particle.EXPLOSION_NORMAL, block.getLocation(), 1, 1, 1, 1);
+				block.getLocation().getWorld().spawnParticle(Particle.EXPLOSION_NORMAL, block.getLocation(), 1, 1, 1,
+						1);
 				blockLoc1.getWorld().spawnParticle(Particle.BLOCK_CRACK, block.getLocation(), 3, 2, 2, 2);
 				blockLoc2.getWorld().spawnParticle(Particle.BLOCK_CRACK, block.getLocation(), 3, 2, 2, 2);
 				blockLoc3.getWorld().spawnParticle(Particle.BLOCK_CRACK, block.getLocation(), 3, 2, 2, 2);
@@ -166,14 +201,14 @@ public class ArrowListener implements Listener {
 				blockLoc6.getBlock().setType(Material.AIR);
 				blockLoc7.getBlock().setType(Material.AIR);
 				block.getLocation().getWorld().spawnParticle(Particle.BLOCK_CRACK, block.getLocation(), 3, 2, 2, 2);
-				block.getLocation().getWorld().spawnParticle(Particle.EXPLOSION_NORMAL, block.getLocation(), 1, 1, 1, 1);
+				block.getLocation().getWorld().spawnParticle(Particle.EXPLOSION_NORMAL, block.getLocation(), 1, 1, 1,
+						1);
 				blockLoc1.getWorld().spawnParticle(Particle.BLOCK_CRACK, block.getLocation(), 3, 2, 2, 2);
 				blockLoc2.getWorld().spawnParticle(Particle.BLOCK_CRACK, block.getLocation(), 3, 2, 2, 2);
 				blockLoc3.getWorld().spawnParticle(Particle.BLOCK_CRACK, block.getLocation(), 3, 2, 2, 2);
 				block.getLocation().getWorld().playSound(block.getLocation(), Sound.BLOCK_WOOD_BREAK, 1, 1);
-//				block.getLocation().getWorld().createExplosion(block.getLocation().getX(), block.getLocation().getY(),
-//						block.getLocation().getZ(), 10, false, false);
-
+				//				block.getLocation().getWorld().createExplosion(block.getLocation().getX(), block.getLocation().getY(),
+				//						block.getLocation().getZ(), 10, false, false);
 
 			}
 
@@ -195,16 +230,16 @@ public class ArrowListener implements Listener {
 
 					}
 					Location loc = entity.getLocation();
-					PacketPlayOutWorldParticles packet = new PacketPlayOutWorldParticles(EnumParticle.HEART, 	//パーティクルの種類
-							true, 		//true
-							(float) loc.getX(), 	//位置X
-							(float) loc.getY(), 	//位置Y
-							(float) loc.getZ(),		//位置Z
-							0,				//x方面の拡散offset
-							0, 				//y方面の拡散
-							0,				//z方面の拡散
-							20, 			//パーティクル出現スピード(tick) 20tick=1s
-							10, 				//パーティクルの量
+					PacketPlayOutWorldParticles packet = new PacketPlayOutWorldParticles(EnumParticle.HEART, //パーティクルの種類
+							true, //true
+							(float) loc.getX(), //位置X
+							(float) loc.getY(), //位置Y
+							(float) loc.getZ(), //位置Z
+							0, //x方面の拡散offset
+							0, //y方面の拡散
+							0, //z方面の拡散
+							20, //パーティクル出現スピード(tick) 20tick=1s
+							10, //パーティクルの量
 							null);
 
 					for (Map.Entry<Player, Location> entry : locationCache.entrySet()) {
