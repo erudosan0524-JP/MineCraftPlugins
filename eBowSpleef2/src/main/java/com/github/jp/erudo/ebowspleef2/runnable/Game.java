@@ -95,6 +95,8 @@ public class Game extends BukkitRunnable {
 
 				player.getWorld().setPVP(false);
 
+				player.getLocation().getWorld().playSound(player.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 0.5F, 1);
+
 			}
 			plg.setCurrentGameState(GameState.PREPARE);
 			plg.getServer().getScheduler().cancelTask(task.getTaskId());
