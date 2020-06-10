@@ -120,15 +120,14 @@ public class ArrowListener implements Listener {
 					if (hitPlayer != shooter) {
 						//どちらも同じチームだったら回復
 						if(plg.getTeam(Teams.BLUE).hasEntry(hitPlayer.getName()) && plg.getTeam(Teams.BLUE).hasEntry(shooter.getName())) {
-							hitPlayer.setHealth(hitPlayer.getHealth() + 10);
+							hitPlayer.setHealth(hitPlayer.getHealth() + 8);
 							hitPlayer.getLocation().getWorld().spawnParticle(Particle.HEART, hitPlayer.getLocation(), 5, 1, 1, 1);
 						}
 
 						if(plg.getTeam(Teams.RED).hasEntry(hitPlayer.getName()) && plg.getTeam(Teams.RED).hasEntry(shooter.getName())) {
-							hitPlayer.setHealth(hitPlayer.getHealth() + 10);
+							hitPlayer.setHealth(hitPlayer.getHealth() + 8);
 							hitPlayer.getLocation().getWorld().spawnParticle(Particle.HEART, hitPlayer.getLocation(), 5, 1, 1, 1);
 						}
-
 
 
 						hitPlayer.damage(2);
@@ -148,10 +147,9 @@ public class ArrowListener implements Listener {
 								//もし手に持っている弓がアイオロスだったら
 								if(ChatColor.stripColor(bow.getItemMeta().getDisplayName().toString()).equals(ChatColor.stripColor(Items.bow1Name))) {
 
-									Vector boostVec = arrow.getVelocity();
+									Vector boostVec = hitPlayer.getLocation().getDirection().normalize().multiply(2.5).setY(1);
 
 									hitPlayer.setVelocity(boostVec);
-
 								}
 							}
 						}

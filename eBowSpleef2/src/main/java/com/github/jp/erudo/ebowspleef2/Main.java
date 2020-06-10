@@ -101,7 +101,7 @@ public class Main extends JavaPlugin {
 		red.setPrefix("§c");
 		red.setSuffix(ChatColor.WHITE.toString());
 		red.setDisplayName("赤チーム");
-//		red.setAllowFriendlyFire(false);
+		red.setAllowFriendlyFire(true);
 
 		if (board.getTeam(Teams.BLUE.getName()) == null) {
 			blue = board.registerNewTeam(Teams.BLUE.getName());
@@ -111,7 +111,7 @@ public class Main extends JavaPlugin {
 		blue.setPrefix("§9");
 		blue.setSuffix(ChatColor.WHITE.toString());
 		blue.setDisplayName("青チーム");
-//		blue.setAllowFriendlyFire(false);
+		blue.setAllowFriendlyFire(true);
 
 		if (board.getTeam(Teams.SPECTATOR.getName()) == null) {
 			spectator = board.registerNewTeam(Teams.SPECTATOR.getName());

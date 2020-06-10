@@ -141,8 +141,8 @@ public class CommandManager implements CommandExecutor {
 						p.getName() + "を" + ChatColor.BLUE + "青チーム" + ChatColor.WHITE + "に設定しました");
 				return true;
 			}
-		} else if(args[0].equalsIgnoreCase("setspe")){
-			if(!player.hasPermission("ebs.commands.setspe")) {
+		} else if (args[0].equalsIgnoreCase("setspe")) {
+			if (!player.hasPermission("ebs.commands.setspe")) {
 				return true;
 			}
 
@@ -180,12 +180,13 @@ public class CommandManager implements CommandExecutor {
 			PlayersSetting.setLobbyPos(player.getLocation());
 			return true;
 		} else if (args[0].equalsIgnoreCase("shopper")) {
-			if(!player.hasPermission("ebs.commands.shopper")) {
+			if (!player.hasPermission("ebs.commands.shopper")) {
 				return true;
 			}
 
-			Location l = new Location(null, player.getLocation().getX(), player.getLocation().getY() -1, player.getLocation().getZ());
-			Villager villager = (Villager) player.getWorld().spawnEntity(l,EntityType.VILLAGER);
+			Location l = new Location(null, player.getLocation().getX(), player.getLocation().getY() - 1,
+					player.getLocation().getZ());
+			Villager villager = (Villager) player.getWorld().spawnEntity(l, EntityType.VILLAGER);
 			villager.setAI(false);
 			villager.setGlowing(true);
 			villager.setAdult();
@@ -197,30 +198,32 @@ public class CommandManager implements CommandExecutor {
 
 			return true;
 
-		}else if (args[0].equalsIgnoreCase("setstage")) {
+		} else if (args[0].equalsIgnoreCase("setstage")) {
 			if (Objects.isNull(args[1])) {
 				return true;
 			} else {
 				plg.setStageName(args[1]);
-				MessageManager.sendMessage(player, "ステージを" + ChatColor.AQUA + plg.getStageName() + ChatColor.WHITE + "に設定しました");
+				MessageManager.sendMessage(player,
+						"ステージを" + ChatColor.AQUA + plg.getStageName() + ChatColor.WHITE + "に設定しました");
 				return true;
 			}
-		}else if(args[0].equalsIgnoreCase("build")) {
+		} else if (args[0].equalsIgnoreCase("build")) {
 			MessageManager.messageAll("ワールドを復元中です・・・");
 			WorldManager wm = new WorldManager();
-			Location loc = new Location(player.getWorld(), plg.getMyConfig().getBeginCoordinate()[0], plg.getMyConfig().getBeginCoordinate()[1], plg.getMyConfig().getBeginCoordinate()[2]);
+			Location loc = new Location(player.getWorld(), plg.getMyConfig().getBeginCoordinate()[0],
+					plg.getMyConfig().getBeginCoordinate()[1], plg.getMyConfig().getBeginCoordinate()[2]);
 			wm.loadSchematic(loc, plg.getStageName());
 			MessageManager.messageAll("復元が完了しました！");
 			return true;
 
-		} else if (args[0].equalsIgnoreCase("resetscore")){
+		} else if (args[0].equalsIgnoreCase("resetscore")) {
 			MessageManager.sendMessage(player, "スコアボードをリセットします");
 			plg.setBluePoint(0);
 			plg.setRedPoint(0);
 			MessageManager.sendMessage(player, "完了しました");
 			return true;
 
-		} else if(args[0].equalsIgnoreCase("reload")){
+		} else if (args[0].equalsIgnoreCase("reload")) {
 			plg.getMyConfig().reload();
 			return true;
 
@@ -233,7 +236,7 @@ public class CommandManager implements CommandExecutor {
 			MessageManager.sendMessage(player, "Version: " + pdf.getVersion());
 			return true;
 
-		} else if(args[0].equalsIgnoreCase("help")) {
+		} else if (args[0].equalsIgnoreCase("help")) {
 			MessageManager.CommandContent(player);
 			return true;
 		}
