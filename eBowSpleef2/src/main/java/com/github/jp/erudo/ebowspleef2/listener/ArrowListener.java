@@ -146,12 +146,12 @@ public class ArrowListener implements Listener {
 
 				block.setType(Material.AIR);
 				block.getLocation().getWorld().spawnParticle(Particle.BLOCK_CRACK, block.getLocation(), 1, 1, 1, 1);
+				block.getLocation().getWorld().spawnParticle(Particle.EXPLOSION_NORMAL, block.getLocation(), 1, 1, 1, 1);
 				blockLoc1.getWorld().spawnParticle(Particle.BLOCK_CRACK, block.getLocation(), 3, 2, 2, 2);
 				blockLoc2.getWorld().spawnParticle(Particle.BLOCK_CRACK, block.getLocation(), 3, 2, 2, 2);
 				blockLoc3.getWorld().spawnParticle(Particle.BLOCK_CRACK, block.getLocation(), 3, 2, 2, 2);
 				block.getLocation().getWorld().playSound(block.getLocation(), Sound.BLOCK_WOOD_BREAK, 1, 1);
-				block.getLocation().getWorld().createExplosion(block.getLocation().getX(), block.getLocation().getY(),
-						block.getLocation().getZ(), 10, false, false);
+
 			} else {
 				if (!(block.getType() == Material.WOOL)) {
 					return;
@@ -166,12 +166,15 @@ public class ArrowListener implements Listener {
 				blockLoc6.getBlock().setType(Material.AIR);
 				blockLoc7.getBlock().setType(Material.AIR);
 				block.getLocation().getWorld().spawnParticle(Particle.BLOCK_CRACK, block.getLocation(), 3, 2, 2, 2);
+				block.getLocation().getWorld().spawnParticle(Particle.EXPLOSION_NORMAL, block.getLocation(), 1, 1, 1, 1);
 				blockLoc1.getWorld().spawnParticle(Particle.BLOCK_CRACK, block.getLocation(), 3, 2, 2, 2);
 				blockLoc2.getWorld().spawnParticle(Particle.BLOCK_CRACK, block.getLocation(), 3, 2, 2, 2);
 				blockLoc3.getWorld().spawnParticle(Particle.BLOCK_CRACK, block.getLocation(), 3, 2, 2, 2);
 				block.getLocation().getWorld().playSound(block.getLocation(), Sound.BLOCK_WOOD_BREAK, 1, 1);
-				block.getLocation().getWorld().createExplosion(block.getLocation().getX(), block.getLocation().getY(),
-						block.getLocation().getZ(), 10, false, false);
+//				block.getLocation().getWorld().createExplosion(block.getLocation().getX(), block.getLocation().getY(),
+//						block.getLocation().getZ(), 10, false, false);
+
+
 			}
 
 		}

@@ -33,6 +33,10 @@ public class Game extends BukkitRunnable {
 
 	public void run() {
 
+		Score TimeScore = plg.getObj().getScore(ChatColor.GOLD + "残り時間: ");
+		Score RedPoint = plg.getObj().getScore(ChatColor.DARK_RED + "赤チーム獲得ポイント: ");
+		Score BluePoint = plg.getObj().getScore(ChatColor.DARK_BLUE + "青チーム獲得ポイント: ");
+
 		if (plg.getCurrentGameState() == GameState.END) {
 			if (plg.getMyConfig().isCanRespawn()) {
 				if (plg.getBluePoint() > plg.getRedPoint()) { //青の勝ち
@@ -53,8 +57,14 @@ public class Game extends BukkitRunnable {
 			plg.setBluePoint(0);
 			plg.setRedPoint(0);
 
+			RedPoint.setScore(plg.getRedPoint());
+			BluePoint.setScore(plg.getBluePoint());
+
+
 			MessageManager.broadcastMessage("試合終了！！");
 			count = 0;
+
+			TimeScore.setScore(0);
 
 			MessageManager.messageAll("ワールドを復元中です・・・");
 			WorldManager wm = new WorldManager();
@@ -92,7 +102,7 @@ public class Game extends BukkitRunnable {
 
 		if (plg.getCurrentGameState() == GameState.GAMING) {
 			if (count > 0) {
-				Score TimeScore = plg.getObj().getScore(ChatColor.GOLD + "残り時間: ");
+
 				TimeScore.setScore(count);
 
 				//カウントダウン
@@ -104,10 +114,7 @@ public class Game extends BukkitRunnable {
 				}
 
 				if (plg.getMyConfig().isCanRespawn()) {
-					Score RedPoint = plg.getObj().getScore(ChatColor.DARK_RED + "赤チーム獲得ポイント: ");
 					RedPoint.setScore(plg.getRedPoint());
-
-					Score BluePoint = plg.getObj().getScore(ChatColor.DARK_BLUE + "青チーム獲得ポイント: ");
 					BluePoint.setScore(plg.getBluePoint());
 
 				} else {
