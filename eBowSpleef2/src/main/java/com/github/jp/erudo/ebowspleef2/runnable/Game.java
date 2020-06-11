@@ -47,10 +47,12 @@ public class Game extends BukkitRunnable {
 					for (Player p : plg.getServer().getOnlinePlayers()) {
 						title.sendTitle(p, ChatColor.RED + "赤チーム" + ChatColor.WHITE + "の勝利！！！", null, null);
 					}
-				} else { //引き分け
+				} else if(plg.getRedPoint() == plg.getBluePoint()){ //引き分け
 					for (Player p : plg.getServer().getOnlinePlayers()) {
 						title.sendTitle(p, ChatColor.WHITE + "引き分け！！！", null, null);
 					}
+				} else {
+					System.out.println("予期せぬ結果となりました。");
 				}
 			}
 

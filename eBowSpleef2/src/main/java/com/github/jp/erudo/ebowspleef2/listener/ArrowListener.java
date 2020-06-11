@@ -120,13 +120,30 @@ public class ArrowListener implements Listener {
 					if (hitPlayer != shooter) {
 						//どちらも同じチームだったら回復
 						if(plg.getTeam(Teams.BLUE).hasEntry(hitPlayer.getName()) && plg.getTeam(Teams.BLUE).hasEntry(shooter.getName())) {
-							hitPlayer.setHealth(hitPlayer.getHealth() + 8);
+							hitPlayer.setHealth(hitPlayer.getHealth() + 10);
 							hitPlayer.getLocation().getWorld().spawnParticle(Particle.HEART, hitPlayer.getLocation(), 5, 1, 1, 1);
 						}
 
 						if(plg.getTeam(Teams.RED).hasEntry(hitPlayer.getName()) && plg.getTeam(Teams.RED).hasEntry(shooter.getName())) {
-							hitPlayer.setHealth(hitPlayer.getHealth() + 8);
+							hitPlayer.setHealth(hitPlayer.getHealth() + 10);
 							hitPlayer.getLocation().getWorld().spawnParticle(Particle.HEART, hitPlayer.getLocation(), 5, 1, 1, 1);
+						}
+
+
+						//持っている弓がテュケーだったら
+						ItemStack item = shooter.getInventory().getItemInMainHand();
+						if(item != null && item.getType() == Material.BOW && item.hasItemMeta()) {
+							if(ChatColor.stripColor(item.getItemMeta().getDisplayName().toString()).equals(ChatColor.stripColor(Items.bow2Name)) ) {
+								Vector vector1 = shooter.getLocation().getDirection();
+								Vector vector2 = hitPlayer.getLocation().getDirection();
+
+
+								Vector knockback = vector1.subtract(vector2).setY(0.5).multiply(0.9D);
+
+
+								hitPlayer.setVelocity(knockback);
+
+							}
 						}
 
 

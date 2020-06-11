@@ -262,6 +262,15 @@ public class CommandManager implements CommandExecutor {
 			PlayersSetting.setLobbyPos(plg.getMyConfig().getLobbyPosition(player.getWorld()));
 		}
 
+
+		if(plg.getTeam(Teams.RED).getSize() <= 0) {
+			MessageManager.messageAll("赤チームの人数が0人です。");
+			return;
+		} else if(plg.getTeam(Teams.BLUE).getSize() <= 0) {
+			MessageManager.messageAll("青チームの人数が0人です。");
+			return;
+		}
+
 		game = new Game(plg, time);
 		task = plg.getServer().getScheduler().runTaskTimer(plg, game, 0L, 20L);
 
