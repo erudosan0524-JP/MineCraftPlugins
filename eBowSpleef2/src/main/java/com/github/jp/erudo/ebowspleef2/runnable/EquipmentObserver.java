@@ -32,6 +32,10 @@ public class EquipmentObserver extends BukkitRunnable {
 						p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED,2 *20,2), true);
 					} else if(ChatColor.stripColor(handItem.getItemMeta().getDisplayName().toString()).equals(ChatColor.stripColor(Items.bow2Name))) {
 						p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW,2 * 20,127), true);
+
+						for(Player player : Bukkit.getServer().getOnlinePlayers()) {
+							player.showPlayer(plg, p);
+						}
 					} else if(ChatColor.stripColor(handItem.getItemMeta().getDisplayName().toString()).equals(ChatColor.stripColor(Items.bow3Name))) {
 						p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW,2 * 20,127),true);
 						p.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING,2 * 20, 20),true);

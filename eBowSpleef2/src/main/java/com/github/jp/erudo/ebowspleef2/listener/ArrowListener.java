@@ -134,12 +134,8 @@ public class ArrowListener implements Listener {
 						ItemStack item = shooter.getInventory().getItemInMainHand();
 						if(item != null && item.getType() == Material.BOW && item.hasItemMeta()) {
 							if(ChatColor.stripColor(item.getItemMeta().getDisplayName().toString()).equals(ChatColor.stripColor(Items.bow2Name)) ) {
-								Vector vector1 = shooter.getLocation().getDirection();
-								Vector vector2 = hitPlayer.getLocation().getDirection();
 
-
-								Vector knockback = vector1.subtract(vector2).setY(0.5).multiply(0.9D);
-
+								Vector knockback = arrow.getVelocity().setY(0.5).multiply(1.5D);
 
 								hitPlayer.setVelocity(knockback);
 
