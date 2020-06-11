@@ -42,21 +42,27 @@ public class MoveListener implements Listener {
 		}
 
 		if(plg.getCurrentGameState() == GameState.GAMING) {
-			ItemStack item = player.getInventory().getItemInMainHand();
+			if(player.getInventory().contains(Material.BOW)) {
+				ItemStack item = player.getInventory().getItem(player.getInventory().first(Material.BOW));
 
-			if(item != null && item.getType() == Material.BOW && item.hasItemMeta()) {
-				if(ChatColor.stripColor(item.getItemMeta().getDisplayName().toString()).equals(ChatColor.stripColor(Items.bow2Name))) {
-					if(downBlock.getType() == Material.WOOL) {
-						downBlock.setType(Material.WOOL);
+				if(item != null && item.getType() == Material.BOW && item.hasItemMeta()) {
+					if(ChatColor.stripColor(item.getItemMeta().getDisplayName().toString()).equals(ChatColor.stripColor(Items.bow2Name))) {
+						if(downBlock.getType() == Material.WOOL) {
+							downBlock.setType(Material.WOOL);
 
-						if(plg.getTeam(Teams.BLUE).hasEntry(player.getName())) {
-							downBlock.setData(DyeColor.BLUE.getWoolData());
-						} else if(plg.getTeam(Teams.RED).hasEntry(player.getName())) {
-							downBlock.setData(DyeColor.RED.getWoolData());
+							if(plg.getTeam(Teams.BLUE).hasEntry(player.getName())) {
+								downBlock.setData(DyeColor.BLUE.getWoolData());
+							} else if(plg.getTeam(Teams.RED).hasEntry(player.getName())) {
+								downBlock.setData(DyeColor.RED.getWoolData());
+							}
 						}
 					}
 				}
 			}
+
+
+
+
 		}
 
 	}
