@@ -39,15 +39,15 @@ public class Game extends BukkitRunnable {
 
 		if (plg.getCurrentGameState() == GameState.END) {
 			if (plg.getMyConfig().isCanRespawn()) {
-				if (plg.getBluePoint() > plg.getRedPoint()) { //青の勝ち
+				if (Main.getBluePoint() > Main.getRedPoint()) { //青の勝ち
 					for (Player p : plg.getServer().getOnlinePlayers()) {
 						title.sendTitle(p, ChatColor.BLUE + "青チーム" + ChatColor.WHITE + "の勝利！！！", null, null);
 					}
-				} else if (plg.getRedPoint() < plg.getBluePoint()) { //赤の勝ち
+				} else if (Main.getRedPoint() < Main.getBluePoint()) { //赤の勝ち
 					for (Player p : plg.getServer().getOnlinePlayers()) {
 						title.sendTitle(p, ChatColor.RED + "赤チーム" + ChatColor.WHITE + "の勝利！！！", null, null);
 					}
-				} else if(plg.getRedPoint() == plg.getBluePoint()){ //引き分け
+				} else if(Main.getRedPoint() == Main.getBluePoint()){ //引き分け
 					for (Player p : plg.getServer().getOnlinePlayers()) {
 						title.sendTitle(p, ChatColor.WHITE + "引き分け！！！", null, null);
 					}
@@ -56,11 +56,11 @@ public class Game extends BukkitRunnable {
 				}
 			}
 
-			plg.setBluePoint(0);
-			plg.setRedPoint(0);
+			Main.setBluePoint(0);
+			Main.setRedPoint(0);
 
-			RedPoint.setScore(plg.getRedPoint());
-			BluePoint.setScore(plg.getBluePoint());
+			RedPoint.setScore(Main.getRedPoint());
+			BluePoint.setScore(Main.getBluePoint());
 
 
 			MessageManager.broadcastMessage("試合終了！！");
@@ -76,6 +76,10 @@ public class Game extends BukkitRunnable {
 			MessageManager.messageAll("復元が完了しました！");
 
 			for (Player player : Bukkit.getServer().getOnlinePlayers()) {
+				for(Player pla : Bukkit.getServer().getOnlinePlayers()) {
+					player.showPlayer(plg ,pla);
+				}
+
 				player.setSneaking(false);
 				player.teleport(PlayersSetting.getLobbyPos());
 				player.setGameMode(GameMode.ADVENTURE);
@@ -118,8 +122,8 @@ public class Game extends BukkitRunnable {
 				}
 
 				if (plg.getMyConfig().isCanRespawn()) {
-					RedPoint.setScore(plg.getRedPoint());
-					BluePoint.setScore(plg.getBluePoint());
+					RedPoint.setScore(Main.getRedPoint());
+					BluePoint.setScore(Main.getBluePoint());
 
 				} else {
 					for (Player p : plg.getServer().getOnlinePlayers()) {

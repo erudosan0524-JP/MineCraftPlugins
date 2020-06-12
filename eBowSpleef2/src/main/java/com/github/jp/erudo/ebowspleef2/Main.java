@@ -34,8 +34,8 @@ public class Main extends JavaPlugin {
 	private static Team spectator;
 
 	//両者ポイント
-	private int redPoint = 0;
-	private int bluePoint = 0;
+	private static int redPoint = 0;
+	private static int bluePoint = 0;
 
 	//ゲーム状態
 	private GameState currentState;
@@ -191,28 +191,28 @@ public class Main extends JavaPlugin {
 		Main.spectator = spectator;
 	}
 
-	public int getRedPoint() {
+	public static int getRedPoint() {
 		return redPoint;
 	}
 
-	public void setRedPoint(int num) {
-		this.redPoint = num;
+	public static void setRedPoint(int num) {
+		redPoint = num;
 	}
 
-	public int getBluePoint() {
+	public static int getBluePoint() {
 		return bluePoint;
 	}
 
-	public void setBluePoint(int num) {
-		this.bluePoint = num;
+	public static void setBluePoint(int num) {
+		bluePoint = num;
 	}
 
-	public void addRedPoint() {
-		this.redPoint += 1;
+	public static void addRedPoint() {
+		redPoint += 1;
 	}
 
-	public void addBluePoint() {
-		this.bluePoint += 1;
+	public static void addBluePoint() {
+		bluePoint += 1;
 	}
 
 	public String getStageName() {

@@ -135,7 +135,7 @@ public class ArrowListener implements Listener {
 						if(item != null && item.getType() == Material.BOW && item.hasItemMeta()) {
 							if(ChatColor.stripColor(item.getItemMeta().getDisplayName().toString()).equals(ChatColor.stripColor(Items.bow2Name)) ) {
 
-								Vector knockback = arrow.getVelocity().setY(0.5).multiply(1.5D);
+								Vector knockback = arrow.getVelocity().setY(0.5).multiply(1.0D);
 
 								hitPlayer.setVelocity(knockback);
 

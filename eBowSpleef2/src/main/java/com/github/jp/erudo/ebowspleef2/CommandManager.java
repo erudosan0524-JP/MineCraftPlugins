@@ -218,8 +218,8 @@ public class CommandManager implements CommandExecutor {
 
 		} else if (args[0].equalsIgnoreCase("resetscore")) {
 			MessageManager.sendMessage(player, "スコアボードをリセットします");
-			plg.setBluePoint(0);
-			plg.setRedPoint(0);
+			Main.setBluePoint(0);
+			Main.setRedPoint(0);
 			MessageManager.sendMessage(player, "完了しました");
 			return true;
 

@@ -31,9 +31,9 @@ public class DeathListener implements Listener {
 		if(plg.getMyConfig().isCanRespawn()) {
 			//リスポーン可能ならポイント増やすだけ
 			if(plg.getTeam(Teams.BLUE).hasEntry(player.getName())) {
-				plg.addRedPoint();
+				Main.addRedPoint();
 			}else if(plg.getTeam(Teams.RED).hasEntry(player.getName())) {
-				plg.addBluePoint();
+				Main.addBluePoint();
 			}
 		} else {
 			//リスポーン不可ならチームから抜ける
@@ -42,10 +42,10 @@ public class DeathListener implements Listener {
 			player.setSneaking(false);
 			if(plg.getTeam(Teams.BLUE).hasEntry(player.getName())) {
 				plg.getTeam(Teams.BLUE).removeEntry(player.getName());
-				plg.setRedPoint(1);
+				Main.setRedPoint(1);
 			}else if(plg.getTeam(Teams.RED).hasEntry(player.getName())) {
 				plg.getTeam(Teams.RED).removeEntry(player.getName());
-				plg.setBluePoint(1);
+				Main.setBluePoint(1);
 			}
 		}
 	}
