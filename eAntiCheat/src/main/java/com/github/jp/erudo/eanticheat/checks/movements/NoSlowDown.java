@@ -17,9 +17,10 @@ public class NoSlowDown {
 		if (u.getPlayer().hasPotionEffect(PotionEffectType.SPEED))
 			return;
 
-		double xzDist = (d.getxDiff() > d.getzDiff() ? d.getxDiff() : d.getzDiff());
+		u.setCurrentFoodLevel(u.getPlayer().getFoodLevel());
 
-		u.getPlayer().sendMessage("Eat: " + String.valueOf(xzDist));
+		System.out.println(u.getCurrentFoodLevel());
+		double xzDist = (d.getxDiff() > d.getzDiff() ? d.getxDiff() : d.getzDiff());
 
 		if (xzDist > Settings.MAX_XZ_EATING_SPEED && u.getFoodStart() != null
 				&& System.currentTimeMillis() - u.getFoodStart() > 1200) {

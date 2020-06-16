@@ -35,7 +35,6 @@ public class Settings {
 		FOODS.add(Material.RAW_FISH);
 		FOODS.add(Material.COOKED_FISH);
 		FOODS.add(Material.CARROT);
-		FOODS.add(Material.CARROT_ITEM);
 		FOODS.add(Material.APPLE);
 		FOODS.add(Material.POTATO);
 		FOODS.add(Material.POISONOUS_POTATO);
@@ -44,7 +43,7 @@ public class Settings {
 		FOODS.add(Material.GOLDEN_CARROT);
 		FOODS.add(Material.BREAD);
 		FOODS.add(Material.MELON);
-		FOODS.add(Material.MUSHROOM_SOUP);
+		FOODS.add(Material.BEETROOT_SOUP);
 		FOODS.add(Material.ROTTEN_FLESH);
 		FOODS.add(Material.COOKIE);
 		FOODS.add(Material.PUMPKIN_PIE);

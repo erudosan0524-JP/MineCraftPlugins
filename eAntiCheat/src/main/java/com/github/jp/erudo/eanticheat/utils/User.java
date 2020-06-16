@@ -9,6 +9,7 @@ public class User {
 	private Long foodStart;
 	private Location foodStartLoc;
 	private int invalidFoodEatableCount = 0;
+	private int currentFoodLevel = 0;
 
 	public User(Player p) {
 		this.player = p;
@@ -47,5 +48,15 @@ public class User {
 		this.invalidFoodEatableCount = 0;
 
 	}
+
+	public int getCurrentFoodLevel() {
+		return currentFoodLevel;
+	}
+
+	public void setCurrentFoodLevel(int currentFoodLevel) {
+		this.currentFoodLevel = currentFoodLevel;
+	}
+
+
 
 }
