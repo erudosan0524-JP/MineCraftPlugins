@@ -32,9 +32,6 @@ public class FoodLevelListener implements Listener {
 
 		if(!u.getPlayer().isOnGround()) return;
 
-		System.out.println("nowFoodLevel: " + e.getFoodLevel());
-		System.out.println("currentFoodLevel: " + u.getCurrentFoodLevel());
-
 		if(u.getPlayer().getItemInHand() != null && Settings.FOODS.contains(u.getPlayer().getItemInHand().getType()) && e.getFoodLevel() > u.getCurrentFoodLevel()) {
 			if(u.getInvalidFoodEatableCount() != 0) {
 				e.setCancelled(true);

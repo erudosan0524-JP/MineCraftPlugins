@@ -19,7 +19,6 @@ public class NoSlowDown {
 
 		u.setCurrentFoodLevel(u.getPlayer().getFoodLevel());
 
-		System.out.println(u.getCurrentFoodLevel());
 		double xzDist = (d.getxDiff() > d.getzDiff() ? d.getxDiff() : d.getzDiff());
 
 		if (xzDist > Settings.MAX_XZ_EATING_SPEED && u.getFoodStart() != null
