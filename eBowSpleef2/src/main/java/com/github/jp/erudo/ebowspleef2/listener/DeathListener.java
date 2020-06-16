@@ -42,10 +42,10 @@ public class DeathListener implements Listener {
 			player.setSneaking(false);
 			if(plg.getTeam(Teams.BLUE).hasEntry(player.getName())) {
 				plg.getTeam(Teams.BLUE).removeEntry(player.getName());
-				Main.setRedPoint(1);
+				Main.addRedPoint();
 			}else if(plg.getTeam(Teams.RED).hasEntry(player.getName())) {
 				plg.getTeam(Teams.RED).removeEntry(player.getName());
-				Main.setBluePoint(1);
+				Main.addBluePoint();
 			}
 		}
 	}

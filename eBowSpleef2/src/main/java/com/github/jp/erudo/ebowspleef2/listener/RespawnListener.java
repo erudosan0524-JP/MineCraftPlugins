@@ -52,6 +52,7 @@ public class RespawnListener implements Listener {
 				e.setRespawnLocation(PlayersSetting.getBluePos());
 				player.setGameMode(GameMode.ADVENTURE);
 				player.setSneaking(true);
+
 			//赤チームだったら
 			} else if (plg.getTeam(Teams.RED).hasEntry(player.getName())) {
 

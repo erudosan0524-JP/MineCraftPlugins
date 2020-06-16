@@ -146,8 +146,7 @@ public class ArrowListener implements Listener {
 						hitPlayer.damage(2);
 						hitPlayer.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 5 * 20, 1));
 						hitPlayer.getLocation().getWorld().spawnParticle(Particle.VILLAGER_HAPPY,
-								hitPlayer.getLocation(), 50, 5,
-								3, 5);
+								hitPlayer.getLocation(), 10,1,1,1);
 						hitPlayer.getLocation().getWorld().playSound(hitPlayer.getLocation(), Sound.BLOCK_ANVIL_PLACE,
 								(float) 0.5, 5);
 

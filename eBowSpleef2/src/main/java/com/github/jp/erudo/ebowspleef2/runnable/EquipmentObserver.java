@@ -10,6 +10,7 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import com.github.jp.erudo.ebowspleef2.Main;
+import com.github.jp.erudo.ebowspleef2.enums.GameState;
 import com.github.jp.erudo.ebowspleef2.item.Items;
 
 public class EquipmentObserver extends BukkitRunnable {
@@ -22,36 +23,46 @@ public class EquipmentObserver extends BukkitRunnable {
 
 	@Override
 	public void run() {
-		for(Player p : plg.getServer().getOnlinePlayers()) {
+		for (Player p : plg.getServer().getOnlinePlayers()) {
 
 			ItemStack handItem = p.getInventory().getItemInMainHand();
 			//手に持ってるアイテムの検知
-			if(handItem != null && handItem.getType() == Material.BOW) {
-				if(handItem.hasItemMeta()) {
-					if(ChatColor.stripColor(handItem.getItemMeta().getDisplayName().toString()).equals(ChatColor.stripColor(Items.bow1Name))) {
-						p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED,2 *20,2), true);
-					} else if(ChatColor.stripColor(handItem.getItemMeta().getDisplayName().toString()).equals(ChatColor.stripColor(Items.bow2Name))) {
-						p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW,2 * 20,127), true);
+			if (handItem != null && handItem.getType() == Material.BOW) {
+				if (handItem.hasItemMeta()) {
+					if (ChatColor.stripColor(handItem.getItemMeta().getDisplayName().toString())
+							.equals(ChatColor.stripColor(Items.bow1Name))) {
+						p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 2 * 20, 2), true);
+					} else if (ChatColor.stripColor(handItem.getItemMeta().getDisplayName().toString())
+							.equals(ChatColor.stripColor(Items.bow2Name))) {
+						p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 2 * 20, 127), true);
 
-						for(Player player : Bukkit.getServer().getOnlinePlayers()) {
-							player.showPlayer(plg, p);
+						if (plg.getCurrentGameState() == GameState.GAMING) {
+							for (Player player : Bukkit.getServer().getOnlinePlayers()) {
+								player.showPlayer(plg, p);
+							}
 						}
-					} else if(ChatColor.stripColor(handItem.getItemMeta().getDisplayName().toString()).equals(ChatColor.stripColor(Items.bow3Name))) {
-						p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW,2 * 20,127),true);
-						p.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING,2 * 20, 20),true);
+
+					} else if (ChatColor.stripColor(handItem.getItemMeta().getDisplayName().toString())
+							.equals(ChatColor.stripColor(Items.bow3Name))) {
+						p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 2 * 20, 127), true);
+						p.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 2 * 20, 20), true);
 					}
 				}
-			//何も持ってない時 || 弓以外のアイテムを持っている時
+				//何も持ってない時 || 弓以外のアイテムを持っている時
 			} else {
-				if(p.getInventory().contains(Material.BOW)) {
+				if (p.getInventory().contains(Material.BOW)) {
 					ItemStack bow = p.getInventory().getItem(p.getInventory().first(Material.BOW));
 
-					if(bow.hasItemMeta()) {
-						if(ChatColor.stripColor(bow.getItemMeta().getDisplayName().toString()).equals(ChatColor.stripColor(Items.bow2Name))) {
-							p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED,2 * 20,0), true);
+					if (bow.hasItemMeta()) {
+						if (ChatColor.stripColor(bow.getItemMeta().getDisplayName().toString())
+								.equals(ChatColor.stripColor(Items.bow2Name))) {
+							p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 2 * 20, 0), true);
 
-							for(Player player : Bukkit.getServer().getOnlinePlayers()) {
-								player.hidePlayer(plg,p);
+							if (plg.getCurrentGameState() == GameState.GAMING) {
+								for (Player player : Bukkit.getServer().getOnlinePlayers()) {
+									player.hidePlayer(plg, p);
+								}
+
 							}
 
 						}
