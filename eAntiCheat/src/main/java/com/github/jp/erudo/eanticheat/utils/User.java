@@ -6,10 +6,17 @@ import org.bukkit.entity.Player;
 public class User {
 
 	private Player player;
+
+	//NoSlowで使う変数
 	private Long foodStart;
 	private Location foodStartLoc;
 	private int invalidFoodEatableCount = 0;
 	private int currentFoodLevel = 0;
+	private boolean bow = false;
+
+
+	//FastUseで使う変数
+	private Long bowStart;
 
 	public User(Player p) {
 		this.player = p;
@@ -57,6 +64,21 @@ public class User {
 		this.currentFoodLevel = currentFoodLevel;
 	}
 
+	public Long getBowStart() {
+		return bowStart;
+	}
+
+	public void setBowStart(Long bowStart) {
+		this.bowStart = bowStart;
+	}
+
+	public boolean isBow() {
+		return bow;
+	}
+
+	public void setBow(boolean bow) {
+		this.bow = bow;
+	}
 
 
 }

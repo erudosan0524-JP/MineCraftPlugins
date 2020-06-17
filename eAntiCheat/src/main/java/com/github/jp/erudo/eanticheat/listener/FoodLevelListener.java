@@ -9,6 +9,7 @@ import com.github.jp.erudo.eanticheat.Main;
 import com.github.jp.erudo.eanticheat.checks.CheckResult;
 import com.github.jp.erudo.eanticheat.checks.CheckType;
 import com.github.jp.erudo.eanticheat.checks.Level;
+import com.github.jp.erudo.eanticheat.checks.player.FastUse;
 import com.github.jp.erudo.eanticheat.utils.MessageManager;
 import com.github.jp.erudo.eanticheat.utils.Settings;
 import com.github.jp.erudo.eanticheat.utils.User;
@@ -38,6 +39,13 @@ public class FoodLevelListener implements Listener {
 				u.getPlayer().teleport(u.getFoodStartLoc());
 				MessageManager.log(new CheckResult(Level.DEFINITELY,u.getInvalidFoodEatableCount() + "times in a row. max=(0)",CheckType.NOSLOW), u);
 			}
+		}
+
+
+		CheckResult result = FastUse.runFoodCheck(u);
+		if(result.failed()) {
+			e.setCancelled(true);
+			MessageManager.log(result, u);
 		}
 	}
 }

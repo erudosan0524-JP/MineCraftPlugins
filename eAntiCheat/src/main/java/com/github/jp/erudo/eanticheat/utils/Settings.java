@@ -10,9 +10,18 @@ public class Settings {
 	//SPEED Settings
 	public static final Double MAX_XZ_SPEED = 0.66D;
 
+	//NOSLOW Settings
 	public static final Double MAX_XZ_EATING_SPEED = 0.11178D;
 
 	public static final Double MAX_XZ_BLOCKING_SPEED = 0.10224D;
+
+	public static final Double MAX_XZ_BOW_SPEED = 0.15D;
+
+	//FASTUSE Settings
+	public static final Long BOW_MIN = 100L;
+
+	public static final Long FOOD_MIN = 1000L;
+
 
 
 	//Alert Permission
