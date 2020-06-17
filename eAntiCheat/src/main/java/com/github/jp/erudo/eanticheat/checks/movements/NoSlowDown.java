@@ -37,6 +37,12 @@ public class NoSlowDown {
 
 		}
 
+		//弓に関してのNoSlowDownの検知
+		if(u.isBow() && xzDist > Settings.MAX_XZ_BOW_SPEED) {
+			return new CheckResult(Level.DEFINITELY,"tried to move too fast while bow shooting", CheckType.NOSLOW);
+		}
+
+
 		return PASS;
 	}
 
