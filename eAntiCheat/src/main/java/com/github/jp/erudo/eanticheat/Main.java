@@ -6,7 +6,9 @@ import java.util.UUID;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.github.jp.erudo.eanticheat.listener.BowListener;
 import com.github.jp.erudo.eanticheat.listener.FoodLevelListener;
+import com.github.jp.erudo.eanticheat.listener.InventoryListener;
 import com.github.jp.erudo.eanticheat.listener.JoinLeaveListener;
 import com.github.jp.erudo.eanticheat.listener.PlayerInteractListener;
 import com.github.jp.erudo.eanticheat.listener.PlayerMoveListener;
@@ -34,6 +36,8 @@ public class Main extends JavaPlugin {
 		new JoinLeaveListener(this);
 		new PlayerInteractListener(this);
 		new FoodLevelListener(this);
+		new BowListener(this);
+		new InventoryListener(this);
 
 		for(Player p : getServer().getOnlinePlayers()) {
 			USERS.put(p.getUniqueId(), new User(p));
