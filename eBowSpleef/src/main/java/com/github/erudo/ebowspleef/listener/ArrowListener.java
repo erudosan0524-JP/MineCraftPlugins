@@ -117,7 +117,7 @@ public class ArrowListener implements Listener {
 					return;
 				}
 
-				if (arrows.contains(entity)) {//if the arrow still is in the air
+				if (arrows.contains(entity)) {//矢が空中にあったら
 					Map<Player, Location> locationCache = new HashMap<Player, Location>();
 					for (Player online : Bukkit.getOnlinePlayers()) {
 						locationCache.put(online, online.getLocation());

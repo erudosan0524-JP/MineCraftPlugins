@@ -1,0 +1,15 @@
+name: eAntiTNT
+version: 1.3.0
+main: jp.github.erudo.eantitnt.EAntiTNT
+website: https://github.com/erudosan0524-JP
+author: 'Ld0'
+commands:
+   eAntiTNT:
+    description: kaijo/on/off
+permissions:
+  eantitnt.unkick:
+    default: op
+  eantitnt.kidou:
+    default: op
+  eantitnt.lava:
+    default: op

@@ -41,7 +41,7 @@ public class Main extends JavaPlugin {
 		Player player = (Player) sender;
 
 		if (player.isOp() || player.hasPermission("evanish.admin")) {
-			if (isVanished.get(player)) { //true
+			if (isVanished.get(player)) { //透明化状態
 				for (Player online : Bukkit.getServer().getOnlinePlayers()) {
 					if(online == player) {
 						continue;
@@ -77,7 +77,7 @@ public class Main extends JavaPlugin {
 	private void sendMessage(Player sender) {
 		String pluginName = ChatColor.AQUA + "【eVanish】" + ChatColor.WHITE;
 
-		if (isVanished.get(sender)) { //true
+		if (isVanished.get(sender)) {
 			sender.sendMessage(pluginName + "透明化が有効になりました");
 		} else {
 			sender.sendMessage(pluginName + "透明化が解除されました");

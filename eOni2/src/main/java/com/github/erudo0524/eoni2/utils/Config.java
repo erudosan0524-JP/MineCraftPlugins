@@ -52,6 +52,8 @@ public class Config {
 	}
 
 	public int[] getConfOniPos() {
+		//文字列を空白区切りでint型の配列に変える
+		//ex "100 100 100"→100,100,100のint型の配列に変える
 		String[] str = confOniPos.split(" ", 0);
 		for (String arg : str) {
 			if (arg.isEmpty() || str.equals(null)) {
@@ -65,6 +67,7 @@ public class Config {
 			num[i] = Integer.parseInt(str[i]);
 		}
 		return num;
+		//配列.foreach()
 
 	}
 

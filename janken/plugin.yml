@@ -1,0 +1,7 @@
+name: janken
+version: 1.0.0
+main: janken.plugin.Main
+auther: erudo
+commands:
+  janken:
+    description: do the janken.

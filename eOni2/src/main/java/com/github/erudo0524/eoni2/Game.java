@@ -81,6 +81,7 @@ public class Game extends BukkitRunnable {
 					Block block = plg.getSupplyChestPos().get(r.nextInt(plg.getSupplyChestPos().size()))
 							.getBlock();
 					Chest SupplyChest = null;
+
 					if(block.getType().equals(Material.CHEST)) {
 						if(!(block instanceof DoubleChest)) {
 							SupplyChest = (Chest) plg.getSupplyChestPos().get(r.nextInt(plg.getSupplyChestPos().size()))
@@ -90,6 +91,7 @@ public class Game extends BukkitRunnable {
 						MessageManager.messageAll("SupplyChestの中にチェストでないものがあったためゲームを終了します");
 						plg.setCurrentGameState(GameState.END);
 					}
+
 					SupplyChest.getInventory().addItem(item);
 					SupplyChest.getLocation().getWorld().spawnParticle(Particle.VILLAGER_HAPPY,
 							SupplyChest.getLocation(), 20, 1, 1, 1);

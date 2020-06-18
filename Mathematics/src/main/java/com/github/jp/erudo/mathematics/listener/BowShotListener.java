@@ -12,10 +12,8 @@ import com.github.jp.erudo.mathematics.Main;
 
 public class BowShotListener implements Listener {
 
-	private Main plg;
 
 	public BowShotListener(Main plg) {
-		this.plg = plg;
 		plg.getServer().getPluginManager().registerEvents(this, plg);
 	}
 
@@ -30,7 +28,7 @@ public class BowShotListener implements Listener {
 		Player player = (Player) e.getEntity();
 		Location loc = player.getLocation();
 
-		double arrowAngle = 15; //45度
+		double arrowAngle = 15;
 
 		double totalAngle1 = (((loc.getYaw()+90) + arrowAngle) * Math.PI)/180;
 		double arrowDirX1 = Math.cos(totalAngle1);

@@ -1,0 +1,4 @@
+name: insaneMC
+version: 1.0.0
+main: insaneMC.plugin.Main
+auther: erudo

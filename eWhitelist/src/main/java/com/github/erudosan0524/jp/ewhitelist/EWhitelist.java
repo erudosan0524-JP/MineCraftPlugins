@@ -15,19 +15,23 @@ public class EWhitelist extends JavaPlugin {
 	@Override
 	public void onEnable() {
 		getLogger().info("プラグインが起動しました");
-		getCommand("ewhitelist").setExecutor(new CommandManager(this));
+		getCommand("ewl").setExecutor(new CommandManager(this));
 		CustomConfig config = new CustomConfig(this);
 		CustomConfig config2 = new CustomConfig(this,"IDlist.yml");
 		config.saveDefaultConfig();
 		config2.saveDefaultConfig();
 
 		if(config.getConfig().getBoolean("enabled-load")) {
-			getServer().dispatchCommand(getServer().getConsoleSender(), "ewhitelist addall");
+			getServer().dispatchCommand(getServer().getConsoleSender(), "ewl addall");
 		}
 	}
 
 	public static void sendMessage(Player p, String s) {
 		p.sendMessage(ChatColor.AQUA + "[eWhitelist]" + ChatColor.WHITE + s);
+	}
+
+	public static void log(String message) {
+		System.out.println(message);
 	}
 
 

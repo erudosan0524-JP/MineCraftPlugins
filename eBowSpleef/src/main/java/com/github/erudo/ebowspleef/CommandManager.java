@@ -81,9 +81,11 @@ public class CommandManager implements CommandExecutor {
 			} else if(args[0].equalsIgnoreCase("setredpos")) {
 				plg.setRedPosition(player.getLocation());
 				MessageManager.sendMessage(player, "赤チームの拠点を設定しました。");
+				return true;
 			} else if(args[0].equalsIgnoreCase("setbluepos")) {
 				plg.setBluePosition(player.getLocation());
 				MessageManager.sendMessage(player, "青チームの拠点を設定しました。");
+				return true;
 			}
 		}
 		return false;

@@ -16,6 +16,7 @@ import org.bukkit.scoreboard.Team;
 import com.github.erudo.ebowspleef.enums.GameState;
 import com.github.erudo.ebowspleef.enums.Teams;
 import com.github.erudo.ebowspleef.listener.ArrowListener;
+import com.github.erudo.ebowspleef.listener.DeathListener;
 import com.github.erudo.ebowspleef.listener.JoinLeaveListener;
 import com.github.erudo.ebowspleef.listener.MoveListener;
 import com.github.erudo.ebowspleef.runnable.CountDown;
@@ -40,6 +41,9 @@ public class Main extends JavaPlugin {
 
 	private Items items;
 
+	private int redPoint = 0;
+	private int bluePoint = 0;
+
 	@Override
 	public void onDisable() {
 		getLogger().info("プラグインが停止しました");
@@ -63,6 +67,7 @@ public class Main extends JavaPlugin {
 		new JoinLeaveListener(this);
 		new ArrowListener(this);
 		new MoveListener(this);
+		new DeathListener(this);
 
 		///////////////////////////
 		///		ScoreBoard		///
@@ -141,19 +146,47 @@ public class Main extends JavaPlugin {
 		setGameState(GameState.PREPARE);
 
 		for (Player p : Bukkit.getServer().getOnlinePlayers()) {
-			if (!(this.getTeam(Teams.BLUE).hasEntry(p.getName()) || this.getTeam(Teams.RED).hasEntry(p.getName()))) {
+			if(this.getTeam(Teams.BLUE).hasEntry(p.getName())) {
+				//テレポート＆スポーン地点設定
+				p.teleport(new Location(null, this.getBluePosition()[0], this.getBluePosition()[1], this.getBluePosition()[2]));
+				p.setBedSpawnLocation(new Location(null, this.getBluePosition()[0], this.getBluePosition()[1], this.getBluePosition()[2]));
+
+				p.setGameMode(GameMode.SURVIVAL);
+				p.setSneaking(true);
+			}else if(this.getTeam(Teams.RED).hasEntry(p.getName())) {
+				p.teleport(new Location(null, this.getRedPosition()[0], this.getRedPosition()[1], this.getRedPosition()[2]));
+				p.setBedSpawnLocation(new Location(null, this.getRedPosition()[0], this.getRedPosition()[1], this.getRedPosition()[2]));
+
+				p.setGameMode(GameMode.SURVIVAL);
+				p.setSneaking(true);
+			} else {
 				this.addPlayerToTeam(Teams.SPECTATOR, p);
 				p.setGameMode(GameMode.SPECTATOR);
 			}
-
-			p.setGameMode(GameMode.SURVIVAL);
-			p.setSneaking(true);
 		}
+
+
 
 		countDown = new CountDown(this, count, time);
 		task = this.getServer().getScheduler().runTaskTimer(this, countDown, 0L, 20L);
 		countDown.setTask(task);
 
+	}
+
+	public int getRedPoint() {
+		return redPoint;
+	}
+
+	public void setRedPoint(int num) {
+		this.redPoint += num;
+	}
+
+	public int getBluePoint() {
+		return bluePoint;
+	}
+
+	public void setBluePoint(int num) {
+		this.bluePoint += num;
 	}
 
 	public Objective getObj() {
@@ -219,5 +252,17 @@ public class Main extends JavaPlugin {
 
 	public void setBluePosition(Location loc) {
 		config.setBluePosition(loc.getX(), loc.getY(), loc.getZ());
+	}
+
+	public int[] getRedPosition() {
+		return config.getRedPosition();
+	}
+
+	public int[] getBluePosition() {
+		return config.getBluePosition();
+	}
+
+	public boolean isCanRespawn() {
+		return config.isCanRespawn();
 	}
 }

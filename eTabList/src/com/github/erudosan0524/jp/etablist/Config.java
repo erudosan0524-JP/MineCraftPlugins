@@ -20,7 +20,8 @@ public class Config {
 
 	JavaPlugin plg;
 
-	String color;
+	private String color;
+	private String serverName;
 
 	public Config(JavaPlugin plg, World world) {
 		this.plg = plg;
@@ -39,7 +40,9 @@ public class Config {
 
 			conf.load(reader);
 
+
 			color = conf.getString(world.getName() + ".color");
+			serverName = conf.getString("serverName");
 
 		} catch (Exception e) {
 			System.out.println(e);
@@ -50,5 +53,9 @@ public class Config {
 
 	public String getColor() {
 		return ChatColor.translateAlternateColorCodes('&', color);
+	}
+
+	public String getServerName() {
+		return serverName;
 	}
 }

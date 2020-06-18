@@ -9,3 +9,4 @@ BluePosition:
   x:
   y:
   z:
+canRespawn: false

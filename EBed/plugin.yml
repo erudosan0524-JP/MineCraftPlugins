@@ -1,0 +1,7 @@
+name: EBed
+main: com.github.ebed.erudo.Main
+version: 2.1.1
+commands:
+   EBed:
+      description: To Players Command
+      usage: /<command>

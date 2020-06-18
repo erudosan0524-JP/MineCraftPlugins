@@ -27,7 +27,9 @@ public class PlayerInteractListener implements Listener {
 				u.setFoodStart();
 				u.resetInvalidFoodEatableCount();
 
-			} else if(e.getPlayer().getItemInHand().getType() == Material.BOW && e.getPlayer().getInventory().contains(Material.ARROW)) {
+			}
+
+			if(e.getPlayer().getItemInHand().getType() == Material.BOW && e.getPlayer().getInventory().contains(Material.ARROW)) {
 				u.setBowStart(System.currentTimeMillis());
 				u.setBow(true);
 			}

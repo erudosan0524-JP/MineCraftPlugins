@@ -37,7 +37,7 @@ public class Main extends JavaPlugin {
 	private GameState currentGameState;
 
 	//コンフィグ
-	private Config config;
+	public static Config config;
 
 	private Location oniPos;
 	private Location tpPos;
@@ -83,6 +83,7 @@ public class Main extends JavaPlugin {
 		config = new Config(this);
 
 		///////////////////////////
+		///		ScoreBoard		///
 		///////////////////////////
 		manager = Bukkit.getScoreboardManager();
 		board = manager.getMainScoreboard();

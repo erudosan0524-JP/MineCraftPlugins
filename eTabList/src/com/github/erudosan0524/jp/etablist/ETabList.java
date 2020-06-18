@@ -52,7 +52,9 @@ public class ETabList extends JavaPlugin {
 
 			@Override
 			public void run() {
+				ETabList main = new ETabList();
 				PacketPlayOutPlayerListHeaderFooter packet = new PacketPlayOutPlayerListHeaderFooter();
+				Config conf = new Config(main, null);
 				try {
 
 					Field a = packet.getClass().getDeclaredField("a");
@@ -60,7 +62,7 @@ public class ETabList extends JavaPlugin {
 					Field b = packet.getClass().getDeclaredField("b");
 					b.setAccessible(true);
 
-					Object header1 = new ChatComponentText(rainbow_color.get((new Random()).nextInt(rainbow_color.size())) + "アルトサーバー");
+					Object header1 = new ChatComponentText(rainbow_color.get((new Random()).nextInt(rainbow_color.size())) + conf.getServerName());
 					Object footer = new ChatComponentText(ChatColor.AQUA + "参加人数: " + ChatColor.WHITE + Bukkit.getServer().getOnlinePlayers().size() + "/" + Bukkit.getServer().getMaxPlayers());
 
 

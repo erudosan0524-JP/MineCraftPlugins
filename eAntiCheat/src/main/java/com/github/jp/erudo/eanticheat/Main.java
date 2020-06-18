@@ -10,6 +10,7 @@ import com.github.jp.erudo.eanticheat.listener.BowListener;
 import com.github.jp.erudo.eanticheat.listener.FoodLevelListener;
 import com.github.jp.erudo.eanticheat.listener.InventoryListener;
 import com.github.jp.erudo.eanticheat.listener.JoinLeaveListener;
+import com.github.jp.erudo.eanticheat.listener.PlayerHealthListener;
 import com.github.jp.erudo.eanticheat.listener.PlayerInteractListener;
 import com.github.jp.erudo.eanticheat.listener.PlayerMoveListener;
 import com.github.jp.erudo.eanticheat.utils.User;
@@ -38,6 +39,7 @@ public class Main extends JavaPlugin {
 		new FoodLevelListener(this);
 		new BowListener(this);
 		new InventoryListener(this);
+		new PlayerHealthListener(this);
 
 		for(Player p : getServer().getOnlinePlayers()) {
 			USERS.put(p.getUniqueId(), new User(p));

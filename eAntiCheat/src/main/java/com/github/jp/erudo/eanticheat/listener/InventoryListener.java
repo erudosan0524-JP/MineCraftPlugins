@@ -1,6 +1,7 @@
 package com.github.jp.erudo.eanticheat.listener;
 
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerItemHeldEvent;
 
@@ -12,7 +13,7 @@ public class InventoryListener implements Listener {
 		main.getServer().getPluginManager().registerEvents(this, main);
 	}
 
-	@EventHandler
+	@EventHandler(priority = EventPriority.LOWEST)
 	public void onItemSwitch(PlayerItemHeldEvent e) {
 		Main.getUser(e.getPlayer()).setBow(false);
 	}

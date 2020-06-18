@@ -4,7 +4,7 @@ version: 0.5.6
 author: 'Ld0'
 website: https://github.com/erudosan0524-JP
 commands:
-   eWhitelist:
+   ewl:
     description: test
 permissions:
   ewhitelist.addall:

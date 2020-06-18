@@ -6,7 +6,8 @@ public enum CheckType {
 
 	SPEED("Speed", new Permission("eac.bypass.speed")),
 	NOSLOW("NoSlowDown", new Permission("eac.bypass.noslowdown")),
-	FASTUSE("FastUse", new Permission("eac.bypass.fastuse"));
+	FASTUSE("FastUse", new Permission("eac.bypass.fastuse")),
+	FASTHEAL("FastHeal", new Permission("eac.bypass.fastheal"));
 
 	private String name;
 	private Permission perm;

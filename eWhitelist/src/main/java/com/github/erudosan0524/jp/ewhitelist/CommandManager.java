@@ -81,6 +81,7 @@ public class CommandManager implements CommandExecutor {
 					if (args[1].length() != 0) {
 						plg.getServer().dispatchCommand(plg.getServer().getConsoleSender(), "whitelist add " + args[1]);
 						EWhitelist.sendMessage(player, args[1] + "をホワイトリストに追加しました");
+						return true;
 					} else {
 						EWhitelist.sendMessage(player, "プレイヤーを指定してください");
 						return true;
@@ -104,15 +105,15 @@ public class CommandManager implements CommandExecutor {
 			}
 
 			player.sendMessage(ChatColor.YELLOW + "===コマンド一覧===\n"
-					+ ChatColor.WHITE + "・/ewhitelist addall\n"
+					+ ChatColor.WHITE + "・/ewl addall\n"
 					+ ChatColor.GRAY + "ファイル内のすべてのプレイヤーをホワイトリストに登録\n"
-					+ ChatColor.WHITE + "・/ewhitelist removeall\n"
+					+ ChatColor.WHITE + "・/ewl removeall\n"
 					+ ChatColor.GRAY + "すべてのプレイヤーをホワイトリストから削除\n"
-					+ ChatColor.WHITE + "・/ewhitelist list\n"
+					+ ChatColor.WHITE + "・/ewl list\n"
 					+ ChatColor.GRAY + "ホワイトリストに登録されているプレイヤー一覧の確認\n"
-					+ ChatColor.WHITE + "・/ewhitelist add [プレイヤー名]\n"
+					+ ChatColor.WHITE + "・/ewl add [プレイヤー名]\n"
 					+ ChatColor.GRAY + "指定プレイヤーをホワイトリストに登録\n"
-					+ ChatColor.WHITE + "・/ewhitelist remove [プレイヤー名]\n"
+					+ ChatColor.WHITE + "・/ewl remove [プレイヤー名]\n"
 					+ ChatColor.GRAY + "指定プレイヤーをホワイトリストから削除");
 			return true;
 		} else {
@@ -122,7 +123,7 @@ public class CommandManager implements CommandExecutor {
 					for (String s : datas) {
 						plg.getServer().dispatchCommand(plg.getServer().getConsoleSender(), "whitelist add " + s);
 					}
-					System.out.println("ファイル内のすべてのプレイヤーをホワイトリストに追加しました");
+					EWhitelist.log("ファイル内のすべてのプレイヤーをホワイトリストに追加しました");
 					return true;
 
 				} else if (args[0].equalsIgnoreCase("removeall")) {
@@ -130,10 +131,39 @@ public class CommandManager implements CommandExecutor {
 						plg.getServer().dispatchCommand(plg.getServer().getConsoleSender(),
 								"whitelist remove " + p_.getName());
 					}
-					System.out.println("すべてのプレイヤーをホワイトリストから削除しました");
+					EWhitelist.log("すべてのプレイヤーをホワイトリストから削除しました");
 					return true;
+				} else if (args[0].equalsIgnoreCase("add")) {
+					if (args[1].length() != 0) {
+						plg.getServer().dispatchCommand(plg.getServer().getConsoleSender(), "whitelist add " + args[1]);
+						EWhitelist.log(args[1] + "をホワイトリストに追加しました");
+						return true;
+					} else {
+						EWhitelist.log("プレイヤーを指定してください");
+						return true;
+					}
+				} else if (args[0].equalsIgnoreCase("remove")) {
+					if (args[1].length() != 0) {
+						plg.getServer().dispatchCommand(plg.getServer().getConsoleSender(),
+								"whitelist remove " + args[1]);
+						EWhitelist.log(args[1] + "をホワイトリストから削除しました");
+						return true;
+					} else {
+						EWhitelist.log("プレイヤーを指定してください");
+						return true;
+					}
 				}
 			}
+
+			EWhitelist.log("\u001b[00;33m" + "===コマンド一覧===\n"
+					+ "\u001B[37m" + "・/ewl addall\n"
+					+ "\u001B[35m" + "ファイル内のすべてのプレイヤーをホワイトリストに登録\n"
+					+ "\u001B[37m" + "・/ewl removeall\n"
+					+ "\u001B[35m" + "すべてのプレイヤーをホワイトリストから削除\n"
+					+ "\u001B[37m" + "・/ewl add [プレイヤー名]\n"
+					+ "\u001B[35m" + "指定プレイヤーをホワイトリストに登録\n"
+					+ "\u001B[37m" + "・/ewl remove [プレイヤー名]\n"
+					+ "\u001B[35m" + "指定プレイヤーをホワイトリストから削除" + "\u001B[0m");
 		}
 		return false;
 	}

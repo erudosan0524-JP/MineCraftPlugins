@@ -16,6 +16,8 @@ public class Config {
 	private int[] RedPosition = new int[3];
 	private int[] BluePosition = new int[3];
 
+	private boolean canRespawn;
+
 	public Config(Main plg) {
 		this.plg = plg;
 		load();
@@ -37,6 +39,7 @@ public class Config {
 		BluePosition[0] = config.getInt("BluePosition.x",0);
 		BluePosition[1] = config.getInt("BluePosition.y",0);
 		BluePosition[2] = config.getInt("BluePosition.z",0);
+		canRespawn = config.getBoolean("canRespawn");
 	}
 
 	public int getArrowRange() {
@@ -72,4 +75,9 @@ public class Config {
 		config.set("BluePosition.z", z);
 		plg.saveConfig();
 	}
+
+	public boolean isCanRespawn() {
+		return canRespawn;
+	}
+
 }
