@@ -25,7 +25,6 @@ public class CommandManager implements CommandExecutor {
 
 	private Main plg;
 	private Game game;
-	private BukkitTask task;
 
 	public CommandManager(Main plg) {
 		this.plg = plg;
@@ -184,7 +183,6 @@ public class CommandManager implements CommandExecutor {
 
 	}
 
-	@SuppressWarnings("deprecation")
 	private void gameStart(int time, Player player) {
 		//ゲーム状態をGAMINGに変更
 		plg.setCurrentGameState(GameState.GAMING);
@@ -199,10 +197,10 @@ public class CommandManager implements CommandExecutor {
 		}
 
 		game = new Game(plg, time);
-		task = plg.getServer().getScheduler().runTaskTimer(plg, game, 0L, 20L);
+		@SuppressWarnings("unused")
+		BukkitTask task = game.runTaskTimer(plg, 0, 20L);
 
 		MessageManager.broadcastMessage("鬼ごっこスタート!");
-		game.setTask(task);
 
 		//鬼以外のプレイヤーをPlayerチームに振り分け
 		for (Player p : Bukkit.getServer().getOnlinePlayers()) {

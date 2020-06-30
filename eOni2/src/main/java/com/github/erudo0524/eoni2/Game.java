@@ -48,7 +48,7 @@ public class Game extends BukkitRunnable {
 					player.getWorld().setPVP(false);
 				}
 			}
-			plg.getServer().getScheduler().cancelTask(task.getTaskId());
+			this.cancel();
 		}
 
 		if (plg.getCurrentGameState() == GameState.GAMING) {
@@ -118,9 +118,4 @@ public class Game extends BukkitRunnable {
 			count--;
 		}
 	}
-
-	public void setTask(BukkitTask task) {
-		this.task = task;
-	}
-
 }
