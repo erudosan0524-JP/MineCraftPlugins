@@ -19,9 +19,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
@@ -100,65 +97,6 @@ public class ArrowListener implements Listener {
 
 		if (e.getEntity() instanceof Arrow) {
 			arrows.remove(e.getEntity());
-
-			Arrow arrow = (Arrow) e.getEntity();
-
-			//プレイヤーに当たったら
-			if (e.getHitEntity() != null) {
-				if (e.getHitEntity() instanceof Player) {
-					Player hitPlayer = (Player) e.getHitEntity();
-
-					//弓を打ったエンティティがプレイヤーなければ除外
-					if (!(arrow.getShooter() instanceof Player)) {
-						return;
-					}
-
-					Player shooter = (Player) arrow.getShooter();
-
-					//シューターとヒットしたプレイヤーが一致しない時
-					if (hitPlayer != shooter) {
-
-						//持っている弓がテュケーだったら
-						ItemStack item = shooter.getInventory().getItemInMainHand();
-						if(item != null && item.getType() == Material.BOW && item.hasItemMeta()) {
-							if(ChatColor.stripColor(item.getItemMeta().getDisplayName().toString()).equals(ChatColor.stripColor(Items.bow2Name)) ) {
-
-								Vector knockback = arrow.getVelocity().setY(0.5).multiply(1.0D);
-
-								hitPlayer.setVelocity(knockback);
-
-							}
-						}
-
-
-						hitPlayer.damage(2);
-						hitPlayer.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 5 * 20, 1));
-						hitPlayer.getLocation().getWorld().spawnParticle(Particle.VILLAGER_HAPPY,
-								hitPlayer.getLocation(), 10,1,1,1);
-						hitPlayer.getLocation().getWorld().playSound(hitPlayer.getLocation(), Sound.BLOCK_ANVIL_PLACE,
-								(float) 0.5, 5);
-
-					} else { //シューターとプレイヤーが一致するとき
-						//シューターの手に持っている弓の条件
-						ItemStack bow = shooter.getInventory().getItemInMainHand();
-
-						if(bow != null && bow.getType() == Material.BOW) {
-							if(bow.hasItemMeta()) {
-								//もし手に持っている弓がアイオロスだったら
-								if(ChatColor.stripColor(bow.getItemMeta().getDisplayName().toString()).equals(ChatColor.stripColor(Items.bow1Name))) {
-
-									Vector boostVec = hitPlayer.getLocation().getDirection().normalize().multiply(2.5).setY(1);
-
-									hitPlayer.setVelocity(boostVec);
-								}
-							}
-						}
-					}
-
-					return;
-				}
-				return;
-			}
 
 			//あたったブロックが羊毛だったら消去
 			//あたったブロックを含む2*2*2の立方体
