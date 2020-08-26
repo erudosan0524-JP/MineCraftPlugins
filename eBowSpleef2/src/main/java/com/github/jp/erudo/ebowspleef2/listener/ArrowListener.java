@@ -27,7 +27,6 @@ import org.bukkit.util.Vector;
 
 import com.github.jp.erudo.ebowspleef2.Main;
 import com.github.jp.erudo.ebowspleef2.enums.GameState;
-import com.github.jp.erudo.ebowspleef2.enums.Teams;
 import com.github.jp.erudo.ebowspleef2.item.Items;
 
 import net.md_5.bungee.api.ChatColor;
@@ -118,17 +117,6 @@ public class ArrowListener implements Listener {
 
 					//シューターとヒットしたプレイヤーが一致しない時
 					if (hitPlayer != shooter) {
-						//どちらも同じチームだったら回復
-						if(plg.getTeam(Teams.BLUE).hasEntry(hitPlayer.getName()) && plg.getTeam(Teams.BLUE).hasEntry(shooter.getName())) {
-							hitPlayer.setHealth(hitPlayer.getHealth() + 10);
-							hitPlayer.getLocation().getWorld().spawnParticle(Particle.HEART, hitPlayer.getLocation(), 5, 1, 1, 1);
-						}
-
-						if(plg.getTeam(Teams.RED).hasEntry(hitPlayer.getName()) && plg.getTeam(Teams.RED).hasEntry(shooter.getName())) {
-							hitPlayer.setHealth(hitPlayer.getHealth() + 10);
-							hitPlayer.getLocation().getWorld().spawnParticle(Particle.HEART, hitPlayer.getLocation(), 5, 1, 1, 1);
-						}
-
 
 						//持っている弓がテュケーだったら
 						ItemStack item = shooter.getInventory().getItemInMainHand();

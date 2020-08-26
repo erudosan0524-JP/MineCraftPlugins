@@ -68,13 +68,6 @@ public class Game extends BukkitRunnable {
 
 			TimeScore.setScore(0);
 
-			MessageManager.messageAll("ワールドを復元中です・・・");
-			WorldManager wm = new WorldManager();
-			Location loc = new Location(plg.getServer().getWorld("world"), plg.getMyConfig().getBeginCoordinate()[0],
-					plg.getMyConfig().getBeginCoordinate()[1], plg.getMyConfig().getBeginCoordinate()[2]);
-			wm.loadSchematic(loc, plg.getStageName());
-			MessageManager.messageAll("復元が完了しました！");
-
 			for (Player player : Bukkit.getServer().getOnlinePlayers()) {
 				for(Player pla : Bukkit.getServer().getOnlinePlayers()) {
 					player.showPlayer(plg ,pla);
@@ -104,6 +97,14 @@ public class Game extends BukkitRunnable {
 				player.getLocation().getWorld().playSound(player.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 0.5F, 1);
 
 			}
+
+			MessageManager.messageAll("ワールドを復元中です・・・");
+			WorldManager wm = new WorldManager();
+			Location loc = new Location(plg.getServer().getWorld("world"), plg.getMyConfig().getBeginCoordinate()[0],
+					plg.getMyConfig().getBeginCoordinate()[1], plg.getMyConfig().getBeginCoordinate()[2]);
+			wm.loadSchematic(loc, plg.getStageName());
+			MessageManager.messageAll("復元が完了しました！");
+
 			plg.setCurrentGameState(GameState.PREPARE);
 			plg.getServer().getScheduler().cancelTask(task.getTaskId());
 		}

@@ -3,6 +3,8 @@ package com.github.jp.erudo.ebowspleef2.listener;
 import java.util.Objects;
 
 import org.bukkit.Material;
+import org.bukkit.Particle;
+import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -13,14 +15,18 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
 import com.github.jp.erudo.ebowspleef2.Main;
+import com.github.jp.erudo.ebowspleef2.enums.Teams;
 import com.github.jp.erudo.ebowspleef2.item.Items;
 
 import net.md_5.bungee.api.ChatColor;
 
 public class EntityDamageListener implements Listener {
 
+	private Main plg;
+
 	public EntityDamageListener(Main plg) {
 		plg.getServer().getPluginManager().registerEvents(this, plg);
+		this.plg = plg;
 	}
 
 	@EventHandler
@@ -54,6 +60,23 @@ public class EntityDamageListener implements Listener {
 						entity.setVelocity(vector);
 					}
 				}
+			}
+		//弓に当たった時
+		} else if (damager instanceof Arrow && entity instanceof Player ) {
+			Arrow arrow = (Arrow) damager;
+			Player shooter = (Player) arrow.getShooter();
+			Player hitPlayer = (Player) entity;
+
+			if(plg.getTeam(Teams.BLUE).hasEntry(hitPlayer.getName()) && plg.getTeam(Teams.BLUE).hasEntry(shooter.getName())) {
+				e.setCancelled(true);
+				hitPlayer.setHealth(hitPlayer.getHealth() + 10);
+				hitPlayer.getLocation().getWorld().spawnParticle(Particle.HEART, hitPlayer.getLocation(), 5, 1, 1, 1);
+			}
+
+			if(plg.getTeam(Teams.RED).hasEntry(hitPlayer.getName()) && plg.getTeam(Teams.RED).hasEntry(shooter.getName())) {
+				e.setCancelled(true);
+				hitPlayer.setHealth(hitPlayer.getHealth() + 10);
+				hitPlayer.getLocation().getWorld().spawnParticle(Particle.HEART, hitPlayer.getLocation(), 5, 1, 1, 1);
 			}
 		}
 	}
