@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.jp.erudo.eantitroll</groupId>
 	<artifactId>eAntiTroll</artifactId>
-	<version>0.0.4-SNAPSHOT</version>
+	<version>0.0.5-SNAPSHOT</version>
 	<name>eAntiTroll</name>
 	<description>チートや荒らしの対策をします</description>
 	<properties>
@@ -36,7 +36,7 @@
 		<dependency>
 			<groupId>org.spigotmc</groupId>
 			<artifactId>spigot-api</artifactId>
-			<version>1.12.2-R0.1-SNAPSHOT</version>
+			<version>1.16.2-R0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.spigotmc</groupId>

@@ -35,7 +35,7 @@ public class Main extends JavaPlugin {
 
 		new Config(this);
 
-		getCommand("eantitroll").setExecutor(new CommandManager(this));
+		getCommand("eat").setExecutor(new CommandManager(this));
 
 
 		//Multiverse-core check

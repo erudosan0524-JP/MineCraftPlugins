@@ -45,7 +45,7 @@ public class LavaListener implements Listener {
 			}
 
 			if (target.isLiquid()) {
-				if (target.getType() == Material.LAVA || target.getType() == Material.STATIONARY_LAVA) {
+				if (target.getType() == Material.LAVA) {
 					return;
 				}
 			}
